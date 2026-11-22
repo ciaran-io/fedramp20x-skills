@@ -1,0 +1,367 @@
+{
+  "skill": "20x-incident-reporting",
+  "skill_version": "0.1.0",
+  "title": "Incident evaluation: INC-2027-001",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C",
+  "date": "2027-01-12",
+  "frmr_version": "2026.11.02.01",
+  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+  "prepared_by": "Claude, for A. Example",
+  "mode": "evaluate",
+  "incident": "INC-2027-001",
+  "proposal": {
+    "reportable": "Yes, decided by the CISO at 2027-01-12 10:20 ET",
+    "rating_in_force": "N5 (default until an estimate is approved)",
+    "proposed_rating": "N4 (EV-4)"
+  },
+  "timeline": {
+    "clock_starts_at": "reportable",
+    "clock": "2027-01-12T10:20:00-05:00",
+    "business_days": "Monday to Friday, no holidays skipped",
+    "timeline": [
+      {
+        "target": "reportability",
+        "amount": "1h",
+        "from": "declared",
+        "repeats": false,
+        "due": "2027-01-12T10:40:00-05:00",
+        "status": "met"
+      },
+      {
+        "target": "rating",
+        "amount": "4h",
+        "from": "reportable",
+        "repeats": false,
+        "due": "2027-01-12T14:20:00-05:00",
+        "status": "due"
+      },
+      {
+        "target": "initial_report",
+        "amount": "1h",
+        "from": "clock",
+        "repeats": false,
+        "due": "2027-01-12T11:20:00-05:00",
+        "status": "due"
+      },
+      {
+        "target": "ongoing_report",
+        "amount": "24h",
+        "from": "clock",
+        "repeats": true,
+        "due": "2027-01-13T10:20:00-05:00",
+        "status": "due"
+      },
+      {
+        "target": "final_report",
+        "amount": "5bd",
+        "from": "resolved",
+        "repeats": false,
+        "due": null,
+        "status": "needs resolved"
+      }
+    ]
+  },
+  "target_refs": {
+    "reportability": "Plan section 4: within 1 hour of declaration",
+    "rating": "Plan section 4: within 4 hours of the reportability decision",
+    "initial_report": "Plan section 5: within 1 hour after the clock starts",
+    "ongoing_report": "Plan section 5: at least every 24 hours while open",
+    "final_report": "Plan section 5: within 5 business days after resolution and recovery"
+  },
+  "inputs": [
+    {
+      "id": "I-19",
+      "file": "incidents/INC-2027-001.md",
+      "sha256": "51772dc4d45ec9e8f4cd75a426178b2bcf011a64b9d23f42fd4c80fd9b00d0f8",
+      "description": "Incident record INC-2027-001 (open)"
+    },
+    {
+      "id": "I-05",
+      "file": "plans/incident-response-plan.md",
+      "sha256": "443df3674b1bb04ed809ed494b359b15f849d3e3ce611842242193b1d78ec40b",
+      "description": "Incident response plan, version 1.0"
+    },
+    {
+      "id": "I-14",
+      "file": "scope/mas-record.json",
+      "sha256": "b44e3cde2a752abb05195ffec5e3ccff17d2fd219763b06626a44f3c90d4fd3e",
+      "description": "Minimum Assessment Scope record, version 0.1.0"
+    }
+  ],
+  "items": [
+    {
+      "id": "EV-1",
+      "kind": "evaluation",
+      "question": "Which resources and data classes are involved?",
+      "answer": "The web console's escalation rule page (part of application compute, P2) showed responder names and work and personal mobile numbers. In the scope record these are responder contact data, D1.",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "What happened"
+        },
+        {
+          "input": "I-14",
+          "location": "D1; P2"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "EV-2",
+      "kind": "evaluation",
+      "question": "Is the data federal customer data?",
+      "answer": "Yes. The scope record marks D1 as federal customer data.",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "D1 federal_customer_data"
+        },
+        {
+          "frmr": "FRD-FCD"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "EV-3",
+      "kind": "evaluation",
+      "question": "Is confidentiality or integrity affected, or likely to be?",
+      "answer": "Confidentiality: AGY-07 responder contact data was shown to an AGY-03 administrator. Integrity: the record says the data was shown, not changed. This agrees with the CISO's reportability decision at 10:20 ET.",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "What happened; Reportability decision"
+        },
+        {
+          "frmr": "IEC-CSO-EFR"
+        },
+        {
+          "frmr": "FRD-FRI"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "EV-4",
+      "kind": "evaluation",
+      "question": "Which PAIN rating fits, and which applies now?",
+      "answer": "Proposed N4, for the CISO to approve: the plan's own example for N4 is responder contact details for one agency being exposed, and the record shows one agency's data (AGY-07) exposed. Until an estimate is approved, N5 applies (IEC-CSO-DPR and plan section 2). A lower rating is arguable because one administrator viewed the page twice and the release was rolled back; the plan says the higher rating applies while evidence is unclear.",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "Affected tenants; PAIN rating"
+        },
+        {
+          "input": "I-05",
+          "location": "section 2 rating table; section 4"
+        },
+        {
+          "frmr": "VER-EVA-EPA"
+        },
+        {
+          "frmr": "IEC-CSO-EFI"
+        },
+        {
+          "frmr": "IEC-CSO-DPR"
+        }
+      ],
+      "confirmed": false
+    },
+    {
+      "id": "EV-5",
+      "kind": "evaluation",
+      "question": "Is a vulnerability involved that is treated as an incident?",
+      "answer": "The record names a release defect, not a detected vulnerability. The root cause is not yet known, so this stays open.",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "Not yet known"
+        },
+        {
+          "frmr": "VER-TFR-IRI"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "RC-01",
+      "kind": "report_content",
+      "report": "initial",
+      "item": "Contact information for the federal incident response coordinator",
+      "supplied": "No: not known for AGY-07",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "record"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "RC-02",
+      "kind": "report_content",
+      "report": "initial",
+      "item": "Provider's tracking identifier",
+      "supplied": "Yes: INC-2027-001",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "record"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "RC-03",
+      "kind": "report_content",
+      "report": "initial",
+      "item": "Description of the incident",
+      "supplied": "Yes",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "record"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "RC-04",
+      "kind": "report_content",
+      "report": "initial",
+      "item": "Timeline: start, detection time and source, evaluation completed, milestones",
+      "supplied": "Yes: start 06:55, detection 09:10 by agency report, reportability decision 10:20, containment 10:05",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "record"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "RC-05",
+      "kind": "report_content",
+      "report": "initial",
+      "item": "Current and earlier PAIN ratings with the explanation",
+      "supplied": "Partly: N5 default in force; estimate due by 14:20 ET",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "record"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "RC-06",
+      "kind": "report_content",
+      "report": "initial",
+      "item": "Functional impact, including confidentiality or integrity and data types",
+      "supplied": "Yes: confidentiality of D1 for AGY-07",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "record"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "RC-07",
+      "kind": "report_content",
+      "report": "initial",
+      "item": "Estimated recovery plan, milestones and timelines",
+      "supplied": "Partly: rolled back at 10:05 ET; no further milestones recorded",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "record"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "RC-08",
+      "kind": "report_content",
+      "report": "initial",
+      "item": "List of likely affected agencies",
+      "supplied": "Partly: AGY-07; whether other tenants were affected is not yet known",
+      "sources": [
+        {
+          "input": "I-19",
+          "location": "record"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    }
+  ],
+  "decisions_needed": [
+    {
+      "id": "DQ-001",
+      "question": "Which PAIN rating does the CISO approve for INC-2027-001?",
+      "options": [
+        "N4",
+        "N3",
+        "Keep N5 until the other tenants are checked"
+      ],
+      "recommendation": "Keep N5 until the other tenants are checked",
+      "reason": "The record does not yet show whether other tenant pairs were affected. The plan applies the higher rating while evidence is unclear. N4 fits if only AGY-07 was exposed",
+      "decision_ref": null
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "Q-001",
+      "question": "Who is the federal incident response coordinator for AGY-07, and how are they contacted?",
+      "why": "The initial report needs the contact; the GRC Lead keeps the agency contacts (plan section 5)",
+      "blocks": [
+        "RC-01"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-002",
+      "question": "Were other tenant pairs affected between 06:55 and 10:05 ET?",
+      "why": "It decides the list of affected agencies and the rating",
+      "blocks": [
+        "RC-08",
+        "EV-4"
+      ],
+      "answer": null
+    }
+  ],
+  "sme_validation": {
+    "status": "draft",
+    "validated_by": null,
+    "role": null,
+    "date": null,
+    "corrections": [],
+    "rejected": []
+  }
+}

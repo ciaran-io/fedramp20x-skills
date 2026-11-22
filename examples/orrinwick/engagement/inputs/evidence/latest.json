@@ -1,0 +1,2010 @@
+{
+  "demo_notice": "FICTIONAL company and data. Not a real FedRAMP certification.",
+  "company": "Orrinwick Labs, Inc.",
+  "cso": "Orrinwick Beacon",
+  "class": "c",
+  "frmr_version": "2026.11.02.01",
+  "generated_at": "2026-11-22T17:22:41+00:00",
+  "summary": {
+    "total": 46,
+    "pass": 38,
+    "partial": 0,
+    "fail": 2,
+    "not_implemented": 6
+  },
+  "ksis": [
+    {
+      "id": "KSI-CED-RAT",
+      "theme": "CED",
+      "name": "Reviewing All Training",
+      "optional_at_class": false,
+      "controls": [
+        "at-2",
+        "at-2.2",
+        "at-2.3",
+        "at-3",
+        "at-3.5",
+        "at-4",
+        "cm-11",
+        "cp-3",
+        "cp-3.1",
+        "ir-2",
+        "ir-2.1",
+        "ir-2.2",
+        "ir-2.3",
+        "ir-9.2",
+        "ir-9.4",
+        "pl-4",
+        "pl-4.1",
+        "ps-6",
+        "sr-11.1"
+      ],
+      "status": "not_implemented",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": []
+    },
+    {
+      "id": "KSI-CMT-LMC",
+      "theme": "CMT",
+      "name": "Logging Changes",
+      "optional_at_class": false,
+      "controls": [
+        "au-2",
+        "ca-7.4",
+        "cm-3",
+        "cm-3.1",
+        "cm-3.2",
+        "cm-3.6",
+        "cm-4.2",
+        "cm-6",
+        "cm-8.3"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement also requires changes to be monitored; methods check that changes are logged and manual changes alert, not that logs are reviewed.",
+      "methods": [
+        {
+          "method_id": "lmc-iac-change-logging",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Cloud, configuration and pipeline changes are recorded with at least 12 months of retention",
+          "status": "pass",
+          "expected": "multi-region trail, recorder, pipeline log >= 365d",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "lmc-live-change-coverage",
+          "kind": "live",
+          "source": "environment/live-state.json#change_events",
+          "description": "Every change in the last 30 days is logged and every manual change raised an alert",
+          "status": "pass",
+          "expected": "100% logged, 100% of manual changes alerted",
+          "observed": "212/212 logged, 2/2 manual alerted",
+          "findings": []
+        },
+        {
+          "method_id": "lmc-live-change-types",
+          "kind": "live",
+          "source": "environment/live-state.json#change_events",
+          "description": "Every pipeline change in the last 30 days was assessed and given one of the four change types",
+          "status": "pass",
+          "expected": "100% typed: routine recurring, not significant, adaptive or transformative",
+          "observed": "212/212 typed: routine_recurring 190, not_significant 22, adaptive 0, transformative 0",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CMT-RMV",
+      "theme": "CMT",
+      "name": "Redeploying vs Modifying",
+      "optional_at_class": false,
+      "controls": [
+        "cm-2",
+        "cm-3",
+        "cm-5",
+        "cm-6",
+        "cm-7",
+        "cm-8.1",
+        "si-3"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "rmv-iac-redeploy-policy",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Machine-based resources are replaced from immutable, version-controlled images",
+          "status": "pass",
+          "expected": "redeploy strategy, immutable tags, no inbound SSH",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "rmv-live-image-match",
+          "kind": "live",
+          "source": "environment/live-state.json#compute",
+          "description": "Every running compute resource matches an image in the registry",
+          "status": "pass",
+          "expected": "all digests match",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CMT-RVP",
+      "theme": "CMT",
+      "name": "Reviewing Change Procedures",
+      "optional_at_class": false,
+      "controls": [
+        "cm-3",
+        "cm-3.2",
+        "cm-3.4",
+        "cm-5",
+        "cm-7.1",
+        "cm-9"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "cmt-rvp-static",
+          "kind": "static",
+          "source": "environment/grc-records.json#change_procedure",
+          "description": "POL-CMT requires a yearly review of the change procedure and a review after failed or emergency changes, and the procedure exists",
+          "status": "pass",
+          "expected": "POL-CMT CMT-3 covers CMT-RVP; cadence <= 365 days; procedure present",
+          "observed": "0 gap(s)",
+          "findings": []
+        },
+        {
+          "method_id": "cmt-rvp-live",
+          "kind": "live",
+          "source": "environment/grc-records.json#change_procedure",
+          "description": "The newest review of the change procedure is inside the cadence and was recorded by the POL-CMT owner",
+          "status": "pass",
+          "expected": "<= 365 days; reviewed by Platform Lead",
+          "observed": "51 days",
+          "findings": []
+        },
+        {
+          "method_id": "cmt-rvp-change",
+          "kind": "live",
+          "source": "environment/grc-records.json#change_procedure.failed_or_emergency_changes",
+          "description": "Every failed or emergency change has a review of the change procedure within 10 business days",
+          "status": "pass",
+          "expected": "review within 10 business days of each failed or emergency change",
+          "observed": "1 failed or emergency change(s), 0 overdue",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CMT-VTD",
+      "theme": "CMT",
+      "name": "Validating Throughout Deployment",
+      "optional_at_class": false,
+      "controls": [
+        "cm-3",
+        "cm-3.2",
+        "cm-4.2",
+        "cm-6.2",
+        "ir-9.4",
+        "si-2"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "vtd-iac-pipeline-stages",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "The pipeline tests, scans and verifies every change",
+          "status": "pass",
+          "expected": "test, scan and verify stages enabled",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "vtd-live-pipeline-runs",
+          "kind": "live",
+          "source": "environment/live-state.json#pipeline_runs_30d",
+          "description": "Every pipeline run in the last 30 days ran tests, scans and verification",
+          "status": "pass",
+          "expected": "100% of runs",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CNA-DFP",
+      "theme": "CNA",
+      "name": "Defining Functionality and Privileges",
+      "optional_at_class": false,
+      "controls": [
+        "cm-2",
+        "cm-8.4",
+        "cp-10.4",
+        "ir-9.4",
+        "si-3"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement says functionality and privileges are strictly defined for infrastructure and services; methods check roles only, not network or data-store privileges.",
+      "methods": [
+        {
+          "method_id": "dfp-iac-role-definitions",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Each service has its own role with a stated function and no wildcard actions",
+          "status": "pass",
+          "expected": "one defined role per service",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "dfp-live-role-privileges",
+          "kind": "live",
+          "source": "environment/live-state.json#iam_roles",
+          "description": "No live role holds wildcard actions",
+          "status": "pass",
+          "expected": "0 wildcard actions",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CNA-EIS",
+      "theme": "CNA",
+      "name": "Enforcing Intended State",
+      "optional_at_class": false,
+      "controls": [
+        "ca-2.1",
+        "cm-11",
+        "cm-6.2",
+        "cp-10.4",
+        "ir-9.4",
+        "sc-24",
+        "sc-7.18",
+        "si-4.22",
+        "si-7",
+        "si-7.1",
+        "si-7.5",
+        "si-7.7"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement requires automatically ENFORCING intended state; methods only detect drift, no auto-remediation check.",
+      "methods": [
+        {
+          "method_id": "eis-iac-drift-rule",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "A drift-detection rule is declared and enabled in IaC",
+          "status": "pass",
+          "expected": ">=1 enabled drift rule",
+          "observed": "1 rule(s)",
+          "findings": []
+        },
+        {
+          "method_id": "eis-live-drift",
+          "kind": "live",
+          "source": "environment/live-state.json#drift",
+          "description": "Live environment has no resources outside declared intended state",
+          "status": "pass",
+          "expected": "0 unmanaged resources",
+          "observed": "0 unmanaged",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CNA-IBP",
+      "theme": "CNA",
+      "name": "Implementing Best Practices",
+      "optional_at_class": false,
+      "controls": [
+        "ac-17.3",
+        "cm-2",
+        "pl-10",
+        "sc-7.18"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers all third-party machine-based resources; methods compare the AWS account to one benchmark and not the SaaS tools (E1, E7, E9).",
+      "methods": [
+        {
+          "method_id": "ibp-iac-provider-guidance",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Provider best-practice benchmarks and managed rules are enabled",
+          "status": "pass",
+          "expected": "CIS pack, threat detection, managed WAF rules",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "ibp-live-benchmark-results",
+          "kind": "live",
+          "source": "environment/live-state.json#benchmark_results",
+          "description": "The latest benchmark scan has no failed controls",
+          "status": "pass",
+          "expected": "0 failed controls",
+          "observed": "0 of 52 controls failed",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CNA-MAT",
+      "theme": "CNA",
+      "name": "Minimizing Attack Surface",
+      "optional_at_class": false,
+      "controls": [
+        "ac-17.3",
+        "ac-18.1",
+        "ac-18.3",
+        "ac-20.1",
+        "ca-9",
+        "sc-10",
+        "sc-7.18",
+        "sc-7.3",
+        "sc-7.4",
+        "sc-7.5",
+        "sc-7.8",
+        "sc-8",
+        "si-10",
+        "si-11",
+        "si-16"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers a persistent review of lateral movement; methods count known paths and do not run a path analysis.",
+      "methods": [
+        {
+          "method_id": "mat-iac-exposure",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "No service has a public IP, a WAF fronts the edge, and only 443 is open to the internet",
+          "status": "pass",
+          "expected": "no public IPs, WAF present, only 443",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "mat-live-exposed-endpoints",
+          "kind": "live",
+          "source": "environment/live-state.json#exposed_endpoints",
+          "description": "Only allowed endpoints are exposed and no unneeded lateral paths exist",
+          "status": "pass",
+          "expected": "observed endpoints equal allowed, 0 lateral paths",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CNA-OFA",
+      "theme": "CNA",
+      "name": "Optimizing for Availability",
+      "optional_at_class": false,
+      "controls": [
+        "cp-2.5",
+        "sc-12.1"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers rapid recovery; recovery is only tested by KSI-RPL-TRC, which records one restore test.",
+      "methods": [
+        {
+          "method_id": "ofa-iac-redundancy",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Compute and database are redundant across zones and backed up",
+          "status": "pass",
+          "expected": ">= 2 AZs, multi-AZ DB, >= 2 tasks, backup plan",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "ofa-live-availability",
+          "kind": "live",
+          "source": "environment/live-state.json#availability",
+          "description": "Every service runs in 2 or more zones and failover was tested in the last 90 days",
+          "status": "pass",
+          "expected": ">= 2 tasks and zones, failover test <= 90d",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CNA-RNT",
+      "theme": "CNA",
+      "name": "Restricting Network Traffic",
+      "optional_at_class": false,
+      "controls": [
+        "ac-17.3",
+        "ca-9",
+        "cm-7.1",
+        "sc-7.10",
+        "sc-7.18",
+        "sc-7.20",
+        "sc-7.21",
+        "sc-7.5",
+        "si-10",
+        "si-4.11",
+        "si-4.18",
+        "si-4.4",
+        "si-8"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "rnt-iac-traffic",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "No IaC security group sends or accepts internet traffic on anything but 443",
+          "status": "pass",
+          "expected": "only 443 to or from 0.0.0.0/0",
+          "observed": "0 violating rule(s)",
+          "findings": []
+        },
+        {
+          "method_id": "rnt-live-traffic",
+          "kind": "live",
+          "source": "environment/live-state.json#security_groups",
+          "description": "No live security group sends or accepts internet traffic on anything but 443",
+          "status": "pass",
+          "expected": "only 443 to or from 0.0.0.0/0",
+          "observed": "0 violating rule(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CNA-RVP",
+      "theme": "CNA",
+      "name": "Reviewing Protections",
+      "optional_at_class": false,
+      "controls": [
+        "ir-4.2",
+        "sc-5",
+        "sc-7.18",
+        "si-8",
+        "si-8.2"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "cna-rvp-static",
+          "kind": "static",
+          "source": "policies/policy-set.json#POL-CNA",
+          "description": "POL-CNA requires an annual review of protections and a review after each change, with a deadline for each SCN change type",
+          "status": "pass",
+          "expected": "CNA-7a annual; CNA-7b deadlines for all four change types",
+          "observed": "0 gap(s)",
+          "findings": []
+        },
+        {
+          "method_id": "cna-rvp-live",
+          "kind": "live",
+          "source": "environment/grc-records.json#protection_reviews",
+          "description": "The newest review of protections is no older than 365 days, was done by the Platform Lead and covers every protection resource",
+          "status": "pass",
+          "expected": "<= 365 days, Platform Lead, all protection resources covered",
+          "observed": "0 days",
+          "findings": []
+        },
+        {
+          "method_id": "cna-rvp-change",
+          "kind": "live",
+          "source": "mas/scope-changes.json",
+          "description": "Every recorded change has a protection review inside the deadline for its SCN change type",
+          "status": "pass",
+          "expected": "review before the deadline for each change",
+          "observed": "2 change(s), 0 overdue",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-CNA-ULN",
+      "theme": "CNA",
+      "name": "Using Logical Networking",
+      "optional_at_class": false,
+      "controls": [
+        "ac-12",
+        "ac-17.3",
+        "ac-4.21",
+        "ca-9",
+        "cm-11",
+        "sc-10",
+        "sc-4",
+        "sc-7",
+        "sc-7.20",
+        "sc-7.21",
+        "sc-7.7",
+        "sc-8"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers a persistent review of traffic flow controls; methods check configuration and telemetry, not a review record.",
+      "methods": [
+        {
+          "method_id": "uln-iac-logical-network",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "A VPC with flow logs, tier security groups and controlled egress is declared",
+          "status": "pass",
+          "expected": "flow logs, 3+ security groups, NAT",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "uln-live-network-controls",
+          "kind": "live",
+          "source": "environment/live-state.json#network",
+          "description": "Flow logs deliver, data subnets have no internet route and network changes are reviewed",
+          "status": "pass",
+          "expected": "active logs, 0 routes, 0 unreviewed",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-IAM-AAM",
+      "theme": "IAM",
+      "name": "Automating Account Management",
+      "optional_at_class": false,
+      "controls": [
+        "ac-2.13",
+        "ac-2.2",
+        "ac-2.3",
+        "ac-6.7",
+        "ia-12",
+        "ia-12.2",
+        "ia-12.3",
+        "ia-12.5",
+        "ia-4.4",
+        "ia-8.4"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers all accounts, roles and groups; methods check workforce leavers and provisioning, not role and group lifecycle.",
+      "methods": [
+        {
+          "method_id": "aam-iac-lifecycle-automation",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Account lifecycle runs from the identity provider with a 24 hour removal target",
+          "status": "pass",
+          "expected": "automated provisioning, group roles, <= 24h",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "aam-live-deprovisioning",
+          "kind": "live",
+          "source": "environment/live-state.json#identity",
+          "description": "Leavers in the last 90 days lost access within 24 hours",
+          "status": "pass",
+          "expected": "all <= 24h",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-IAM-APM",
+      "theme": "IAM",
+      "name": "Adopting Passwordless Methods",
+      "optional_at_class": false,
+      "controls": [
+        "ac-2",
+        "ac-3",
+        "ia-2",
+        "ia-2.1",
+        "ia-2.2",
+        "ia-2.6",
+        "ia-2.8",
+        "ia-5",
+        "ia-5.1",
+        "ia-5.2",
+        "ia-5.6",
+        "ia-5.8",
+        "ia-6",
+        "ia-8",
+        "ia-8.2",
+        "ia-8.4",
+        "sc-23"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "apm-iac-idp-policy",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "IdP policy requires phishing-resistant / passwordless factors",
+          "status": "pass",
+          "expected": "MFA required, WebAuthn-class factors, no password-only",
+          "observed": "1 policy(ies)",
+          "findings": []
+        },
+        {
+          "method_id": "apm-live-user-factors",
+          "kind": "live",
+          "source": "environment/live-state.json#identity",
+          "description": "Every workforce user is enrolled in a phishing-resistant factor",
+          "status": "pass",
+          "expected": "100% enrolled",
+          "observed": "37/37 enrolled",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-IAM-ELP",
+      "theme": "IAM",
+      "name": "Ensuring Least Privilege",
+      "optional_at_class": false,
+      "controls": [
+        "ac-12",
+        "ac-14",
+        "ac-17",
+        "ac-17.1",
+        "ac-17.2",
+        "ac-17.3",
+        "ac-18.4",
+        "ac-2.11",
+        "ac-2.5",
+        "ac-2.6",
+        "ac-2.7",
+        "ac-2.9",
+        "ac-20",
+        "ac-20.1",
+        "ac-21",
+        "ac-3",
+        "ac-4",
+        "ac-6",
+        "ac-6.3",
+        "ac-6.8",
+        "au-12.3",
+        "au-6.7",
+        "cm-2.7",
+        "cm-5.1",
+        "cm-5.5",
+        "cm-7.2",
+        "cm-9",
+        "ia-11",
+        "ia-2",
+        "ia-3",
+        "ia-4",
+        "ia-4.4",
+        "ia-5.2",
+        "ia-5.6",
+        "ir-4.6",
+        "ir-9.4",
+        "ps-2",
+        "ps-3",
+        "ps-4",
+        "ps-5",
+        "ps-6",
+        "ra-5.5",
+        "sc-2",
+        "sc-20",
+        "sc-21",
+        "sc-22",
+        "sc-23",
+        "sc-3",
+        "sc-39",
+        "sc-4",
+        "si-3",
+        "si-4.19"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "elp-iac-wildcards",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "No standing wildcard admin; break-glass is approval-gated",
+          "status": "pass",
+          "expected": "0 ungated wildcard grants",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "elp-live-unused-perms",
+          "kind": "live",
+          "source": "environment/live-state.json#iam",
+          "description": "Live IAM has no ungated wildcard admin and no unused-permission backlog",
+          "status": "pass",
+          "expected": "<= 0 unused-permission findings",
+          "observed": "0 findings",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-IAM-JIT",
+      "theme": "IAM",
+      "name": "Authorizing Just-in-Time",
+      "optional_at_class": false,
+      "controls": [
+        "ac-17",
+        "ac-17.4",
+        "ac-2",
+        "ac-2.1",
+        "ac-2.11",
+        "ac-2.2",
+        "ac-2.3",
+        "ac-2.4",
+        "ac-2.6",
+        "ac-2.7",
+        "ac-20.1",
+        "ac-21",
+        "ac-3",
+        "ac-4",
+        "ac-5",
+        "ac-6",
+        "ac-6.1",
+        "ac-6.10",
+        "ac-6.2",
+        "ac-6.3",
+        "ac-6.5",
+        "ac-6.7",
+        "ac-6.8",
+        "ac-6.9",
+        "ac-7",
+        "au-10",
+        "au-12.3",
+        "au-9.4",
+        "ca-3.6",
+        "cm-5",
+        "cm-5.1",
+        "cm-5.5",
+        "cm-7",
+        "cm-7.2",
+        "cm-7.5",
+        "cm-9",
+        "ia-4",
+        "ia-4.4",
+        "ia-7",
+        "ir-4.6",
+        "ps-2",
+        "ps-3",
+        "ps-4",
+        "ps-5",
+        "ps-6",
+        "ps-9",
+        "ra-5.5",
+        "sc-2",
+        "sc-23",
+        "sc-3",
+        "sc-39"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers user and non-user accounts and a persistent review; methods check privileged human access only.",
+      "methods": [
+        {
+          "method_id": "jit-iac-access-model",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Production access is approval-gated, time-limited and conditional",
+          "status": "pass",
+          "expected": "no standing access, approval, <= 8h",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "jit-live-standing-access",
+          "kind": "live",
+          "source": "environment/live-state.json#standing_privileged_accounts",
+          "description": "No account holds standing privileged access",
+          "status": "pass",
+          "expected": "0 accounts",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-IAM-SNU",
+      "theme": "IAM",
+      "name": "Securing Non-User Authentication",
+      "optional_at_class": false,
+      "controls": [
+        "ac-2",
+        "ac-2.2",
+        "ac-2.9",
+        "ac-4",
+        "ac-6.5",
+        "au-10",
+        "ia-2.5",
+        "ia-3",
+        "ia-5.2",
+        "ra-5.5"
+      ],
+      "status": "fail",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers a persistent review of non-user authentication; methods check key age and declared key use, not a review record.",
+      "methods": [
+        {
+          "method_id": "snu-iac-workload-auth",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Workload and pipeline identities use short-lived credentials",
+          "status": "pass",
+          "expected": "no long-lived keys in IaC",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "snu-live-access-key-age",
+          "kind": "live",
+          "source": "environment/live-state.json#access_keys",
+          "description": "No static access key is older than 90 days",
+          "status": "fail",
+          "expected": "0 keys over 90d",
+          "observed": "1 finding(s)",
+          "findings": [
+            "Access key for svc-legacy-export is 212 days old"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "KSI-IAM-SUS",
+      "theme": "IAM",
+      "name": "Responding to Suspicious Activity",
+      "optional_at_class": false,
+      "controls": [
+        "ac-2",
+        "ac-2.1",
+        "ac-2.11",
+        "ac-2.12",
+        "ac-2.13",
+        "ac-2.3",
+        "ac-7",
+        "au-6.5",
+        "cm-5.1",
+        "cm-6.2",
+        "ir-4.2",
+        "ir-4.6",
+        "ps-4",
+        "ps-8",
+        "si-4",
+        "si-4.1",
+        "si-4.19",
+        "si-4.20",
+        "si-4.22",
+        "si-4.4"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers disabling or securing accounts; methods check response time for sampled events, not every account type.",
+      "methods": [
+        {
+          "method_id": "sus-iac-response-rules",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Automated rules secure privileged accounts when activity looks suspicious",
+          "status": "pass",
+          "expected": "auto-disable and 3 core rules",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "sus-live-response-time",
+          "kind": "live",
+          "source": "environment/live-state.json#suspicious_activity",
+          "description": "Each suspicious-activity event was secured within the target time",
+          "status": "pass",
+          "expected": "<= 15 min",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-INR-AAR",
+      "theme": "INR",
+      "name": "Generating After Action Reports",
+      "optional_at_class": false,
+      "controls": [
+        "ir-3",
+        "ir-4",
+        "ir-4.1",
+        "ir-5.1",
+        "ir-8",
+        "ir-9.3"
+      ],
+      "status": "not_implemented",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": []
+    },
+    {
+      "id": "KSI-INR-RIR",
+      "theme": "INR",
+      "name": "Reviewing Incident Response Procedures",
+      "optional_at_class": false,
+      "controls": [
+        "ir-4",
+        "ir-4.1",
+        "ir-4.11",
+        "ir-6",
+        "ir-6.1",
+        "ir-6.3",
+        "ir-7",
+        "ir-7.1",
+        "ir-8",
+        "ir-8.1",
+        "ir-9.3",
+        "si-4.5"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "inr-rir-static",
+          "kind": "static",
+          "source": "environment/grc-records.json#ir_plan",
+          "description": "POL-INR requires a plan review with a named owner, the cadence is 365 days or less, and the plan is written",
+          "status": "pass",
+          "expected": "POL-INR covers INR-RIR; owner named; cadence <= 365 days; plan with no TODO",
+          "observed": "0 gap(s)",
+          "findings": []
+        },
+        {
+          "method_id": "inr-rir-live",
+          "kind": "live",
+          "source": "environment/grc-records.json#ir_plan",
+          "description": "The plan was reviewed by its owner inside the cadence, and after every report or review that required a plan change",
+          "status": "pass",
+          "expected": "<= 365 days; reviewed by CISO; review after each required change",
+          "observed": "1 days",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-INR-RPI",
+      "theme": "INR",
+      "name": "Reviewing Past Incidents",
+      "optional_at_class": false,
+      "controls": [
+        "ir-3",
+        "ir-4",
+        "ir-4.1",
+        "ir-4.11",
+        "ir-4.4",
+        "ir-5",
+        "ir-5.1",
+        "ir-8",
+        "ra-5.8"
+      ],
+      "status": "not_implemented",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": []
+    },
+    {
+      "id": "KSI-MLA-ALA",
+      "theme": "MLA",
+      "name": "Authorizing Log Access",
+      "optional_at_class": false,
+      "controls": [
+        "au-12.3",
+        "au-6.7",
+        "si-11"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement bases access on data sensitivity classes; methods check roles and grants, not a per-class sensitivity map.",
+      "methods": [
+        {
+          "method_id": "ala-iac-log-access-model",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Log access is role-based, just-in-time for raw logs, masked and reviewed monthly",
+          "status": "pass",
+          "expected": "JIT, <= 8h, masked, monthly review",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "ala-live-log-access-grants",
+          "kind": "live",
+          "source": "environment/live-state.json#log_access",
+          "description": "No standing raw log access, no unmasked reads and a review in the last 30 days",
+          "status": "pass",
+          "expected": "0 standing, review <= 30d",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-MLA-EVC",
+      "theme": "MLA",
+      "name": "Evaluating Configurations",
+      "optional_at_class": false,
+      "controls": [
+        "ac-19",
+        "ca-7",
+        "cm-2",
+        "cm-6",
+        "cm-6.1",
+        "ra-3",
+        "si-7.7"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers all machine-based resources; methods check IaC scans and merge checks, not configuration tests of SaaS tools.",
+      "methods": [
+        {
+          "method_id": "evc-iac-config-testing",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "IaC is tested on every pull request and scanned daily, and failures block merge",
+          "status": "pass",
+          "expected": "policy-as-code, PR checks, blocking, daily",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "evc-live-scan-results",
+          "kind": "live",
+          "source": "environment/live-state.json#iac_evaluation",
+          "description": "Scans are fresh, every merge was checked and no high finding is open",
+          "status": "pass",
+          "expected": "scan <= 24h, 100% checked, 0 high",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-MLA-LET",
+      "theme": "MLA",
+      "name": "Logging Event Types",
+      "optional_at_class": false,
+      "controls": [
+        "ac-17.1",
+        "ac-2.4",
+        "ac-20.1",
+        "ac-6.9",
+        "au-10",
+        "au-12",
+        "au-2",
+        "au-7",
+        "au-7.1",
+        "cm-5.1",
+        "ir-9.4",
+        "si-4.19",
+        "si-4.20",
+        "si-4.4",
+        "si-4.5",
+        "si-7.7"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement is about a maintained, reviewed LIST of resources and event types that are logged; methods only check that the audit trail is on and fresh.",
+      "methods": [
+        {
+          "method_id": "let-iac-cloudtrail",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Multi-region audit trail with integrity validation is declared",
+          "status": "pass",
+          "expected": "multi-region + validation",
+          "observed": "1 trail(s)",
+          "findings": []
+        },
+        {
+          "method_id": "let-live-cloudtrail",
+          "kind": "live",
+          "source": "environment/live-state.json#cloudtrail",
+          "description": "Audit trail is actively logging with fresh delivery",
+          "status": "pass",
+          "expected": "logging, delivery <= 60 min",
+          "observed": "logging=True, age=7m",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-MLA-OSM",
+      "theme": "MLA",
+      "name": "Operating SIEM Capability",
+      "optional_at_class": false,
+      "controls": [
+        "ac-17.1",
+        "ac-20.1",
+        "au-11",
+        "au-12.1",
+        "au-2",
+        "au-3",
+        "au-3.1",
+        "au-4",
+        "au-5",
+        "au-5.1",
+        "au-6.1",
+        "au-6.3",
+        "au-6.4",
+        "au-6.5",
+        "au-7",
+        "au-7.1",
+        "au-8",
+        "au-9",
+        "ir-4.1",
+        "si-4.16",
+        "si-4.2",
+        "si-4.4"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement requires the SIEM itself to be persistently reviewed; methods check health and tamper protection, not a review record.",
+      "methods": [
+        {
+          "method_id": "osm-iac-siem-config",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "A central, tamper-resistant log store with 12 months of retention and core sources",
+          "status": "pass",
+          "expected": "central, tamper protection, >= 365d",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "osm-live-siem-health",
+          "kind": "live",
+          "source": "environment/live-state.json#siem",
+          "description": "All expected sources report, events are fresh and the store is locked",
+          "status": "pass",
+          "expected": "all sources, <= 15 min, lock on",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-MLA-RVL",
+      "theme": "MLA",
+      "name": "Reviewing Logs",
+      "optional_at_class": false,
+      "controls": [
+        "ac-2.4",
+        "ac-6.9",
+        "au-2",
+        "au-6",
+        "au-6.1",
+        "au-7",
+        "ra-5.8",
+        "si-4",
+        "si-4.19",
+        "si-4.4"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement requires logs to be audited; methods check review recency and triage, not audit quality.",
+      "methods": [
+        {
+          "method_id": "rvl-iac-review-process",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Automated detections with a 60 minute triage target and a weekly review",
+          "status": "pass",
+          "expected": "detections, <= 60 min, weekly",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "rvl-live-review-activity",
+          "kind": "live",
+          "source": "environment/live-state.json#log_review",
+          "description": "Logs were reviewed this week, alerts met the triage target and detections run",
+          "status": "pass",
+          "expected": "review <= 7d, 100% triaged, 0 failing",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-PIY-GIV",
+      "theme": "PIY",
+      "name": "Generating Inventories",
+      "optional_at_class": false,
+      "controls": [
+        "cm-12",
+        "cm-12.1",
+        "cm-2.2",
+        "cm-7.5",
+        "cm-8",
+        "cm-8.1",
+        "cm-8.2",
+        "cm-8.4",
+        "cp-2.8"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers all information resources; the live method checks cloud resources against the scope record, not people and process resources.",
+      "methods": [
+        {
+          "method_id": "giv-iac-inventory-generator",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "The inventory is generated from authoritative sources every hour and ties to scope IDs",
+          "status": "pass",
+          "expected": ">= 2 sources, <= 60 min, scope ID tag",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "giv-live-unscoped-resources",
+          "kind": "live",
+          "source": "environment/live-state.json",
+          "description": "Every live resource carries a scope ID that exists in the scope record",
+          "status": "pass",
+          "expected": "0 unscoped resources",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-PIY-RES",
+      "theme": "PIY",
+      "name": "Reviewing Executive Support",
+      "optional_at_class": false,
+      "controls": [],
+      "status": "not_implemented",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": []
+    },
+    {
+      "id": "KSI-PIY-RIS",
+      "theme": "PIY",
+      "name": "Reviewing Investments in Security",
+      "optional_at_class": false,
+      "controls": [
+        "ac-5",
+        "ca-2",
+        "ca-2.2",
+        "cp-2.1",
+        "cp-4.1",
+        "ir-3.2",
+        "ir-4.11",
+        "pm-3",
+        "sa-2",
+        "sa-3",
+        "sr-2.1"
+      ],
+      "status": "not_implemented",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": []
+    },
+    {
+      "id": "KSI-PIY-RSD",
+      "theme": "PIY",
+      "name": "Reviewing Security in the SDLC",
+      "optional_at_class": false,
+      "controls": [
+        "ac-5",
+        "au-3.3",
+        "cm-3.4",
+        "ia-5.7",
+        "pl-8",
+        "pm-7",
+        "ra-9",
+        "sa-3",
+        "sa-8",
+        "sc-18",
+        "sc-4",
+        "si-10",
+        "si-11",
+        "si-16"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers CISA Secure by Design principles; methods check four named principles, not the full pledge.",
+      "methods": [
+        {
+          "method_id": "rsd-iac-sdlc-policy",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "A quarterly SDLC review with secure-by-design principles, threat models, SAST and dependency scans",
+          "status": "pass",
+          "expected": "quarterly, >= 3 principles, 3 gates",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "rsd-live-sdlc-metrics",
+          "kind": "live",
+          "source": "environment/live-state.json#sdlc",
+          "description": "The SDLC was reviewed this quarter, threat models cover 90% of features and no critical finding is open",
+          "status": "pass",
+          "expected": "review <= 90d, >= 90%, 0 critical",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-PIY-RVD",
+      "theme": "PIY",
+      "name": "Reviewing Vulnerability Disclosures",
+      "optional_at_class": false,
+      "controls": [
+        "ra-5.11"
+      ],
+      "status": "not_implemented",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": []
+    },
+    {
+      "id": "KSI-RPL-ABO",
+      "theme": "RPL",
+      "name": "Aligning Backups with Objectives",
+      "optional_at_class": false,
+      "controls": [
+        "cm-2.3",
+        "cp-6",
+        "cp-9",
+        "cp-10",
+        "cp-10.2"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Objectives are read from environment/recovery-objectives.json, but the methods do not prove a backup can be restored or that a restore meets the RTO (see KSI-RPL-TRC).",
+      "methods": [
+        {
+          "method_id": "abo-iac-backup-policy",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Backup plan runs at least every 2h, keeps 14+ days, copies to a locked vault in us-west-2 and covers every protected data store",
+          "status": "pass",
+          "expected": "<= 2h interval, >= 14d, locked copy in us-west-2",
+          "observed": "0 gap(s)",
+          "findings": []
+        },
+        {
+          "method_id": "abo-live-backup-currency",
+          "kind": "live",
+          "source": "environment/live-state.json#aws_backup",
+          "description": "Newest recovery point and its cross-region copy are within the 4h recovery point objective",
+          "status": "pass",
+          "expected": "<= 4h, copy to us-west-2",
+          "observed": "0 breaching",
+          "findings": []
+        },
+        {
+          "method_id": "abo-live-failed-job-alerts",
+          "kind": "live",
+          "source": "environment/backup-jobs.json",
+          "description": "Backup and copy jobs completed in the last day, and every failed job in the last 30 days raised an alert within 60 minutes that a person acknowledged",
+          "status": "pass",
+          "expected": "jobs in the last day; alert <= 60 min, acknowledged",
+          "observed": "15 job(s) in 30 days, 1 failed, 0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-RPL-ARP",
+      "theme": "RPL",
+      "name": "Aligning Recovery Plan",
+      "optional_at_class": false,
+      "controls": [
+        "cp-2",
+        "cp-2.1",
+        "cp-2.3",
+        "cp-4.1",
+        "cp-6",
+        "cp-6.1",
+        "cp-6.3",
+        "cp-7",
+        "cp-7.1",
+        "cp-7.2",
+        "cp-7.3",
+        "cp-8",
+        "cp-8.1",
+        "cp-8.2",
+        "cp-10",
+        "cp-10.2"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement is about a persistent review; methods compare the plan record to the objectives and check review age.",
+      "methods": [
+        {
+          "method_id": "arp-iac-plan-alignment",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "The recovery plan record matches the objectives and names a declared runbook",
+          "status": "pass",
+          "expected": "RTO, RPO, cadence and runbook match",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "arp-live-plan-review",
+          "kind": "live",
+          "source": "environment/live-state.json#recovery_plan",
+          "description": "The documented plan matches the objectives and was reviewed within the cadence",
+          "status": "pass",
+          "expected": "match, review <= cadence",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-RPL-RRO",
+      "theme": "RPL",
+      "name": "Reviewing Recovery Objectives",
+      "optional_at_class": false,
+      "controls": [
+        "cp-2.3",
+        "cp-10"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "rpl-rro-static",
+          "kind": "static",
+          "source": "environment/recovery-objectives.json",
+          "description": "Recovery time, recovery point and review cadence are defined, and policy POL-RPL requires the review",
+          "status": "pass",
+          "expected": "RTO, RPO and cadence set; POL-RPL covers RPL-RRO",
+          "observed": "0 gap(s)",
+          "findings": []
+        },
+        {
+          "method_id": "rpl-rro-live",
+          "kind": "live",
+          "source": "environment/recovery-objectives.json",
+          "description": "The newest review of the recovery objectives is inside the review cadence and was recorded by the POL-RPL owner",
+          "status": "pass",
+          "expected": "<= 90 days since last review; reviewed by Platform Lead",
+          "observed": "0 days",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-RPL-TRC",
+      "theme": "RPL",
+      "name": "Testing Recovery Capabilities",
+      "optional_at_class": false,
+      "controls": [
+        "cp-10",
+        "cp-2.1",
+        "cp-2.3",
+        "cp-4",
+        "cp-4.1",
+        "cp-6",
+        "cp-6.1",
+        "cp-9.1",
+        "ir-3",
+        "ir-3.2",
+        "ir-9.3",
+        "sc-12.1"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "One restore test result is recorded; methods do not prove the result by running a restore.",
+      "methods": [
+        {
+          "method_id": "trc-iac-restore-test-plan",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "A recovery module exists and a restore test cadence at or under the objective is set",
+          "status": "pass",
+          "expected": "module declared, cadence <= objective",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "trc-live-restore-results",
+          "kind": "live",
+          "source": "environment/live-state.json#restore_tests",
+          "description": "A restore test inside the cadence met the RTO and RPO",
+          "status": "pass",
+          "expected": "<= cadence, RTO and RPO met",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SCR-MIT",
+      "theme": "SCR",
+      "name": "Mitigating Supply Chain Risk",
+      "optional_at_class": false,
+      "controls": [
+        "ac-19",
+        "ac-20",
+        "ca-7.4",
+        "ra-3",
+        "ra-3.1",
+        "sa-10",
+        "sa-11",
+        "sa-11.1",
+        "sa-11.2",
+        "sa-15",
+        "sa-15.3",
+        "sa-16",
+        "sa-17",
+        "sa-21",
+        "sa-22",
+        "sa-4",
+        "sa-4.1",
+        "sa-4.2",
+        "sa-4.5",
+        "sa-4.9",
+        "sa-9",
+        "sa-9.1",
+        "sa-9.2",
+        "sa-9.5",
+        "sc-18",
+        "si-7.1",
+        "si-7.15",
+        "sr-2",
+        "sr-3",
+        "sr-5",
+        "sr-6"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers identifying risks; methods check review recency, stale risks and contract clauses, not risk quality.",
+      "methods": [
+        {
+          "method_id": "mit-iac-supply-chain-policy",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "An SBOM, vendor notification clauses and a quarterly risk review are defined",
+          "status": "pass",
+          "expected": "SBOM, clause, quarterly",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "mit-live-supply-chain-risks",
+          "kind": "live",
+          "source": "environment/live-state.json#supply_chain",
+          "description": "Risks were reviewed this quarter, none is stale and every third party has a notification clause",
+          "status": "pass",
+          "expected": "review <= 90d, 0 stale, all clauses",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SCR-MON",
+      "theme": "SCR",
+      "name": "Monitoring Supply Chain Risk",
+      "optional_at_class": false,
+      "controls": [
+        "ac-19",
+        "ac-20",
+        "ca-2.3",
+        "ca-3",
+        "ir-6.3",
+        "ps-7",
+        "ra-3",
+        "ra-5",
+        "sa-9",
+        "si-5",
+        "sr-3",
+        "sr-5",
+        "sr-6",
+        "sr-8"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers contractual or active monitoring; methods check advisory check age and the SBOM, not that each advisory was acted on.",
+      "methods": [
+        {
+          "method_id": "mon-iac-upstream-monitoring",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Dependencies are monitored and running images are scanned automatically",
+          "status": "pass",
+          "expected": "monitoring on, scanner enabled",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "mon-live-upstream-advisories",
+          "kind": "live",
+          "source": "environment/live-state.json#supply_chain",
+          "description": "Every third party was checked within 24 hours, the SBOM is current and no critical upstream issue is open",
+          "status": "pass",
+          "expected": "<= 24h, SBOM <= 7d, 0 critical",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SVC-ACM",
+      "theme": "SVC",
+      "name": "Automating Configuration Management",
+      "optional_at_class": false,
+      "controls": [
+        "ac-2.4",
+        "ac-6.8",
+        "cm-2",
+        "cm-2.2",
+        "cm-2.3",
+        "cm-6",
+        "cm-7.1",
+        "pl-10",
+        "pl-9",
+        "sa-5",
+        "sc-45",
+        "sc-45.1",
+        "sc-7.18",
+        "si-5",
+        "sr-10"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": null,
+      "methods": [
+        {
+          "method_id": "acm-iac-config-automation",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Configuration is applied by the pipeline and drift is evaluated",
+          "status": "pass",
+          "expected": "drift rule, state lock, pipeline apply",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "acm-live-drift",
+          "kind": "live",
+          "source": "environment/live-state.json#drift",
+          "description": "No unmanaged resources exist and the drift scan is under 24 hours old",
+          "status": "pass",
+          "expected": "0 unmanaged, scan <= 24h",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SVC-ASM",
+      "theme": "SVC",
+      "name": "Automating Secret Management",
+      "optional_at_class": false,
+      "controls": [
+        "ac-17.2",
+        "ia-5.2",
+        "ia-5.6",
+        "sc-12",
+        "sc-12.1",
+        "sc-17"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers keys, certificates and other secrets; methods check secret rotation only, not key rotation or certificate expiry.",
+      "methods": [
+        {
+          "method_id": "asm-iac-rotation",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Secrets declare automatic rotation at <= 90 days",
+          "status": "pass",
+          "expected": "all secrets rotate <= 90d",
+          "observed": "3 rotation(s) declared",
+          "findings": []
+        },
+        {
+          "method_id": "asm-live-rotation-age",
+          "kind": "live",
+          "source": "environment/live-state.json#secrets",
+          "description": "No live secret is older than its rotation limit",
+          "status": "pass",
+          "expected": "all secrets rotated within 90d",
+          "observed": "0 overdue",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SVC-EIS",
+      "theme": "SVC",
+      "name": "Evaluating and Improving Security",
+      "optional_at_class": false,
+      "controls": [
+        "ca-7.4",
+        "cm-12.1",
+        "cm-5.5",
+        "cm-7.1",
+        "ir-9.4",
+        "pl-8",
+        "ra-3",
+        "sc-39",
+        "sc-7",
+        "si-2.2",
+        "si-4",
+        "sr-10"
+      ],
+      "status": "fail",
+      "coverage_gap": null,
+      "coverage_note": "Official statement requires improvements to be made; methods check that open items are not stale, not that each improvement was effective.",
+      "methods": [
+        {
+          "method_id": "sei-iac-improvement-process",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "A quarterly improvement review with a 90 day item limit is defined",
+          "status": "pass",
+          "expected": "quarterly, <= 90d items",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "sei-live-improvement-flow",
+          "kind": "live",
+          "source": "environment/live-state.json#security_improvements",
+          "description": "Improvements are being closed and none is older than 90 days",
+          "status": "fail",
+          "expected": ">= 1 closed, 0 over 90d",
+          "observed": "1 finding(s)",
+          "findings": [
+            "IMP-27 has been open 118 days"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "KSI-SVC-PRR",
+      "theme": "SVC",
+      "name": "Preventing Residual Risk",
+      "optional_at_class": false,
+      "controls": [
+        "ac-19",
+        "ir-9.4",
+        "sc-12.1",
+        "sc-4",
+        "sc-7.18"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers plans, procedures and state; methods check state only.",
+      "methods": [
+        {
+          "method_id": "prr-iac-cleanup-step",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Changes end with a cleanup step and access sessions are logged",
+          "status": "pass",
+          "expected": "cleanup step, session logging",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "prr-live-residual-elements",
+          "kind": "live",
+          "source": "environment/live-state.json#residual",
+          "description": "No unused roles, orphaned volumes, old task definitions or stale records remain",
+          "status": "pass",
+          "expected": "0 residual elements",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SVC-RUD",
+      "theme": "SVC",
+      "name": "Removing Unwanted Data",
+      "optional_at_class": false,
+      "controls": [
+        "ir-9",
+        "si-12.3",
+        "si-18.4",
+        "si-8",
+        "si-8.2"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement depends on customer agreements; methods check the 30 day target the demo author chose, not each agreement.",
+      "methods": [
+        {
+          "method_id": "rud-iac-removal-process",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "A removal process with a 30 day target covers backups and leaves an audit trail",
+          "status": "pass",
+          "expected": "<= 30d, backups, audit trail",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "rud-live-removal-requests",
+          "kind": "live",
+          "source": "environment/live-state.json#data_removal_requests",
+          "description": "Every removal request finished within 30 days, including backups",
+          "status": "pass",
+          "expected": "all <= 30d",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SVC-SIN",
+      "theme": "SVC",
+      "name": "Securing Information",
+      "optional_at_class": false,
+      "controls": [
+        "ac-11",
+        "ac-11.1",
+        "ac-17.2",
+        "ac-19.5",
+        "ac-21",
+        "cp-9.8",
+        "ir-9.4",
+        "sc-13",
+        "sc-20",
+        "sc-21",
+        "sc-22",
+        "sc-23",
+        "sc-28",
+        "sc-28.1",
+        "sc-4",
+        "sc-7.18",
+        "sc-8",
+        "sc-8.1",
+        "si-4.18"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement also covers securing information from unwanted modification; methods check encryption at rest only.",
+      "methods": [
+        {
+          "method_id": "sin-iac-encryption",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "All declared storage resources are encrypted at rest",
+          "status": "pass",
+          "expected": "0 unencrypted resources",
+          "observed": "0 unencrypted",
+          "findings": []
+        },
+        {
+          "method_id": "sin-live-encryption",
+          "kind": "live",
+          "source": "environment/live-state.json",
+          "description": "All live storage resources are encrypted at rest",
+          "status": "pass",
+          "expected": "0 unencrypted resources",
+          "observed": "0 unencrypted",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SVC-VCM",
+      "theme": "SVC",
+      "name": "Validating Communications",
+      "optional_at_class": false,
+      "controls": [
+        "ac-10",
+        "ac-17.4",
+        "ac-18",
+        "ac-19",
+        "sc-23",
+        "si-4.22",
+        "si-7.1"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Observed TLS version and certificate validity are checked for every data flow in the scope record, but not mutual authentication or workload identity between machine-based resources.",
+      "methods": [
+        {
+          "method_id": "vcm-iac-tls-policy",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Declared listeners enforce HTTPS with a modern TLS policy",
+          "status": "pass",
+          "expected": "HTTPS + TLS1.2+ policy",
+          "observed": "0 weak listener(s)",
+          "findings": []
+        },
+        {
+          "method_id": "vcm-live-tls-scan",
+          "kind": "live",
+          "source": "environment/live-state.json#tls_scan,flow_tls",
+          "description": "Public endpoints and every data flow in the scope record use TLS 1.2+ with valid certificates and no weak ciphers",
+          "status": "pass",
+          "expected": "TLS1.2+, valid certificates, 0 weak ciphers",
+          "observed": "3 endpoint(s), 31 flow(s) checked, 0 finding(s)",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "KSI-SVC-VRI",
+      "theme": "SVC",
+      "name": "Validating Resource Integrity",
+      "optional_at_class": false,
+      "controls": [
+        "ac-17.4",
+        "ac-18",
+        "ac-19",
+        "au-9.3",
+        "cm-14",
+        "cm-2.2",
+        "cm-8.3",
+        "sc-13",
+        "sc-23",
+        "si-7",
+        "si-7.1",
+        "si-7.15",
+        "sr-10",
+        "sr-11"
+      ],
+      "status": "pass",
+      "coverage_gap": null,
+      "coverage_note": "Official statement covers all machine-based information resources; methods check container images only.",
+      "methods": [
+        {
+          "method_id": "vri-iac-signing",
+          "kind": "static",
+          "source": "environment/iac-plan.json",
+          "description": "Images are signed, verified at deploy and immutable",
+          "status": "pass",
+          "expected": "signing, verification, immutable tags",
+          "observed": "0 finding(s)",
+          "findings": []
+        },
+        {
+          "method_id": "vri-live-image-integrity",
+          "kind": "live",
+          "source": "environment/live-state.json#image_integrity",
+          "description": "Every running image is signed and digest-verified",
+          "status": "pass",
+          "expected": "100% signed and verified",
+          "observed": "0 finding(s)",
+          "findings": []
+        }
+      ]
+    }
+  ]
+}

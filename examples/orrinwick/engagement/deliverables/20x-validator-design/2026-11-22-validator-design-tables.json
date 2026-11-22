@@ -1,0 +1,177 @@
+{
+  "title": "Validator designs: KSI-INR-RPI and KSI-INR-AAR",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C (CR26)",
+  "frmr_version": "2026.11.02.01",
+  "date": "2026-11-22",
+  "sme_validation": "Draft: pending SME validation",
+  "sheets": [
+    {
+      "name": "Methods",
+      "columns": [
+        "KSI",
+        "Method",
+        "Kind",
+        "Reads",
+        "Passes when",
+        "Break test",
+        "Expected message",
+        "Break test status",
+        "Design status"
+      ],
+      "rows": [
+        [
+          "KSI-INR-RPI",
+          "inr-rpi-static",
+          "static",
+          "POL-INR INR-4 and the past incident review row in plan section 9",
+          "a POL-INR requirement lists KSI-INR-RPI, it states a cycle of 92 days or less, it names one owner role, and the plan names the record location",
+          "Remove the cycle from INR-4 in a copy of the policy.",
+          "POL-INR INR-4 states no review cycle for KSI-INR-RPI",
+          "Planned",
+          "Designed"
+        ],
+        [
+          "KSI-INR-RPI",
+          "inr-rpi-live",
+          "live",
+          "incident_pattern_reviews and incidents in the GRC records export, measured against the run date",
+          "the newest review is no older than the cycle, is not dated after the run date, was recorded by the owner role, lists the incidents it covered, includes every incident and near miss opened since the previous review, and has a findings summary",
+          "Add an incident opened after the newest review's start date and leave it out of incidents_covered.",
+          "Past incident review dated <date> does not cover INC-<id> opened <date>",
+          "Planned",
+          "Designed"
+        ],
+        [
+          "KSI-INR-AAR",
+          "inr-aar-static",
+          "static",
+          "POL-INR INR-2 and plan section 8",
+          "a POL-INR requirement lists KSI-INR-AAR, sets the reports' scope (reportable incidents and N2 or above) and a 10 business day deadline, and the plan requires each lesson to carry a ticket or change reference",
+          "Remove the 10 business day deadline from INR-2 in a copy of the policy.",
+          "POL-INR INR-2 sets no deadline for after action reports",
+          "Planned",
+          "Designed"
+        ],
+        [
+          "KSI-INR-AAR",
+          "inr-aar-reports",
+          "live",
+          "incidents in the GRC records export (pain_rating, reportable, closed, aar_completed), measured against the run date",
+          "every closed incident that is reportable or rated N2 or above has aar_completed within 10 business days of closed. A reportable incident with no rating is treated as N5. A report not yet due is a due-by note",
+          "Add a closed reportable incident with no rating and no aar_completed, and set the run date 11 business days after it closed.",
+          "INC-<id> (reportable, unrated, treated as N5) has no after action report 11 business days after closing",
+          "Planned",
+          "Designed"
+        ],
+        [
+          "KSI-INR-AAR",
+          "inr-aar-lessons",
+          "live",
+          "the lessons recorded for each completed report, with their ticket or change reference and status",
+          "every lesson in a completed report has a ticket or change reference, and every open lesson has an owner and a due date that has not passed",
+          "Add a lesson with no ticket reference to a completed report.",
+          "Lesson <n> in the report for INC-<id> has no ticket or change reference",
+          "Planned",
+          "Designed"
+        ]
+      ]
+    },
+    {
+      "name": "Designs",
+      "columns": [
+        "KSI",
+        "Name",
+        "Policy requirement",
+        "Resource type",
+        "Cadence",
+        "Fails when",
+        "Production source",
+        "Gap",
+        "Status"
+      ],
+      "rows": [
+        [
+          "KSI-INR-RPI",
+          "Reviewing Past Incidents",
+          "POL-INR / INR-4; incident response plan section 9 (past incident review)",
+          "Non-machine: the quarterly past incident review and its record",
+          "Every validation run. VDR-TFR-NMV sets a minimum of every 3 months for the check; the review's own cycle comes from INR-4 and the plan",
+          "No POL-INR requirement lists KSI-INR-RPI. The cycle is missing or longer than 92 days. No owner role is named, or the owner is a group with no lead. No review is recorded, or the newest review is dated after the run date or is older than the cycle. The review was recorded by a role other than the owner. The review does not list the incidents it covered, or misses an incident or near miss opened since the previous review. The review has no findings summary.",
+          "The incident tracker named in plan section 10, for incidents and near misses by opened date. The review record in incident_pattern_reviews. The tracker's product and API are not named in the material: [source: client to confirm]",
+          "The methods prove that a review happened on time, by the owner, and covered every incident. They do not prove that the review found the patterns that exist, or that its findings led to action. Near misses are covered only if they are recorded in the incident tracker.",
+          "Designed"
+        ],
+        [
+          "KSI-INR-AAR",
+          "Generating After Action Reports",
+          "POL-INR / INR-2; incident response plan section 8",
+          "Non-machine: after action reports and the lessons they record",
+          "Every validation run. VDR-TFR-NMV sets a minimum of every 3 months for the check",
+          "No POL-INR requirement lists KSI-INR-AAR, or it sets no scope or no deadline. The plan does not require a ticket or change reference for each lesson. A closed incident that needs a report has none 10 business days after closing, or the report is dated after the run date. A reportable incident with no rating is not treated as N5. A lesson has no ticket or change reference. An open lesson has no owner, no due date, or a due date before the run date.",
+          "The incident tracker named in plan section 10, where after action reports are linked from the incident record, and the backlog that holds the lesson tickets. Neither tool is named in the material: [source: client to confirm]",
+          "The methods prove that reports exist on time and that each lesson has a tracked ticket. They do not prove that a report found the right root cause, or that a closed ticket changed what it should have. The record field lessons_incorporated is a single value and cannot show each lesson, so inr-aar-lessons needs a lessons list (DQ-003).",
+          "Designed"
+        ]
+      ]
+    },
+    {
+      "name": "Questions",
+      "columns": [
+        "ID",
+        "Type",
+        "Question",
+        "Detail",
+        "Recommendation or blocks",
+        "Answer"
+      ],
+      "rows": [
+        [
+          "DQ-001",
+          "Decision",
+          "Which cycle applies to the past incident review: every quarter (INR-4) or at least every 90 days (plan section 9)?",
+          "90 days, and change INR-4 to match; One calendar quarter, and change the plan to match; Keep both and check against 92 days",
+          "90 days, and change INR-4 to match",
+          "open"
+        ],
+        [
+          "DQ-002",
+          "Decision",
+          "Which role must record the past incident review?",
+          "Security Operations Lead (plan section 9); CISO; Another role the client names",
+          "Security Operations Lead (plan section 9)",
+          "open"
+        ],
+        [
+          "DQ-003",
+          "Decision",
+          "Will the client add fields to the records: reviewed_by, incidents_covered and findings on each past incident review, and a lessons list (reference, owner, due date, status) on each incident?",
+          "Yes, add the fields; No: design against the fields that exist and record the gap",
+          "Yes, add the fields",
+          "open"
+        ],
+        [
+          "Q-001",
+          "Open question",
+          "Which product is the incident tracker, and can it export incidents, near misses and linked after action reports with their dates?",
+          "Both designs read it in production. The plan names it only as the incident tracker",
+          [
+            "V-001",
+            "V-002"
+          ],
+          "open"
+        ],
+        [
+          "Q-002",
+          "Open question",
+          "Are near misses recorded in the incident tracker, or somewhere else?",
+          "INR-4 and the plan include near misses. The live method can only check what is recorded",
+          [
+            "V-001"
+          ],
+          "open"
+        ]
+      ]
+    }
+  ]
+}

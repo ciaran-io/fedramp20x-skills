@@ -1,0 +1,2175 @@
+{
+  "_notice": "FICTIONAL. Orrinwick Labs, Inc. and every resource here are invented for a learning project. Project-defined structure, not an official FedRAMP schema.",
+  "record_version": "0.1.0",
+  "frmr_version": "2026.11.02.01",
+  "status": "draft",
+  "cso": {
+    "name": "Orrinwick Beacon",
+    "provider": "Orrinwick Labs, Inc.",
+    "target_class": "c",
+    "description": "Multi-tenant SaaS that receives security-relevant alerts from agency tools, routes them to on-call responders and keeps an audit trail.",
+    "overview_doc": "docs/company-and-offering.md"
+  },
+  "trust_zones": [
+    {
+      "id": "Z-AGENCY",
+      "name": "Agency (customer-managed)",
+      "in_cso": false,
+      "description": "Systems, people and devices owned and operated by the federal agency customer. Outside the cloud service offering."
+    },
+    {
+      "id": "Z-PROD",
+      "name": "Orrinwick production",
+      "in_cso": true,
+      "description": "Production cloud environment that runs Orrinwick Beacon and stores federal customer data."
+    },
+    {
+      "id": "Z-ENG",
+      "name": "Engineering and operations",
+      "in_cso": true,
+      "description": "Tooling and endpoints that build, deploy, administer, monitor and secure production."
+    },
+    {
+      "id": "Z-ORG",
+      "name": "Orrinwick people and processes",
+      "in_cso": true,
+      "description": "Non-machine-based information resources: staff roles, policies and procedures that operate and govern the offering."
+    },
+    {
+      "id": "Z-3P",
+      "name": "Third parties",
+      "in_cso": false,
+      "description": "External providers outside the assessed boundary. Those in the data path are documented as third-party information resources."
+    },
+    {
+      "id": "Z-CORP",
+      "name": "Orrinwick corporate and non-production",
+      "in_cso": false,
+      "description": "Corporate IT, business systems, staging and personal devices, kept outside the offering by stated conditions."
+    }
+  ],
+  "external_entities": [
+    {
+      "id": "X1",
+      "name": "Agency responders and administrators",
+      "zone": "Z-AGENCY",
+      "description": "Agency staff using the web console or mobile app to receive alerts and manage tenant settings."
+    },
+    {
+      "id": "X2",
+      "name": "Agency integration tools",
+      "zone": "Z-AGENCY",
+      "description": "Scanners, ticketing, vulnerability disclosure and SIEM or EDR tools that send alerts to Beacon and receive status callbacks."
+    },
+    {
+      "id": "X3",
+      "name": "Agency identity provider",
+      "zone": "Z-AGENCY",
+      "description": "The agency's single sign-on system that authenticates its users to Beacon."
+    },
+    {
+      "id": "X4",
+      "name": "Responder mobile devices",
+      "zone": "Z-AGENCY",
+      "description": "Agency-managed phones running the Beacon app and receiving push notifications."
+    },
+    {
+      "id": "X5",
+      "name": "Carrier and mobile networks",
+      "zone": "Z-AGENCY",
+      "description": "Telephone and mobile networks that carry SMS and voice nudges to responders. Neither Orrinwick nor its providers control them."
+    }
+  ],
+  "data_classes": [
+    {
+      "id": "D1",
+      "name": "Responder contact data",
+      "description": "Names, work email, work and optional personal mobile numbers, notification preferences, device push tokens.",
+      "federal_customer_data": "yes",
+      "fcd_basis": "Supplied by the agency or its users to Beacon for notification delivery. Login account details are separate (D6).",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Exposure of personal numbers and security-role holders enables targeting; wrong numbers misdirect pages; loss stops delivery."
+    },
+    {
+      "id": "D2",
+      "name": "Schedules and routing policy",
+      "description": "On-call rotations, overrides, escalation chains and routing rules.",
+      "federal_customer_data": "yes",
+      "fcd_basis": "Configuration content supplied by the agency for processing. Judgment call, see OQ7.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Reveals coverage gaps; tampering silently diverts or drops critical alerts; loss stops escalation. Integrity weighting reviewed in OQ6."
+    },
+    {
+      "id": "D3",
+      "name": "Alert metadata",
+      "description": "Alert ID, timestamp, severity, category, source tool, target team and source link supplied by the agency's tool.",
+      "federal_customer_data": "yes",
+      "fcd_basis": "Supplied by agency integrations as part of each alert. Service-generated attributes about it are covered under metadata (MD2).",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Shows when and how often an agency detects problems; forged metadata can hide or fabricate incidents; loss delays triage."
+    },
+    {
+      "id": "D4",
+      "name": "Alert summaries",
+      "description": "Short title and description carried in standard payload mode.",
+      "federal_customer_data": "yes",
+      "fcd_basis": "Free-text content supplied by agency tools and users.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "Can describe weaknesses or incidents in agency systems; altered text misdirects responders; responders can fall back to the source link."
+    },
+    {
+      "id": "D5",
+      "name": "Response and audit trail",
+      "description": "Delivery attempts, acknowledgements, reassignments, annotations and administrative changes.",
+      "federal_customer_data": "mixed",
+      "fcd_basis": "User annotations are supplied content (federal customer data). System-generated events are service metadata, excluded from the definition but included in scope under MAS-CSO-MDI.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "Shows response timelines and gaps; tampering undermines audit evidence; short loss harms evidence but not live response."
+    },
+    {
+      "id": "D6",
+      "name": "Tenant and identity data",
+      "description": "Tenant configuration, user accounts, roles, SSO mappings and session records.",
+      "federal_customer_data": "no",
+      "fcd_basis": "Account information, excluded from the federal customer data definition. Included in scope as metadata and under the impact test.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Enables account takeover and impersonation; role changes grant cross-tenant access; loss prevents sign-in to acknowledge alerts."
+    },
+    {
+      "id": "D7",
+      "name": "Integration credentials",
+      "description": "Agency-supplied OAuth tokens and callback URLs, plus Beacon-issued API keys and webhook signing secrets.",
+      "federal_customer_data": "mixed",
+      "fcd_basis": "Agency-supplied tokens are federal customer data. Beacon-issued keys and secrets are service-generated but control who can send or read alerts.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Theft lets an attacker forge or suppress alerts; replaced keys hijack an integration; loss stops alert intake."
+    },
+    {
+      "id": "D8",
+      "name": "Support-derived data",
+      "description": "Screenshots, pasted alert text, tickets and call notes created by Orrinwick support staff.",
+      "federal_customer_data": "mixed",
+      "fcd_basis": "Federal customer data to the extent agency content was pasted or attached; otherwise company data.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Low",
+        "availability": "Low"
+      },
+      "category_rationale": "Same exposure as whatever was pasted but in weaker-controlled tools; little direct integrity or availability impact."
+    },
+    {
+      "id": "D9",
+      "name": "Operational telemetry",
+      "description": "Application logs, traces, error reports and usage metrics generated by the service.",
+      "federal_customer_data": "no",
+      "fcd_basis": "Telemetry generated by the provider, excluded from the definition. Included in scope as metadata (MD3) and because it can leak D1 to D4.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "Leaks D1 to D4 if not scrubbed; altered logs weaken forensics; loss delays detection of platform problems."
+    },
+    {
+      "id": "D10",
+      "name": "Backups and exports",
+      "description": "Database snapshots, storage versions and customer-requested audit exports.",
+      "federal_customer_data": "yes",
+      "fcd_basis": "Copies of federal customer data (D1 to D5, D7) in another location, often with longer life.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Same as source data; backups outlive deletions; corrupted backups defeat recovery; loss prevents recovery from an outage or attack."
+    }
+  ],
+  "information_resources": [
+    {
+      "id": "P1",
+      "name": "Production cloud accounts and network",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Cloud accounts, virtual networks and identity and access policy that host every production resource.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Foundation for all production resources; a misconfiguration affects all three properties.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Holds no federal data itself, but isolation and access paths to every resource depend on it.",
+      "impact_on_fcd": "Controls network isolation and administrative access to every store of federal customer data."
+    },
+    {
+      "id": "P2",
+      "name": "Application compute (API, routing engine, notification workers, web console)",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Containerized services that receive alerts, apply routing and escalation, send notifications and serve the console.",
+      "decision": "in_scope",
+      "handles": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D9"
+      ],
+      "rationale": "Directly handles federal customer data in memory and in transit."
+    },
+    {
+      "id": "P3",
+      "name": "Managed relational database",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "System of record for tenants, users, schedules, policies, alerts and the audit trail.",
+      "decision": "in_scope",
+      "handles": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D10"
+      ],
+      "rationale": "Stores federal customer data at rest, including snapshots managed by the database service."
+    },
+    {
+      "id": "P4",
+      "name": "Object storage",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Customer audit exports and backup copies in the primary region.",
+      "decision": "in_scope",
+      "handles": [
+        "D5",
+        "D10"
+      ],
+      "rationale": "Holds federal customer data at rest; misconfiguration exposes exports and backups."
+    },
+    {
+      "id": "P5",
+      "name": "Key management service",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Encryption keys for the database, storage and backups, including a separate key in the recovery region for P12.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Protects all stored federal data; key loss or misuse breaks confidentiality and, if keys are lost, availability.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Holds no federal data but gates access to all encrypted data.",
+      "impact_on_fcd": "Compromise or loss exposes or destroys access to every encrypted store."
+    },
+    {
+      "id": "P6",
+      "name": "Secrets management service",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Stores integration signing secrets and service credentials.",
+      "decision": "in_scope",
+      "handles": [
+        "D7"
+      ],
+      "rationale": "Holds integration credentials directly."
+    },
+    {
+      "id": "P7",
+      "name": "Message queue and job scheduler",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Carries alerts to the routing engine and notification jobs.",
+      "decision": "in_scope",
+      "handles": [
+        "D3",
+        "D4"
+      ],
+      "rationale": "Handles alert content in transit and drives alert delivery availability."
+    },
+    {
+      "id": "P8",
+      "name": "Load balancer, API gateway and web application firewall",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Public entry point for console, app API and integration webhooks.",
+      "decision": "in_scope",
+      "handles": [
+        "D1",
+        "D3",
+        "D4",
+        "D6",
+        "D7"
+      ],
+      "rationale": "Terminates all customer traffic and sees data in transit."
+    },
+    {
+      "id": "P9",
+      "name": "DNS and certificate management",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Service names and TLS certificates.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Compromise enables interception or redirection of all traffic.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Holds no federal data, but controls where traffic goes and whether it can be trusted.",
+      "impact_on_fcd": "Can undermine integrity and confidentiality of all traffic and availability of the service."
+    },
+    {
+      "id": "P10",
+      "name": "Push registration and device token service",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Registers responder devices and maps users to push tokens.",
+      "decision": "in_scope",
+      "handles": [
+        "D1",
+        "D3"
+      ],
+      "rationale": "Handles device tokens and references to alerts. The mobile app itself is outside scope (SUP1); this backend is in."
+    },
+    {
+      "id": "P11",
+      "name": "Container registry and artifact store",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Holds deployable images and libraries.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Tampered artifacts change what runs in production.",
+      "security_category": {
+        "confidentiality": "Low",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "No federal data is stored, but integrity of deployed code governs integrity of everything.",
+      "impact_on_fcd": "Tampered images give an attacker code execution where federal data is processed."
+    },
+    {
+      "id": "P12",
+      "name": "Cross-region backup replica storage (us-west-2)",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "Receives encrypted replicas of database backups and object storage backups so the service can be rebuilt in the recovery region. No application runs here.",
+      "decision": "in_scope",
+      "handles": [
+        "D10"
+      ],
+      "rationale": "Holds a full copy of federal customer data at rest (backups). It is the only standing resource in the recovery region; a recovery environment is built on demand from infrastructure code (OQ9)."
+    },
+    {
+      "id": "P13",
+      "name": "Recovery environment (built on demand in us-west-2)",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-PROD",
+      "purpose": "The offering rebuilt from infrastructure code in the recovery region, restored from the copied recovery points. It does not run until a recovery or a restore test starts it.",
+      "decision": "in_scope",
+      "handles": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D10"
+      ],
+      "rationale": "Once running it is the production service and holds production data. It uses the same modules and controls as production (OQ9), so it stays in the boundary even while it is not deployed."
+    },
+    {
+      "id": "E1",
+      "name": "Source control (hosted)",
+      "kind": "machine_based",
+      "group": "Third parties",
+      "zone": "Z-3P",
+      "purpose": "Application and infrastructure code.",
+      "decision": "third_party",
+      "handles": [],
+      "rationale": "Code changes alter production behavior. Hosted by another company; documented as TPR-E1."
+    },
+    {
+      "id": "E2",
+      "name": "CI/CD pipeline",
+      "kind": "machine_based",
+      "group": "Engineering and operations",
+      "zone": "Z-ENG",
+      "purpose": "Builds, tests and deploys the service.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Direct integrity control over production and holds deploy credentials.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "Deploy credentials can reach production; pipeline compromise changes deployed code.",
+      "impact_on_fcd": "Can push arbitrary code to the systems that process federal data."
+    },
+    {
+      "id": "E3",
+      "name": "Infrastructure as code state and runners",
+      "kind": "machine_based",
+      "group": "Engineering and operations",
+      "zone": "Z-ENG",
+      "purpose": "Defines and applies production infrastructure.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Can alter or destroy production infrastructure; state may contain secrets.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "State files can hold secrets; applying changes alters production.",
+      "impact_on_fcd": "Can open network paths or disable encryption."
+    },
+    {
+      "id": "E4",
+      "name": "Production logging, monitoring and alerting stack",
+      "kind": "machine_based",
+      "group": "Engineering and operations",
+      "zone": "Z-ENG",
+      "purpose": "Platform health, security events and audit logs of operator actions.",
+      "decision": "in_scope",
+      "handles": [
+        "D9"
+      ],
+      "rationale": "Handles operational telemetry that references tenants, supports detection of attacks, and could receive leaked D1 to D4 if scrubbing fails.",
+      "may_hold": [
+        "D1",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "id": "E5",
+      "name": "Vulnerability scanning and dependency analysis",
+      "kind": "machine_based",
+      "group": "Engineering and operations",
+      "zone": "Z-ENG",
+      "purpose": "Finds flaws in code, images and infrastructure.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Tampering could hide real vulnerabilities.",
+      "security_category": {
+        "confidentiality": "Low",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "No federal data; integrity of vulnerability detection matters.",
+      "impact_on_fcd": "Hidden vulnerabilities remain exploitable in production."
+    },
+    {
+      "id": "E6",
+      "name": "Privileged access management and production access gateway",
+      "kind": "machine_based",
+      "group": "Engineering and operations",
+      "zone": "Z-ENG",
+      "purpose": "Brokered, recorded administrator access to production.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Sole route for humans into production; session recordings may capture federal data.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Gates operator access to every category; recordings can contain data seen in sessions.",
+      "may_hold": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "impact_on_fcd": "Compromise grants administrative access to production."
+    },
+    {
+      "id": "E7",
+      "name": "Workforce identity provider (SSO and MFA)",
+      "kind": "machine_based",
+      "group": "Third parties",
+      "zone": "Z-3P",
+      "purpose": "Authenticates Orrinwick staff.",
+      "decision": "third_party",
+      "handles": [],
+      "rationale": "Compromise grants access to production tooling. Hosted by another company; documented as TPR-E7."
+    },
+    {
+      "id": "E8",
+      "name": "Managed administrative endpoints",
+      "kind": "machine_based",
+      "group": "Engineering and operations",
+      "zone": "Z-ENG",
+      "purpose": "Company-managed laptops used to administer production or to handle customer data.",
+      "decision": "in_scope",
+      "handles": [
+        "D8"
+      ],
+      "rationale": "Any device that can reach production or customer data is in scope; holds admin sessions and cached credentials.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "Support staff view tickets and notes (D8) on these devices. D8 holds no federal customer data while the S1 intake and redaction conditions hold. A compromised endpoint also holds privileged sessions.",
+      "impact_on_fcd": "Compromise hands an attacker an operator's access."
+    },
+    {
+      "id": "E9",
+      "name": "Endpoint detection and response and device management",
+      "kind": "machine_based",
+      "group": "Third parties",
+      "zone": "Z-3P",
+      "purpose": "Protects and manages in-scope endpoints.",
+      "decision": "third_party",
+      "handles": [],
+      "rationale": "Control plane for in-scope endpoints; disabling it removes protection. Hosted by another company; documented as TPR-E9."
+    },
+    {
+      "id": "E10",
+      "name": "Staging and development environments",
+      "kind": "machine_based",
+      "group": "Engineering and operations",
+      "zone": "Z-CORP",
+      "purpose": "Pre-production testing.",
+      "decision": "out_conditional",
+      "handles": [],
+      "rationale": "Out only while it holds synthetic data and has no production network path or shared credentials.",
+      "may_hold": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "conditions": [
+        {
+          "id": "COND-E10-1",
+          "text": "Staging runs in separate cloud accounts with no network path or shared credentials to production.",
+          "evidence": "Account and network configuration checks; credential-sharing scan."
+        },
+        {
+          "id": "COND-E10-2",
+          "text": "Production data, snapshots and backups are never restored or copied into staging.",
+          "evidence": "Snapshot sharing deny policy and restore-event audit."
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "name": "Personal and non-administrative devices",
+      "kind": "machine_based",
+      "group": "Engineering and operations",
+      "zone": "Z-CORP",
+      "purpose": "Devices that cannot reach production or customer data.",
+      "decision": "out_conditional",
+      "handles": [],
+      "rationale": "Out only while device posture enforcement keeps them off production and customer data paths.",
+      "may_hold": [
+        "D8"
+      ],
+      "conditions": [
+        {
+          "id": "COND-E11-1",
+          "text": "Only company-managed devices passing posture checks can use the production access gateway (E6).",
+          "evidence": "Gateway device posture policy and denied-access logs."
+        }
+      ]
+    },
+    {
+      "id": "S1",
+      "name": "Customer support ticketing",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Customer issues and communications.",
+      "decision": "out_conditional",
+      "handles": [],
+      "rationale": "Out only if tooling and policy prevent customer data being attached or pasted.",
+      "may_hold": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D8"
+      ],
+      "conditions": [
+        {
+          "id": "COND-S1-1",
+          "text": "Structured intake rejects attachments and free-text alert content; redaction is applied to inbound text.",
+          "evidence": "Intake configuration test with sample payloads."
+        },
+        {
+          "id": "COND-S1-2",
+          "text": "Support staff are trained and attest that tickets carry no customer alert content.",
+          "evidence": "Training records and quarterly ticket sampling."
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "name": "Corporate email",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Company mail.",
+      "decision": "out_conditional",
+      "handles": [],
+      "rationale": "Out only while data loss prevention blocks customer content.",
+      "may_hold": [
+        "D8"
+      ],
+      "conditions": [
+        {
+          "id": "COND-S2-1",
+          "text": "Data loss prevention rules block alert content, contact lists and credentials in outbound and internal mail.",
+          "evidence": "DLP rule export and test messages."
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "name": "Corporate chat",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Internal messaging.",
+      "decision": "out_conditional",
+      "handles": [],
+      "rationale": "Out only while policy and controls keep customer content out of chat.",
+      "may_hold": [
+        "D8"
+      ],
+      "conditions": [
+        {
+          "id": "COND-S3-1",
+          "text": "Chat retention and DLP detect and remove customer content; policy prohibits sharing it.",
+          "evidence": "DLP configuration and sampled search results."
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "name": "Support impersonation tooling",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-PROD",
+      "purpose": "Lets approved support staff view a tenant's console to resolve issues.",
+      "decision": "in_scope",
+      "handles": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "rationale": "Handles federal customer data by design."
+    },
+    {
+      "id": "C1",
+      "name": "Marketing website and analytics",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Public website.",
+      "decision": "out_of_scope",
+      "handles": [],
+      "rationale": "No path to production or customer data; hosted separately with no shared accounts."
+    },
+    {
+      "id": "C2",
+      "name": "Sales CRM",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Prospects and contracts.",
+      "decision": "out_of_scope",
+      "handles": [],
+      "rationale": "Holds prospect business contacts, which are not federal customer data processed by the offering."
+    },
+    {
+      "id": "C3",
+      "name": "HR and payroll",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Employee records.",
+      "decision": "out_of_scope",
+      "handles": [],
+      "rationale": "Employee records only; not federal customer data and no effect on it. The personnel security process is in scope as N5."
+    },
+    {
+      "id": "C4",
+      "name": "Finance and billing",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Invoicing and usage-based billing.",
+      "decision": "out_conditional",
+      "handles": [],
+      "rationale": "Receives per-tenant usage counts, which is metadata about federal customer data; out only while it is aggregate-only.",
+      "may_hold": [
+        "D3"
+      ],
+      "conditions": [
+        {
+          "id": "COND-C4-1",
+          "text": "Only aggregate monthly counts per tenant leave the platform; no alert, user or content detail is exported.",
+          "evidence": "Billing export schema check and sample review."
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "name": "Internal wiki and documentation",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Runbooks and design documents.",
+      "decision": "out_conditional",
+      "handles": [],
+      "rationale": "Out only while it holds no secrets or customer data.",
+      "may_hold": [
+        "D7",
+        "D8"
+      ],
+      "conditions": [
+        {
+          "id": "COND-C5-1",
+          "text": "Secret scanning and policy keep credentials and customer data out of the wiki; access limited to staff.",
+          "evidence": "Secret scan results and access list."
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "name": "Corporate network and office IT",
+      "kind": "machine_based",
+      "group": "Support and corporate IT",
+      "zone": "Z-CORP",
+      "purpose": "Office connectivity.",
+      "decision": "out_of_scope",
+      "handles": [],
+      "rationale": "Staff reach production only through the access gateway (E6); the office network is untrusted by design."
+    },
+    {
+      "id": "T1",
+      "name": "Mobile push notification service",
+      "kind": "machine_based",
+      "group": "Third parties",
+      "zone": "Z-3P",
+      "purpose": "Delivers push messages to responder phones.",
+      "decision": "third_party",
+      "handles": [
+        "D1",
+        "D3"
+      ],
+      "rationale": "In the delivery path; sees device tokens and message references. Documented as TPR-T1."
+    },
+    {
+      "id": "T2",
+      "name": "Transactional email delivery service",
+      "kind": "machine_based",
+      "group": "Third parties",
+      "zone": "Z-3P",
+      "purpose": "Sends email notifications.",
+      "decision": "third_party",
+      "handles": [
+        "D1",
+        "D3"
+      ],
+      "rationale": "In the delivery path; sees recipient addresses and references. Documented as TPR-T2."
+    },
+    {
+      "id": "T3",
+      "name": "Telephony provider (SMS and voice)",
+      "kind": "machine_based",
+      "group": "Third parties",
+      "zone": "Z-3P",
+      "purpose": "Sends content-free SMS and voice nudges.",
+      "decision": "third_party",
+      "handles": [
+        "D1",
+        "D3"
+      ],
+      "rationale": "Handles personal phone numbers and the fact that a page occurred. Documented as TPR-T3."
+    },
+    {
+      "id": "T4",
+      "name": "Application performance and error tracking service",
+      "kind": "machine_based",
+      "group": "Third parties",
+      "zone": "Z-3P",
+      "purpose": "Captures errors and traces.",
+      "decision": "out_conditional",
+      "handles": [],
+      "rationale": "Out only if no tenant, user or alert identifiers or content leave the platform; otherwise it holds metadata about federal data (MAS-CSO-MDI) and becomes a third-party resource.",
+      "may_hold": [
+        "D1",
+        "D3",
+        "D4",
+        "D9"
+      ],
+      "conditions": [
+        {
+          "id": "COND-T4-1",
+          "text": "Scrubbing removes tenant, user and alert identifiers and all D1 to D4 content before any telemetry leaves the platform.",
+          "evidence": "Automated outbound payload test in the pipeline."
+        }
+      ]
+    },
+    {
+      "id": "T5",
+      "name": "Cloud infrastructure provider",
+      "kind": "machine_based",
+      "group": "Third parties",
+      "zone": "Z-3P",
+      "purpose": "Underlies production service resources.",
+      "decision": "third_party",
+      "handles": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D10"
+      ],
+      "rationale": "Hosts every production resource; documented as TPR-T5 with inherited controls recorded separately."
+    },
+    {
+      "id": "N1",
+      "name": "Engineering staff with production access",
+      "kind": "non_machine_based",
+      "group": "People and processes",
+      "zone": "Z-ORG",
+      "purpose": "Engineers who build, deploy and administer the service.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Their actions and access can change or expose federal data.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "People with privileged access; the rating follows the privileges they hold.",
+      "impact_on_fcd": "Insider or compromised engineer can read, alter or destroy federal customer data.",
+      "performed_via": [
+        "E6",
+        "E7",
+        "E8"
+      ]
+    },
+    {
+      "id": "N2",
+      "name": "Customer support staff with tenant access",
+      "kind": "non_machine_based",
+      "group": "People and processes",
+      "zone": "Z-ORG",
+      "purpose": "Support engineers who use impersonation tooling.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Can view tenant data through S4.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "Read-focused access to tenant data with approval; limited destructive ability.",
+      "impact_on_fcd": "Can view or disclose tenant data.",
+      "performed_via": [
+        "S4",
+        "E7",
+        "E8"
+      ]
+    },
+    {
+      "id": "N3",
+      "name": "Security and compliance team",
+      "kind": "non_machine_based",
+      "group": "People and processes",
+      "zone": "Z-ORG",
+      "purpose": "Runs vulnerability management, monitoring, incident response and compliance.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Their processes detect and respond to threats against federal data.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Failure to detect or respond affects all three properties.",
+      "impact_on_fcd": "Missed detection or response lets incidents persist.",
+      "performed_via": [
+        "E4",
+        "E5"
+      ]
+    },
+    {
+      "id": "N4",
+      "name": "Security policies and procedures",
+      "kind": "non_machine_based",
+      "group": "People and processes",
+      "zone": "Z-ORG",
+      "purpose": "Access control, change management, incident response, backup and recovery, logging and related policies.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Managerial controls that govern how the offering protects federal data.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Weak or absent procedures undermine every technical control.",
+      "impact_on_fcd": "Technical controls drift or are applied inconsistently."
+    },
+    {
+      "id": "N5",
+      "name": "Personnel security process",
+      "kind": "non_machine_based",
+      "group": "People and processes",
+      "zone": "Z-ORG",
+      "purpose": "Screening, security training and offboarding.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Determines who can obtain access and when it is removed.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "Gaps allow unvetted or departed people to retain access.",
+      "impact_on_fcd": "Leads to inappropriate access to federal data."
+    },
+    {
+      "id": "N6",
+      "name": "Third-party risk management process",
+      "kind": "non_machine_based",
+      "group": "People and processes",
+      "zone": "Z-ORG",
+      "purpose": "Selecting, reviewing and monitoring providers such as T1 to T5.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Governs the third-party resources in the data path.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Low"
+      },
+      "category_rationale": "Poor vendor oversight leaves third-party exposure unmanaged.",
+      "impact_on_fcd": "Unreviewed providers may handle federal data unsafely."
+    },
+    {
+      "id": "N7",
+      "name": "Incident and on-call operations for the offering",
+      "kind": "non_machine_based",
+      "group": "People and processes",
+      "zone": "Z-ORG",
+      "purpose": "Orrinwick's own 24x7 coverage, escalation and communications.",
+      "decision": "in_scope",
+      "handles": [],
+      "rationale": "Determines how quickly incidents affecting federal data are handled.",
+      "security_category": {
+        "confidentiality": "Moderate",
+        "integrity": "Moderate",
+        "availability": "Moderate"
+      },
+      "category_rationale": "Slow or absent response extends the impact of any incident.",
+      "impact_on_fcd": "Delays containment of events that affect federal data.",
+      "performed_via": [
+        "E4"
+      ]
+    },
+    {
+      "id": "SUP1",
+      "name": "Beacon responder mobile app",
+      "kind": "machine_based",
+      "group": "Production service",
+      "zone": "Z-AGENCY",
+      "purpose": "Customer-installed app that receives push notifications and shows alerts to authenticated users.",
+      "decision": "supplement",
+      "handles": [],
+      "rationale": "Software delivered for installation on agency devices and not operated in a shared responsibility model is outside FedRAMP scope; the backend it calls (P8, P10) is in scope. See OQ2.",
+      "may_hold": [
+        "D1",
+        "D3",
+        "D4"
+      ]
+    }
+  ],
+  "information_flows": [
+    {
+      "id": "F01",
+      "name": "Alert intake",
+      "type": "data",
+      "source": "X2",
+      "destination": "P8",
+      "data_classes": [
+        "D3",
+        "D4",
+        "D7"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "API key plus HMAC-signed requests",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Agency tools post alerts to the intake API. The credential presented is D7."
+    },
+    {
+      "id": "F02",
+      "name": "Console and API sessions",
+      "type": "data",
+      "source": "X1",
+      "destination": "P8",
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Agency SSO session with MFA enforced by the agency IdP",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Responders and admins use the web console and API."
+    },
+    {
+      "id": "F03",
+      "name": "Mobile app traffic",
+      "type": "data",
+      "source": "X4",
+      "destination": "P8",
+      "data_classes": [
+        "D1",
+        "D3",
+        "D4",
+        "D6"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "App session bound to SSO identity, device registration",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "The customer-installed app calls the same API to fetch alerts and acknowledge them."
+    },
+    {
+      "id": "F04",
+      "name": "Agency SSO assertions",
+      "type": "data",
+      "source": "X3",
+      "destination": "P8",
+      "data_classes": [
+        "D6"
+      ],
+      "protocol": "HTTPS 443 (SAML or OIDC)",
+      "authentication": "Signed assertions",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "The agency IdP sends signed identity assertions at sign-in."
+    },
+    {
+      "id": "F05",
+      "name": "Gateway to application",
+      "type": "data",
+      "source": "P8",
+      "destination": "P2",
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7"
+      ],
+      "protocol": "HTTPS 8443",
+      "authentication": "Mutual TLS between gateway and services",
+      "encryption_in_transit": "TLS 1.2 or higher with mutual authentication",
+      "description": "Validated requests are forwarded to application services inside the private network."
+    },
+    {
+      "id": "F06",
+      "name": "Application to database",
+      "type": "data",
+      "source": "P2",
+      "destination": "P3",
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7"
+      ],
+      "protocol": "TLS 5432",
+      "authentication": "Cloud IAM database authentication",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Application reads and writes the system of record."
+    },
+    {
+      "id": "F07",
+      "name": "Secrets retrieval",
+      "type": "data",
+      "source": "P2",
+      "destination": "P6",
+      "data_classes": [
+        "D7"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Services fetch signing secrets and credentials at start and rotation."
+    },
+    {
+      "id": "F08",
+      "name": "Key operations (application)",
+      "type": "control",
+      "source": "P2",
+      "destination": "P5",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Envelope encryption key requests for application-level encryption."
+    },
+    {
+      "id": "F09",
+      "name": "Key operations (database)",
+      "type": "control",
+      "source": "P3",
+      "destination": "P5",
+      "data_classes": [],
+      "protocol": "Provider internal",
+      "authentication": "Service-linked identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Database encryption at rest uses managed keys."
+    },
+    {
+      "id": "F10",
+      "name": "Key operations (object storage)",
+      "type": "control",
+      "source": "P4",
+      "destination": "P5",
+      "data_classes": [],
+      "protocol": "Provider internal",
+      "authentication": "Service-linked identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Object encryption at rest uses managed keys."
+    },
+    {
+      "id": "F11",
+      "name": "Enqueue alert",
+      "type": "data",
+      "source": "P2",
+      "destination": "P7",
+      "data_classes": [
+        "D3",
+        "D4"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Accepted alerts are queued for routing."
+    },
+    {
+      "id": "F12",
+      "name": "Dequeue alert",
+      "type": "data",
+      "source": "P7",
+      "destination": "P2",
+      "data_classes": [
+        "D3",
+        "D4"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Workers consume queued alerts for routing and notification."
+    },
+    {
+      "id": "F13",
+      "name": "Device token lookup",
+      "type": "data",
+      "source": "P2",
+      "destination": "P10",
+      "data_classes": [
+        "D1",
+        "D3"
+      ],
+      "protocol": "HTTPS 8443",
+      "authentication": "Mutual TLS",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Routing resolves a responder to registered devices."
+    },
+    {
+      "id": "F14",
+      "name": "Push delivery request",
+      "type": "data",
+      "source": "P10",
+      "destination": "T1",
+      "data_classes": [
+        "D1",
+        "D3"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Provider API key from secrets store",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Sends a push message with an alert reference ID and fixed text. No D4 content."
+    },
+    {
+      "id": "F15",
+      "name": "Email delivery request",
+      "type": "data",
+      "source": "P2",
+      "destination": "T2",
+      "data_classes": [
+        "D1",
+        "D3"
+      ],
+      "protocol": "HTTPS 443 / SMTP over TLS",
+      "authentication": "Provider API key from secrets store",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Sends an email with an alert reference and a login-required link. No D4 content."
+    },
+    {
+      "id": "F16",
+      "name": "SMS and voice request",
+      "type": "data",
+      "source": "P2",
+      "destination": "T3",
+      "data_classes": [
+        "D1",
+        "D3"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Provider API key from secrets store",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Sends a fixed-template nudge to a phone number. No D4 content."
+    },
+    {
+      "id": "F17",
+      "name": "Push to devices",
+      "type": "data",
+      "source": "T1",
+      "destination": "X4",
+      "data_classes": [
+        "D3"
+      ],
+      "protocol": "Provider push channel",
+      "authentication": "Provider device token",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Provider delivers the reference-only push message to responder phones."
+    },
+    {
+      "id": "F18",
+      "name": "Carrier delivery",
+      "type": "data",
+      "source": "T3",
+      "destination": "X5",
+      "data_classes": [
+        "D1",
+        "D3"
+      ],
+      "protocol": "Carrier networks",
+      "authentication": "Carrier routing",
+      "encryption_in_transit": "Carrier-dependent; message is content-free",
+      "description": "SMS or voice call reaches the responder; the carrier sees the number and timing."
+    },
+    {
+      "id": "F19",
+      "name": "Email to responders",
+      "type": "data",
+      "source": "T2",
+      "destination": "X1",
+      "data_classes": [
+        "D1",
+        "D3"
+      ],
+      "protocol": "SMTP over TLS",
+      "authentication": "Provider sending domain authentication (SPF, DKIM, DMARC)",
+      "encryption_in_transit": "Opportunistic TLS enforced where the recipient supports it",
+      "description": "Provider delivers reference-only email to agency mailboxes."
+    },
+    {
+      "id": "F20",
+      "name": "Status callbacks to agency tools",
+      "type": "data",
+      "source": "P2",
+      "destination": "X2",
+      "data_classes": [
+        "D3",
+        "D7"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Agency-supplied token or signed callback",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Acknowledgement and resolution status sent back to the source tool."
+    },
+    {
+      "id": "F21",
+      "name": "Backups and snapshots",
+      "type": "data",
+      "source": "P3",
+      "destination": "P4",
+      "data_classes": [
+        "D10"
+      ],
+      "protocol": "Provider internal",
+      "authentication": "Service-linked identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Automated snapshots and exports written to object storage in the primary region."
+    },
+    {
+      "id": "F22",
+      "name": "Audit export generation",
+      "type": "data",
+      "source": "P2",
+      "destination": "P4",
+      "data_classes": [
+        "D5"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Customer-requested audit exports are written to object storage."
+    },
+    {
+      "id": "F23",
+      "name": "Audit export download",
+      "type": "data",
+      "source": "P4",
+      "destination": "X1",
+      "data_classes": [
+        "D5"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Time-limited signed URL, issued after agency SSO session check",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Agency admins download exports."
+    },
+    {
+      "id": "F24",
+      "name": "Application telemetry",
+      "type": "data",
+      "source": "P2",
+      "destination": "E4",
+      "data_classes": [
+        "D9"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Scrubbed logs and traces; identifiers are references, not content."
+    },
+    {
+      "id": "F25",
+      "name": "Cloud audit logs",
+      "type": "data",
+      "source": "P1",
+      "destination": "E4",
+      "data_classes": [
+        "D9"
+      ],
+      "protocol": "Provider internal",
+      "authentication": "Service-linked identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Production control-plane audit events."
+    },
+    {
+      "id": "F26",
+      "name": "Gateway and WAF logs",
+      "type": "data",
+      "source": "P8",
+      "destination": "E4",
+      "data_classes": [
+        "D9"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Request logs with sensitive fields masked."
+    },
+    {
+      "id": "F27",
+      "name": "Operator sign-in to gateway",
+      "type": "control",
+      "source": "E8",
+      "destination": "E6",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Workforce SSO with phishing-resistant MFA and device posture",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Administrators start recorded sessions from managed endpoints."
+    },
+    {
+      "id": "F28",
+      "name": "Workforce authentication",
+      "type": "control",
+      "source": "E7",
+      "destination": "E6",
+      "data_classes": [],
+      "protocol": "HTTPS 443 (OIDC)",
+      "authentication": "Signed assertions",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Workforce identity provider authenticates operators to the gateway."
+    },
+    {
+      "id": "F29",
+      "name": "Privileged database access",
+      "type": "data",
+      "source": "E6",
+      "destination": "P3",
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7"
+      ],
+      "protocol": "TLS 5432",
+      "authentication": "Just-in-time credentials with approval",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Approved, recorded administrative database access."
+    },
+    {
+      "id": "F30",
+      "name": "Privileged runtime access",
+      "type": "data",
+      "source": "E6",
+      "destination": "P2",
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7"
+      ],
+      "protocol": "TLS",
+      "authentication": "Just-in-time credentials with approval",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Approved, recorded administrative access to running services."
+    },
+    {
+      "id": "F31",
+      "name": "Endpoint management",
+      "type": "control",
+      "source": "E9",
+      "destination": "E8",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Device certificate",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "EDR and device management control in-scope endpoints."
+    },
+    {
+      "id": "F32",
+      "name": "Code to pipeline",
+      "type": "control",
+      "source": "E1",
+      "destination": "E2",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Signed commits and pipeline identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Source changes trigger builds after review."
+    },
+    {
+      "id": "F33",
+      "name": "Artifact publishing",
+      "type": "control",
+      "source": "E2",
+      "destination": "P11",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Pipeline identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Pipeline pushes signed images and packages."
+    },
+    {
+      "id": "F34",
+      "name": "Deployment pull",
+      "type": "control",
+      "source": "P11",
+      "destination": "P2",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Production pulls approved artifacts."
+    },
+    {
+      "id": "F35",
+      "name": "Infrastructure changes",
+      "type": "control",
+      "source": "E3",
+      "destination": "P1",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Pipeline identity with approval",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Reviewed infrastructure code is applied to production accounts."
+    },
+    {
+      "id": "F36",
+      "name": "Vulnerability scanning",
+      "type": "control",
+      "source": "E5",
+      "destination": "P11",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Scanner identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Scanners assess images and dependencies."
+    },
+    {
+      "id": "F37",
+      "name": "Name and certificate services",
+      "type": "control",
+      "source": "P9",
+      "destination": "P8",
+      "data_classes": [],
+      "protocol": "Provider internal",
+      "authentication": "Provider identity",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "DNS records and certificates for public endpoints."
+    },
+    {
+      "id": "F38",
+      "name": "Support session start",
+      "type": "control",
+      "source": "E8",
+      "destination": "S4",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Workforce SSO, approval workflow",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Support staff request time-limited tenant access."
+    },
+    {
+      "id": "F39",
+      "name": "Support tenant view",
+      "type": "data",
+      "source": "S4",
+      "destination": "P2",
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "protocol": "HTTPS 8443",
+      "authentication": "Approval-bound token, customer-visible audit",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Read-only tenant view for approved support sessions."
+    },
+    {
+      "id": "F40",
+      "name": "Scrubbed error telemetry",
+      "type": "data",
+      "source": "P2",
+      "destination": "T4",
+      "data_classes": [
+        "D9"
+      ],
+      "protocol": "HTTPS 443",
+      "authentication": "Provider API key from secrets store",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Error reports with identifiers and content removed. Only allowed while COND-T4-1 holds.",
+      "conditional_on": [
+        "COND-T4-1"
+      ]
+    },
+    {
+      "id": "F41",
+      "name": "Aggregate usage export",
+      "type": "data",
+      "source": "P3",
+      "destination": "C4",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Provider API key from secrets store",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Monthly per-tenant counts for billing. Only allowed while COND-C4-1 holds.",
+      "conditional_on": [
+        "COND-C4-1"
+      ]
+    },
+    {
+      "id": "F42",
+      "name": "Hosting and control-plane operations",
+      "type": "control",
+      "source": "P1",
+      "destination": "T5",
+      "data_classes": [],
+      "protocol": "HTTPS 443",
+      "authentication": "Workload and pipeline identities, console access via workforce SSO",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Production accounts consume the provider's control plane. All production resources and the federal data on them physically reside on provider infrastructure (TPR-T5)."
+    },
+    {
+      "id": "F43",
+      "name": "Cross-region backup replication",
+      "type": "data",
+      "source": "P4",
+      "destination": "P12",
+      "data_classes": [
+        "D10"
+      ],
+      "protocol": "HTTPS 443 (S3 replication and RDS automated backup replication)",
+      "authentication": "Service-linked replication role",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Encrypted backups replicate from the primary region to the recovery region. Keys are held in the recovery region."
+    },
+    {
+      "id": "F44",
+      "name": "Restore into the recovery environment",
+      "type": "data",
+      "source": "P12",
+      "destination": "P13",
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D10"
+      ],
+      "protocol": "HTTPS 443 (backup service restore jobs)",
+      "authentication": "Restore role assumed by the recovery pipeline",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "description": "Recovery points copied to the recovery vault are restored into the on-demand environment during a recovery or a restore test."
+    },
+    {
+      "id": "F45",
+      "name": "Support staff view tickets on managed endpoints",
+      "type": "data",
+      "source": "S1",
+      "destination": "E8",
+      "data_classes": [
+        "D8"
+      ],
+      "protocol": "HTTPS 443 (support ticketing web app)",
+      "authentication": "Workforce SSO with a phishing-resistant factor",
+      "encryption_in_transit": "TLS 1.2 or higher",
+      "conditional_on": [
+        "COND-S1-1",
+        "COND-S1-2"
+      ],
+      "description": "Support staff open tickets, notes and screenshots from the ticketing tool on company-managed endpoints. The S1 conditions keep federal customer data out of D8, so this flow carries company data only while they hold."
+    }
+  ],
+  "prohibited_flows": [
+    {
+      "id": "PF1",
+      "name": "Customer content into support and corporate tools",
+      "from": [
+        "P2",
+        "P3",
+        "E4",
+        "S4"
+      ],
+      "to": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D7"
+      ],
+      "control": "Structured intake, redaction and data loss prevention keep customer content out; staff attest to policy.",
+      "evidence": "DLP and intake tests with seeded sample content; quarterly sampling."
+    },
+    {
+      "id": "PF2",
+      "name": "Production data into staging",
+      "from": [
+        "P3",
+        "P4"
+      ],
+      "to": [
+        "E10"
+      ],
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D10"
+      ],
+      "control": "Separate accounts, deny policies on snapshot sharing and no restore paths from production.",
+      "evidence": "Policy configuration check and restore-event audit."
+    },
+    {
+      "id": "PF3",
+      "name": "Alert content into notification channels",
+      "from": [
+        "P2",
+        "P10"
+      ],
+      "to": [
+        "T1",
+        "T2",
+        "T3"
+      ],
+      "data_classes": [
+        "D4"
+      ],
+      "control": "Payload policy: push, email, SMS and voice use reference IDs and fixed text only. A payload linter blocks sends that contain summary text.",
+      "evidence": "Linter unit tests and sampled outbound payload review."
+    },
+    {
+      "id": "PF4",
+      "name": "Identifiers and content to error tracking",
+      "from": [
+        "P2"
+      ],
+      "to": [
+        "T4"
+      ],
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "control": "Scrubbing removes tenant, user and alert identifiers and all content before telemetry leaves the platform.",
+      "evidence": "Pipeline test that injects canary values and asserts they never appear outbound."
+    },
+    {
+      "id": "PF5",
+      "name": "Unmanaged devices to production",
+      "from": [
+        "E11"
+      ],
+      "to": [
+        "E6",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "data_classes": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7"
+      ],
+      "control": "Gateway device posture checks deny any device not enrolled in management and EDR.",
+      "evidence": "Gateway policy export and denied-access log sample."
+    },
+    {
+      "id": "PF6",
+      "name": "Detailed usage data to billing",
+      "from": [
+        "P3"
+      ],
+      "to": [
+        "C4"
+      ],
+      "data_classes": [
+        "D3",
+        "D5"
+      ],
+      "control": "Export schema allows only per-tenant aggregate counts.",
+      "evidence": "Schema validation test on the export job."
+    },
+    {
+      "id": "PF7",
+      "name": "Credentials and customer content into the wiki",
+      "from": [
+        "P2",
+        "P3",
+        "P6",
+        "E4",
+        "S4"
+      ],
+      "to": [
+        "C5"
+      ],
+      "data_classes": [
+        "D7",
+        "D8"
+      ],
+      "control": "Secret scanning blocks credentials; policy and review keep customer content out of runbooks and design documents.",
+      "evidence": "Secret scan results on the wiki and a quarterly content sample."
+    }
+  ],
+  "metadata_inclusion": [
+    {
+      "id": "MD1",
+      "metadata_type": "Tenant and user account information",
+      "generated_by": "Beacon",
+      "about": "Agency tenants and their users",
+      "stored_in": [
+        "P2",
+        "P3"
+      ],
+      "data_class": "D6",
+      "note": "Account information is excluded from the federal customer data definition but included in scope as metadata."
+    },
+    {
+      "id": "MD2",
+      "metadata_type": "Delivery and response events",
+      "generated_by": "Beacon",
+      "about": "Alerts, notification attempts and acknowledgements",
+      "stored_in": [
+        "P2",
+        "P3",
+        "P4",
+        "E4"
+      ],
+      "data_class": "D5",
+      "note": "System-generated events about each alert's handling."
+    },
+    {
+      "id": "MD3",
+      "metadata_type": "Operational telemetry and logs",
+      "generated_by": "Beacon and its platform",
+      "about": "Service behavior, referencing tenants and alerts by identifier",
+      "stored_in": [
+        "P2",
+        "E4"
+      ],
+      "data_class": "D9",
+      "note": "Scrubbed before storage; identifiers are references, not content."
+    },
+    {
+      "id": "MD4",
+      "metadata_type": "Device registration tokens",
+      "generated_by": "Beacon and the push provider",
+      "about": "Responders' devices",
+      "stored_in": [
+        "P3",
+        "P10"
+      ],
+      "data_class": "D1",
+      "note": "Needed to route push notifications; also visible to the push provider (T1)."
+    },
+    {
+      "id": "MD5",
+      "metadata_type": "Per-tenant usage counters",
+      "generated_by": "Beacon",
+      "about": "Volume of alerts and notifications per tenant",
+      "stored_in": [
+        "P3"
+      ],
+      "note": "Aggregates are exported to billing (C4) only under COND-C4-1; detail never leaves the platform."
+    },
+    {
+      "id": "MD6",
+      "metadata_type": "Cloud control-plane audit logs",
+      "generated_by": "Cloud provider (T5)",
+      "about": "Administrative actions in production accounts",
+      "stored_in": [
+        "P1",
+        "E4"
+      ],
+      "data_class": "D9",
+      "note": "Needed to detect unauthorized changes to production."
+    }
+  ],
+  "third_party_resources": [
+    {
+      "id": "TPR-T1",
+      "resource_id": "T1",
+      "provider_type": "Mobile push notification service",
+      "authorization_status": "To be verified before provider selection",
+      "usage_and_configuration": "Production sends push messages to registered device tokens. Messages carry an alert reference ID and fixed text only. Tokens are stored by the provider for delivery.",
+      "justification": "Push is the fastest, cheapest channel to reach a responder and is the only way to wake the app on iOS and Android.",
+      "potential_impact": "Provider could see which devices received an alert and when. A payload mistake could expose summary text.",
+      "mitigation_measures": [
+        "Reference-only payload policy (PF3) with an outbound payload linter",
+        "Per-tenant ability to disable push",
+        "Token rotation on app reinstall and offboarding"
+      ],
+      "compensating_controls": [
+        "The app fetches alert content over the authenticated API, never from the push message",
+        "Every send is recorded in the audit trail (D5)"
+      ]
+    },
+    {
+      "id": "TPR-T2",
+      "resource_id": "T2",
+      "provider_type": "Transactional email delivery service",
+      "authorization_status": "To be verified before provider selection",
+      "usage_and_configuration": "Production sends reference-only emails with a login-required link. Sending domain is authenticated with SPF, DKIM and DMARC.",
+      "justification": "Email is the universal fallback channel and gives responders a durable record.",
+      "potential_impact": "Provider sees recipient addresses and that a page occurred. Email is stored in mailboxes the agency controls, outside Orrinwick.",
+      "mitigation_measures": [
+        "Reference-only content (PF3)",
+        "TLS required to the provider and enforced to recipients where supported",
+        "Provider retention minimized by contract"
+      ],
+      "compensating_controls": [
+        "Link opens only after agency SSO sign-in",
+        "Bounce and delivery events audited"
+      ]
+    },
+    {
+      "id": "TPR-T3",
+      "resource_id": "T3",
+      "provider_type": "Telephony provider (SMS and voice)",
+      "authorization_status": "To be verified before provider selection; see OQ1",
+      "usage_and_configuration": "Production sends fixed-template SMS and voice nudges that say an alert needs attention and to open the app. Phone numbers are sent in E.164 format only.",
+      "justification": "Phone and SMS reach a responder when data connectivity or app notifications fail, which matters for an alerting service.",
+      "potential_impact": "Provider and carriers see the personal or work phone number and the timing of pages. Carrier networks are not under anyone's control (X5).",
+      "mitigation_measures": [
+        "Content-free design (PF3): no D4, no tenant or alert identifiers in the message",
+        "Number minimization and no use of provider address books",
+        "Per-tenant ability to disable SMS and voice"
+      ],
+      "compensating_controls": [
+        "Delivery logs in the audit trail (D5)",
+        "Alerts remain readable only after authentication in the app or console"
+      ]
+    },
+    {
+      "id": "TPR-T5",
+      "resource_id": "T5",
+      "provider_type": "Cloud infrastructure provider",
+      "authorization_status": "To be verified before provider selection",
+      "usage_and_configuration": "Production runs in two US regions on managed compute, database, storage, key, secrets and networking services, with private networking and customer-managed encryption keys.",
+      "justification": "A managed cloud platform is the only practical way to deliver a multi-tenant service at this scale and availability.",
+      "potential_impact": "Provider compromise or misconfiguration could affect every in-scope resource. Provider staff could, in principle, access infrastructure that holds federal data.",
+      "mitigation_measures": [
+        "Customer-managed keys with rotation",
+        "Private networking and least-privilege identity policies as code",
+        "Controls inherited from the provider are recorded separately and reviewed"
+      ],
+      "compensating_controls": [
+        "Cloud control-plane audit logs are exported to in-scope logging (MD6)",
+        "Infrastructure-as-code drift detection"
+      ]
+    },
+    {
+      "id": "TPR-E1",
+      "resource_id": "E1",
+      "provider_type": "Hosted source control service",
+      "authorization_status": "To be verified before provider selection",
+      "usage_and_configuration": "Stores application and infrastructure code and pull request history. Orrinwick configures branch protection, required reviews and access through the workforce identity provider.",
+      "justification": "Code review and version history for every production change cannot be done without a hosted repository.",
+      "potential_impact": "Provider could change or expose code. A compromised account could merge malicious changes that reach production.",
+      "mitigation_measures": [
+        "Branch protection and required review on production branches",
+        "Signed commits and signed build artifacts verified by the pipeline (SVC-8)",
+        "Access only through single sign-on with passwordless factors"
+      ],
+      "compensating_controls": [
+        "Pipeline blocks release when the artifact signature or digest does not match",
+        "Repository audit log is exported to the logging stack (E4)"
+      ]
+    },
+    {
+      "id": "TPR-E7",
+      "resource_id": "E7",
+      "provider_type": "Hosted workforce identity provider (SSO and MFA)",
+      "authorization_status": "To be verified before provider selection",
+      "usage_and_configuration": "Authenticates Orrinwick staff and issues the sessions that the access gateway and cloud accounts trust. Orrinwick configures the sign-in policy, factors and group membership.",
+      "justification": "One central sign-in service gives passwordless authentication, fast offboarding and a single access log.",
+      "potential_impact": "Provider outage stops staff sign-in. A provider or tenant compromise gives an attacker staff identity and so access to production.",
+      "mitigation_measures": [
+        "Phishing-resistant factors only (WebAuthn or platform authenticators)",
+        "Sign-in policy kept as code and checked by validator apm-live-user-factors",
+        "Two break-glass accounts held offline with alerts on use"
+      ],
+      "compensating_controls": [
+        "Production access needs a just-in-time approval at the gateway (E6) in addition to sign-in",
+        "Identity provider audit log is exported to the logging stack (E4)"
+      ]
+    },
+    {
+      "id": "TPR-E9",
+      "resource_id": "E9",
+      "provider_type": "Hosted endpoint detection and device management service",
+      "authorization_status": "To be verified before provider selection",
+      "usage_and_configuration": "Reports endpoint health and enforces device policy for managed administrative endpoints (E8). Orrinwick configures policy and receives telemetry.",
+      "justification": "Administrative laptops need detection and policy enforcement that Orrinwick cannot build itself.",
+      "potential_impact": "Provider telemetry describes staff devices, not federal data. Loss or compromise of the service removes protection from E8.",
+      "mitigation_measures": [
+        "Gateway (E6) denies sessions from endpoints that fail posture checks",
+        "Agent tamper protection on",
+        "Daily check that every E8 device reports in"
+      ],
+      "compensating_controls": [
+        "Production access needs a just-in-time approval at the gateway (E6)",
+        "Agent health is alerted in the logging stack (E4)"
+      ]
+    }
+  ],
+  "supplement": {
+    "label": "Supplemental information about a resource outside this certified cloud service offering",
+    "items": [
+      {
+        "resource_id": "SUP1",
+        "relationship": "Customer-installed app that connects to the Beacon API (P8) and receives pushes via T1.",
+        "certification_status": "Not certified under FedRAMP; outside the cloud service offering",
+        "why_outside": "Software delivered for installation on agency devices that Orrinwick does not operate in a shared responsibility model."
+      }
+    ]
+  },
+  "exclusions_note": "Categories of products and services that the OMB Director has placed entirely outside FedRAMP scope, and customer-installed software that is not operated in a shared responsibility model, are not part of this offering. Anything out of scope here is excluded because it neither handles federal customer data nor affects its confidentiality, integrity or availability, or because a named condition keeps it out.",
+  "open_questions": [
+    {
+      "id": "OQ1",
+      "question": "Can telephony (T3) use a provider with FedRAMP authorization, or does the content-free design plus third-party documentation suffice?",
+      "affects": "T3, TPR-T3, PF3",
+      "leaning": "Content-free design plus TPR documentation; verify any provider's status on the Marketplace first.",
+      "status": "decided",
+      "decision": "Content-free design plus TPR documentation; verify any provider's status on the Marketplace first.",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ2",
+      "question": "Is the responder mobile app entirely outside scope because it is customer-installed software not operated in a shared responsibility model?",
+      "affects": "SUP1, P10",
+      "leaning": "Outside, as a supplement item. Reconsider if Orrinwick remotely manages the app or devices.",
+      "status": "decided",
+      "decision": "Outside, as a supplement item. Reconsider if Orrinwick remotely manages the app or devices.",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ3",
+      "question": "Is per-tenant aggregate usage exported to billing (C4) acceptable as out of scope, or is it metadata that pulls billing in?",
+      "affects": "C4, MD5, F41, PF6",
+      "leaning": "Out, conditional on aggregate-only exports. Revisit if billing needs more detail.",
+      "status": "decided",
+      "decision": "Out, conditional on aggregate-only exports. Revisit if billing needs more detail.",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ4",
+      "question": "Should error tracking (T4) be scrubbed and kept out, or included as a third-party resource?",
+      "affects": "T4, F40, PF4",
+      "leaning": "Scrub and keep out, with a pipeline test that proves no identifiers leave.",
+      "status": "decided",
+      "decision": "Scrub and keep out, with a pipeline test that proves no identifiers leave.",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ5",
+      "question": "Can support ticketing, email and chat (S1 to S3) genuinely stay out of scope, given staff will be tempted to paste customer content?",
+      "affects": "S1, S2, S3, PF1",
+      "leaning": "Out, conditional, with structured intake, redaction and DLP; move in if conditions cannot be evidenced.",
+      "status": "decided",
+      "decision": "Out, conditional, with structured intake, redaction and DLP; move in if conditions cannot be evidenced.",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ6",
+      "question": "Should integrity for routing and identity control data (D2, D6) be High rather than Moderate?",
+      "affects": "D2, D6, P2, P3, E6, E7",
+      "leaning": "Moderate for now; revisit at the security categorization review.",
+      "status": "decided",
+      "decision": "Moderate for now; revisit at the security categorization review.",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ7",
+      "question": "Where exactly is the line between federal customer data and excluded account information or service metadata for D1, D2, D3, D5 and D7?",
+      "affects": "D1 to D10",
+      "leaning": "Treat agency-supplied content as federal customer data and service-generated records as metadata; confirm against agency contracts and counsel.",
+      "status": "decided",
+      "decision": "Treat agency-supplied content as federal customer data and service-generated records as metadata; confirm against agency contracts and counsel.",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ8",
+      "question": "How much documentation does FedRAMP expect for non-machine-based information resources such as policies and staff roles?",
+      "affects": "N1 to N7",
+      "leaning": "List each, tie to the policy set, and evidence through the Security Decision Record.",
+      "status": "decided",
+      "decision": "List each, tie to the policy set, and evidence through the Security Decision Record.",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ9",
+      "question": "The recovery environment is built on demand in us-west-2 from infrastructure code and holds production data once running. How is it held to the same boundary, and does using it count as a significant change?",
+      "affects": "P12, boundary, significant change",
+      "leaning": "Same Terraform modules and controls as production; it is the same offering instantiated in another region. Record activation as a significant change event and test it quarterly (KSI-RPL-TRC).",
+      "status": "decided",
+      "decision": "Same Terraform modules and controls as production; it is the same offering instantiated in another region. Record activation as a significant change event and test it quarterly (KSI-RPL-TRC).",
+      "decided_on": "2026-11-19"
+    },
+    {
+      "id": "OQ10",
+      "question": "How are agency data removal requests applied to backups in both regions?",
+      "affects": "P3, P4, P12, D10",
+      "leaning": "Document backup retention as the removal window in customer agreements and note it in the Security Decision Record (KSI-SVC-RUD).",
+      "status": "decided",
+      "decision": "Document backup retention as the removal window in customer agreements and note it in the Security Decision Record (KSI-SVC-RUD).",
+      "decided_on": "2026-11-19"
+    }
+  ]
+}

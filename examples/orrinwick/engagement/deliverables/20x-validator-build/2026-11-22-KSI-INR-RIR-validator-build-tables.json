@@ -1,0 +1,94 @@
+{
+  "title": "Validator build: KSI-INR-RIR",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C (CR26)",
+  "frmr_version": "2026.11.02.01",
+  "date": "2026-11-22",
+  "sme_validation": "Draft: pending SME validation",
+  "sheets": [
+    {
+      "name": "Break tests",
+      "columns": [
+        "Method",
+        "Change",
+        "Observed message",
+        "Result"
+      ],
+      "rows": [
+        [
+          "inr-rir-static",
+          "plan: appended 'TODO: write the containment steps'",
+          "The incident response plan is not finished: TODO on line(s) 148",
+          "failed as required"
+        ],
+        [
+          "inr-rir-static",
+          "policy: replaced '| Owner | CISO |' with '| Owner | |'",
+          "POL-INR names no owner",
+          "failed as required"
+        ],
+        [
+          "inr-rir-live",
+          "records: set ir_plan.reviews.-1.reviewed_by to \"GRC Lead\"",
+          "The plan review dated 2026-11-21 was recorded by 'GRC Lead', POL-INR names 'CISO'",
+          "failed as required"
+        ],
+        [
+          "inr-rir-live",
+          "run date set to 2027-11-22",
+          "The newest plan review is 366 days old, the cadence is 365 days",
+          "failed as required"
+        ]
+      ]
+    },
+    {
+      "name": "Methods",
+      "columns": [
+        "Method",
+        "Kind",
+        "Reads",
+        "Conditions",
+        "Gap"
+      ],
+      "rows": [
+        [
+          "inr-rir-static",
+          "static",
+          "POL-INR (owner and requirements table), the incident response plan, ir_plan.review_cadence_days in the GRC records",
+          [
+            "a POL-INR requirement lists KSI-INR-RIR",
+            "POL-INR names an owner",
+            "the cadence is a positive number of 365 days or less",
+            "the plan exists and has no TODO lines"
+          ],
+          "Proves the plan is written and the cycle is documented. Does not prove the plan's procedures are effective."
+        ],
+        [
+          "inr-rir-live",
+          "live",
+          "ir_plan.reviews, incidents and incident_pattern_reviews in the GRC records, measured against the run date",
+          [
+            "a dated review exists",
+            "the newest review is not after the run date",
+            "the newest review is no older than the cadence",
+            "the newest review was recorded by the POL-INR owner",
+            "a review follows each after action report or past incident review that required a plan change"
+          ],
+          "Proves the owner reviewed the plan on time and after each required change. Does not prove the review judged the procedures effective, or that a report correctly decided whether a change was needed. The current incident and past incident review records hold no dated entries, so the plan-change condition is tested only by the unit tests."
+        ]
+      ]
+    },
+    {
+      "name": "Questions",
+      "columns": [
+        "ID",
+        "Type",
+        "Question",
+        "Detail",
+        "Recommendation or blocks",
+        "Answer"
+      ],
+      "rows": []
+    }
+  ]
+}
