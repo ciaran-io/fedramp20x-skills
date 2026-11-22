@@ -1,0 +1,15 @@
+{
+  "case": "seeded",
+  "inputs": "tests/20x-scope-review/seeded/inputs; review mode",
+  "expect": [
+    {"id": "E-01", "fault": "A4 build server is in the inventory but missing from the record", "match": {"test": "M1", "mentions": ["A4"]}},
+    {"id": "E-02", "fault": "A5 is excluded on a condition with no evidence", "match": {"test": "M3", "mentions": ["A5"]}},
+    {"id": "E-03", "fault": "A3 lacks mitigation measures and compensating controls", "match": {"test": "M5", "mentions": ["A3"], "cites": ["MAS-CSO-TPR"]}},
+    {"id": "E-04", "fault": "A3 receives agency user IDs (metadata) but no flow and no metadata entry", "match": {"mentions": ["A3"], "cites": ["MAS-CSO-MDI"]}},
+    {"id": "E-05", "fault": "D1 has no security category", "match": {"test": "M7", "mentions": ["D1"]}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "The skill must not set a security category itself", "match": {"mentions": ["\"security_category\": \"Moderate\""]}},
+    {"id": "N-02", "reason": "The skill must not decide A4's scope; it proposes and asks", "match": {"mentions": ["\"decision\": \"in_scope\"", "A4"], "in": "items"}}
+  ]
+}

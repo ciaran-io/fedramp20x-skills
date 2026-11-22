@@ -2,9 +2,9 @@
 
 > **NOT ADVICE.** These skills are a learning and portfolio project. They are **not** a FedRAMP assessment, certification or legal advice. A skill's output says what the evidence shows and where it falls short. It never says that a client is compliant. All examples use Orrinwick Labs, Inc., a fictional company.
 
-This repository is a set of Claude skills for a consultant who reviews a cloud service provider's FedRAMP 20x Class C program. Each skill takes the client's own material (policies, asset lists, diagrams, Terraform plans, records, evidence exports) and returns a finished deliverable. Every finding cites a FedRAMP rule or Key Security Indicator (KSI) ID.
+Claude skills for a consultant who reviews a cloud service provider's FedRAMP 20x Class C (CR26) program. Each skill takes the client's own material (policies, plans, scope records, records exports, change and incident records, validation history) and returns a draft deliverable in Markdown, JSON, Word and Excel. Every finding cites a FedRAMP rule or Key Security Indicator (KSI) ID and the client source it rests on.
 
-The skills apply the method used in [fedramp20x](https://github.com/ciaran-io/fedramp20x), a worked Class C example for the fictional Orrinwick Labs:
+The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedramp20x), a worked Class C example:
 
 - the scope is settled before anything else
 - policies are reviewed against the KSIs, and each requirement names an owner, a cadence or deadline, and where the record is kept
@@ -15,31 +15,38 @@ The skills apply the method used in [fedramp20x](https://github.com/ciaran-io/fe
 
 ## Skills
 
-| Skill | Status | Deliverable |
+| Skill | Use it to | Deliverable |
 |---|---|---|
-| `20x-policy-review` | To do | KSI coverage matrix, gaps, and rewritten requirement text |
-| `20x-validator-design` | To do | One validator design per KSI, with failure conditions and a break test |
-| `20x-assessor-review` | To do | Findings table: observation, criteria, rating, recommendation |
-| `20x-scope-review` | To do | Minimum Assessment Scope record, boundary decisions and open questions |
-| `20x-change-evaluation` | To do | Change type, notice timeline, scope log entry and review deadline |
-| `20x-sanity-check` | To do | Where else a decision applies, and the documents that now disagree |
-| `20x-validator-build` | To do | Check code with two automated methods, unit tests and a break test |
-| `20x-incident-reporting` | To do | PAIN rating, reportability decision and reporting timeline |
-| `20x-package-builder` | To do | Security Decision Record entries, Ongoing Certification Report draft, package outline |
+| `20x-policy-review` | Review policies against all 46 Class C KSIs | Coverage matrix, rated gaps, rewritten requirements |
+| `20x-validator-design` | Design how a KSI will be checked | One design per KSI: methods, how each fails, planned break tests, gaps |
+| `20x-assessor-review` | Challenge finished work as an assessor would | Findings with observation, criteria, rating and recommendation |
+| `20x-scope-review` | Build or review the Minimum Assessment Scope | Scope record or findings, boundary decisions, exclusion conditions and their evidence |
+| `20x-change-evaluation` | Evaluate a change | Change type, notice dates from the rules data, scope log entry, the client's review deadline |
+| `20x-sanity-check` | Follow a decision through every document | Places that agree, disagree, are silent or are affected, and follow-ups to approve |
+| `20x-validator-build` | Build checks from an approved design | Code, unit tests and break test records |
+| `20x-incident-reporting` | Evaluate an incident or review an incident response plan | Reportability, PAIN rating, timeline from the reportability decision, report content |
+| `20x-package-builder` | Prepare Certification Package material | Package outline, KSI summaries and metrics, a draft Ongoing Certification Report |
 
-The skills are built in the order listed.
+Status: all nine skills are built and each has a worked example. They have not yet been run end to end by a model against the seeded test cases (see [Tests](#tests)).
 
-## Rules the skills follow
+## Rules every skill follows
 
-- **Official data at run time.** The skills read the FedRAMP Consolidated Rules from [FedRAMP/rules](https://github.com/FedRAMP/rules) at a pinned commit. `scripts/fetch_frmr.py` downloads the data to `.frmr/` and checks its hashes. The data is not stored in this repository, because upstream has no licence file. Outputs cite rule and KSI IDs and do not copy statement text.
-- **Class C (CR26) only.** Version 1 covers Class C. Each output states the class it assumed.
-- **No compliance verdicts.** Outputs report what the evidence shows and where it falls short.
-- **The consultant decides.** A skill drafts the deliverable, lists the decisions it needs, and recommends one option for each. It does not make scope or risk decisions.
-- **Client data stays local.** The skills work on files the consultant provides and do not send client material anywhere. Keep client files outside this repository. The `client/` folder is ignored by Git as a safeguard.
+- **Never make anything up.** Every statement in a deliverable traces to a client file and location, a FedRAMP ID, or a decision the consultant recorded. When the client's material is silent, the deliverable says so, or writes a placeholder such as `[owner: client to confirm]` and lists an open question. `scripts/check_deliverable.py` fails any item without a source.
+- **Stop and ask.** A skill stops and asks the consultant when it needs a scope or risk decision, the meaning of a client term, how a client tool works, an owner or cadence the client has not set, or a choice between two readings of a rule. It does not carry on with a guess.
+- **SME Validate.** The last step of every skill. The consultant or a subject matter expert they name checks each item against its source. Until then, every copy is marked "Draft: pending SME validation". A deliverable cannot be marked validated while any item is unconfirmed or any blocking question is open, and the skill never marks it validated on its own.
+- **Official data at run time.** The skills read the FedRAMP Consolidated Rules from [FedRAMP/rules](https://github.com/FedRAMP/rules) at a pinned commit, with hash checks. The data is not stored here, because upstream has no licence file. Deliverables cite IDs and do not copy statement text; `scripts/frmr.py lint` reports copied text.
+- **Class C only** in version 1. **No compliance verdicts.** **The consultant decides** scope and risk. **Client data stays local**: the skills work on the files the consultant provides and send nothing elsewhere.
+
+## How a skill runs
+
+1. The consultant names an engagement folder (see `shared/references/engagement-folder.md`). Client files go in `inputs/`, decisions in `decisions.json`.
+2. The skill reads the rules it needs with `scripts/frmr.py`, works through its steps and asks its questions.
+3. It writes the deliverable as JSON and builds the Markdown report and Excel tables from it with `scripts/build_report.py`.
+4. It runs `scripts/check_deliverable.py` and `scripts/frmr.py lint` and fixes every error.
+5. SME Validate.
+6. It renders the Word and Excel copies with `scripts/render.py`.
 
 ## Install
-
-Install all the skills as one plugin, or install one skill on its own.
 
 **Claude Code, all skills:**
 
@@ -47,41 +54,51 @@ Install all the skills as one plugin, or install one skill on its own.
 /plugin install fedramp20x-skills --marketplace ciaran-io/fedramp20x-skills
 ```
 
-**Claude Code, one skill.** Each finished skill is also listed as its own plugin with the same name as the skill, for example:
+**Claude Code, one skill.** Each skill is also a plugin of its own, for example:
 
 ```bash
 /plugin install 20x-policy-review --marketplace ciaran-io/fedramp20x-skills
 ```
 
-**claude.ai.** Each release includes a `.zip` file for each skill and one for the full set. Upload a `.zip` to claude.ai as a custom skill.
+**claude.ai.** Run `python tools/package_skills.py` to build `dist/<skill>.zip` for each skill and `dist/fedramp20x-skills.zip` for the full set, then upload a `.zip` as a custom skill. Each skill folder carries its own copy of the shared scripts and references, so it works on its own.
 
-Before the first run, download the FedRAMP rules data (Python 3.10 or newer):
+**Requirements.** Python 3.10 or newer, and `pip install python-docx openpyxl` for the Word and Excel copies. The first run downloads the FedRAMP rules data to `~/.cache/fedramp20x-skills/` (set `FRMR_DIR` to use another folder):
 
 ```bash
-python scripts/fetch_frmr.py
+python shared/scripts/frmr.py fetch
 ```
 
-## Deliverable formats
+## Example engagement
 
-Each skill writes its deliverable as Markdown and JSON. The JSON is the source of truth for tests and for other skills. Client-facing deliverables are also produced as Word (`.docx`) documents, and tables such as the KSI coverage matrix and findings lists as Excel (`.xlsx`) workbooks.
+[`examples/orrinwick/`](examples/orrinwick/) holds a fictional engagement with one deliverable from each skill, built from the fedramp20x material. The findings are real findings about that material, for example a scope change check that cannot detect a changed exclusion condition, and 28 KSIs that report pass while their coverage notes describe a gap.
 
-## Relation to other FedRAMP plugins
+## Tests
 
-General plugins already cover KSI checks, Minimum Assessment Scope review, vulnerability detection and response, and audit evidence review. These skills do not repeat them. They add the method above: traceability from policy to check, validator designs with break tests, review records measured against the run date, records that are only added to, and an assessor's review of the consultant's own work.
+```bash
+pip install pytest python-docx openpyxl
+python -m pytest -q tests
+```
+
+CI runs these on every push. They check the skills' structure, the shared files, the scripts, and that every example passes its checks and scores fully against its test case. Each skill also has seeded test cases in `tests/<skill>/seeded/` with faults a run must report and things it must not invent. Running those needs a model: see [`tests/README.md`](tests/README.md) and `tools/run_skill_test.sh`.
 
 ## Repository layout
 
 | Folder | Contents |
 |---|---|
-| `.claude-plugin/` | `plugin.json`, so the repository installs as one plugin |
-| `skills/` | One folder per skill: `SKILL.md`, `templates/` for deliverables, `references/` for rule notes (IDs only) |
-| `scripts/` | Shared scripts, such as the FedRAMP rules download |
-| `examples/orrinwick/` | Fictional inputs and the output each skill produced from them |
-| `tests/` | Sample inputs with seeded faults and the findings each skill must report |
+| `.claude-plugin/` | `plugin.json` and `marketplace.json`: the full set and one plugin per skill |
+| `shared/` | The scripts and references every skill uses. Edit here, then run `python tools/sync_shared.py` |
+| `skills/<skill>/` | `SKILL.md`, `references/`, `scripts/`, `templates/` |
+| `tools/` | Sync, packaging, scoring and the headless test runner |
+| `examples/orrinwick/` | The fictional engagement |
+| `tests/` | Repository tests and each skill's test cases |
+
+## Relation to other FedRAMP plugins
+
+General plugins already cover KSI checks, Minimum Assessment Scope review, vulnerability detection and response, and audit evidence review. These skills do not repeat them. They add the method above: traceability from policy to check, validator designs with break tests, review records measured against the run date, records that are only added to, an assessor's review of the consultant's own work, and SME validation of every deliverable.
 
 ## How this project was built
 
-An AI assistant (Claude) drafts the skills, templates and test cases. I decide what each skill must do, set the method it follows, and review, correct and test every skill before I commit it.
+An AI assistant (Claude) drafts the skills, scripts, templates and test cases. I decide what each skill must do, set the method it follows, and review, correct and test every skill before I commit it.
 
 ## License
 

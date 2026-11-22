@@ -1,0 +1,16 @@
+{
+  "case": "baseline",
+  "inputs": "examples/orrinwick/engagement/inputs: evidence/latest.json, evidence/status-model.md, designs/CNA.md, designs/RPL.md, the incident response plan, the scope change log; the policy review and validator design deliverables",
+  "output": "examples/orrinwick/engagement/deliverables/20x-assessor-review/2026-11-22-assessor-review.json",
+  "expect": [
+    {"id": "E-01", "fault": "KSIs pass while coverage notes describe a gap (fedramp20x assessor finding A1)", "match": {"test": "R1", "mentions": ["KSI-CNA-EIS"]}},
+    {"id": "E-02", "fault": "A past review record was edited", "match": {"test": "R4", "cites": ["KSI-CNA-RVP"]}},
+    {"id": "E-03", "fault": "A method has no break test", "match": {"test": "D8", "mentions": ["rpl-rro-static"]}},
+    {"id": "E-04", "fault": "The policy review missed the incident response plan", "match": {"test": "X5"}},
+    {"id": "E-05", "fault": "Applying and Marketplace rules are not assessed for a client that is preparing", "match": {"in": "not_assessed", "mentions": ["FRC-APP"]}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "The review must not state a compliance verdict", "match": {"mentions": ["is compliant"]}},
+    {"id": "N-02", "reason": "Rules that start after certification must not be findings for a client that is preparing", "match": {"cites": ["CCM-OCR-AVL"]}}
+  ]
+}

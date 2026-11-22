@@ -1,0 +1,12 @@
+{
+  "_notice": "TEST INPUT. Seeded faults for the 20x-scope-review tests.",
+  "data_classes": [{"id": "D1", "name": "Agency user records", "federal_customer_data": "yes", "security_category": null}],
+  "resources": [
+    {"id": "A1", "decision": "in_scope", "handles": ["D1"], "rationale": "Handles D1"},
+    {"id": "A2", "decision": "in_scope", "handles": ["D1"], "rationale": "Stores D1"},
+    {"id": "A3", "decision": "third_party", "handles": [], "rationale": "Analytics"},
+    {"id": "A5", "decision": "out_conditional", "handles": [], "conditions": [{"id": "C1", "text": "No agency data in tickets", "evidence": null}]}
+  ],
+  "flows": [{"id": "F1", "source": "A1", "destination": "A2", "data_classes": ["D1"]}],
+  "third_parties": [{"id": "TP-A3", "resource": "A3", "usage_and_configuration": "Collects usage metrics", "justification": "Product analytics"}]
+}

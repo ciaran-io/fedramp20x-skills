@@ -1,0 +1,35 @@
+{
+  "_notice": "FICTIONAL. Scope change log for Orrinwick Beacon. Each entry records the evaluation of a change to mas/mas-record.json (rule SCN-CSO-MAR) and a fingerprint of the scope after it. tools/check_scope_changes.py fails when the record changes without a new entry. Add entries in date order.",
+  "entries": [
+    {
+      "id": "SC-001",
+      "date": "2026-11-19",
+      "change_type": "added",
+      "resources": [
+        "P12",
+        "P13"
+      ],
+      "scn_category": "not_significant",
+      "summary": "Baseline. Recovery model set to backup and restore with cross-region copies. Added the cross-region backup vault (P12) and the on-demand recovery environment (P13) with restore flow F44.",
+      "evaluation": "Recorded as the baseline before first certification. No agency is relying on the offering yet, so no notification is due.",
+      "decision_ref": "SD-003",
+      "notification": null,
+      "scope_fingerprint_after": "4ee5715ad9170d6c"
+    },
+    {
+      "id": "SC-002",
+      "date": "2026-11-21",
+      "change_type": "flow_changed",
+      "resources": [
+        "E8",
+        "S1"
+      ],
+      "scn_category": "not_significant",
+      "summary": "Support-derived data (D8) recorded on managed administrative endpoints (E8), with flow F45 from support ticketing (S1). This records an existing path: support staff already read tickets on company laptops.",
+      "evaluation": "No resource was added or removed and no boundary decision changed. E8 was already in scope and already protected by device management, endpoint detection and disk encryption. Not likely to substantively affect the security posture, so not a significant change and no notification is due. A protection review is due within 20 business days under POL-CNA CNA-7b.",
+      "decision_ref": "SD-004",
+      "notification": null,
+      "scope_fingerprint_after": "a78b5fcdcbfbf373"
+    }
+  ]
+}

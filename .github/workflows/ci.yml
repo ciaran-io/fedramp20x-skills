@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install pytest python-docx openpyxl
+      - name: Download the FedRAMP rules data at the pinned commit
+        run: python shared/scripts/frmr.py fetch
+      - name: Shared files are in sync
+        run: python tools/sync_shared.py --check
+      - name: Tests
+        run: python -m pytest -q tests
+      - name: Build the claude.ai zip files
+        run: python tools/package_skills.py

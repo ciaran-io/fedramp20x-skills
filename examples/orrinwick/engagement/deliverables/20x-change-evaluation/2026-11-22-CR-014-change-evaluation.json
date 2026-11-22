@@ -1,0 +1,482 @@
+{
+  "skill": "20x-change-evaluation",
+  "skill_version": "0.1.0",
+  "title": "Change evaluation: CR-014 team chat notification channel",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C",
+  "date": "2026-11-22",
+  "frmr_version": "2026.11.02.01",
+  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+  "prepared_by": "Claude, for A. Example",
+  "change": {
+    "id": "CR-014",
+    "title": "Team chat notification channel",
+    "start": "2027-02-01",
+    "finish": "2027-02-26",
+    "emergency": "No",
+    "description": "Adds a fifth notification channel: messages to an agency's team chat channel through a chat messaging service run by another company (T6). Notification workers (P2) gain an outbound HTTPS connection to it. Messages carry an alert reference ID and fixed text only (PF3). Agency administrators turn the channel on and add chat channel addresses to escalation rules; addresses are stored with the routing policy (D2)."
+  },
+  "proposed_type": "transformative",
+  "decided_type": null,
+  "timeline": {
+    "type": "transformative",
+    "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+    "business_days": "Monday to Friday, no holidays skipped (FedRAMP does not define business days; confirm with the consultant)",
+    "notices": [
+      {
+        "rule": "SCN-TRF-NIP",
+        "name": "Notification of Initial Plans",
+        "force": "MUST",
+        "counts_from": "start",
+        "direction": "before",
+        "timeframe": "30 bizdays",
+        "due": "2026-12-21",
+        "due_meaning": "send on or before"
+      },
+      {
+        "rule": "SCN-TRF-NFP",
+        "name": "Notification of Final Plans",
+        "force": "MUST",
+        "counts_from": "start",
+        "direction": "before",
+        "timeframe": "10 bizdays",
+        "due": "2027-01-18",
+        "due_meaning": "send on or before"
+      },
+      {
+        "rule": "SCN-TRF-NAF",
+        "name": "Notification After Finishing",
+        "force": "MUST",
+        "counts_from": "finish",
+        "direction": "after",
+        "timeframe": "5 bizdays",
+        "due": "2027-03-05",
+        "due_meaning": "latest date to send"
+      },
+      {
+        "rule": "SCN-TRF-NAV",
+        "name": "Notification After Verification",
+        "force": "MUST",
+        "counts_from": "verified",
+        "direction": "after",
+        "timeframe": "5 bizdays",
+        "due": null,
+        "due_meaning": "needs the verified date"
+      },
+      {
+        "rule": "SCN-TRF-UPD",
+        "name": "Update Documentation",
+        "force": "MUST",
+        "counts_from": "finish",
+        "direction": "after",
+        "timeframe": "30 bizdays",
+        "due": "2027-04-09",
+        "due_meaning": "latest date to send"
+      }
+    ],
+    "note": "Read SCN-TRF-TPR (third-party review before starting) and SCN-CSO-INF (required content)."
+  },
+  "inputs": [
+    {
+      "id": "I-16",
+      "file": "changes/CR-014.md",
+      "sha256": "46f84377c0a534c590dc7dbe430fde228306a825b7ac05be38e5c2a315fbd13e",
+      "description": "Change request CR-014: team chat notification channel"
+    },
+    {
+      "id": "I-14",
+      "file": "scope/mas-record.json",
+      "sha256": "b44e3cde2a752abb05195ffec5e3ccff17d2fd219763b06626a44f3c90d4fd3e",
+      "description": "Minimum Assessment Scope record, version 0.1.0"
+    },
+    {
+      "id": "I-13",
+      "file": "scope/scope-changes.json",
+      "sha256": "e19051ba42713b52b5f3d4d9e6b477caca17e41ca144d4240a3fc6ba133cf18b",
+      "description": "Scope change log, SC-001 and SC-002"
+    },
+    {
+      "id": "I-02",
+      "file": "policies/POL-CNA.md",
+      "sha256": "f59fddbcc83122d1e5bddca343417503a02ad8baf6f2168fcb1c1a46330ab87c",
+      "description": "POL-CNA Cloud-native architecture policy, version 1.0"
+    }
+  ],
+  "items": [
+    {
+      "id": "EV-1",
+      "kind": "evaluation",
+      "question": "Is the change likely to substantively affect the security posture? (FRD-SGC)",
+      "answer": "Yes. It adds a third-party service in the alert delivery path (T6), a new outbound flow from the notification workers (P2), and a new kind of address stored with the routing policy (D2). Each of these changes the scope record.",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "What changes"
+        },
+        {
+          "input": "I-14",
+          "location": "P2; D2; PF3; third_party_resources"
+        },
+        {
+          "frmr": "FRD-SGC"
+        },
+        {
+          "frmr": "SCN-CSO-EVA"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "EV-2",
+      "kind": "evaluation",
+      "question": "Is it likely to change the certification class? (FRD-CCC)",
+      "answer": "No. The request adds no new data class and describes no change to impact levels.",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "What changes"
+        },
+        {
+          "frmr": "FRD-CCC"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "EV-3",
+      "kind": "evaluation",
+      "question": "Does it recur routinely as part of ongoing operations? (FRD-RTR)",
+      "answer": "No. It is the first chat channel, and the change log has no earlier change of this kind.",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "What changes"
+        },
+        {
+          "input": "I-13",
+          "location": "entries"
+        },
+        {
+          "frmr": "FRD-RTR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "EV-4",
+      "kind": "evaluation",
+      "question": "Does it introduce substantive risks that must be assessed in depth? (FRD-TRF)",
+      "answer": "Proposed yes, for the SME to confirm. The change adds a capability agencies configure and use, and a new third party that needs the MAS-CSO-TPR documentation. Against that, messages follow the existing payload policy (PF3), which could make it adaptive if the SME judges that existing checks verify it with minor changes. See DQ-001.",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "What changes"
+        },
+        {
+          "input": "I-14",
+          "location": "PF3"
+        },
+        {
+          "frmr": "FRD-TRF"
+        },
+        {
+          "frmr": "FRD-ADP"
+        },
+        {
+          "frmr": "MAS-CSO-TPR"
+        }
+      ],
+      "confirmed": false
+    },
+    {
+      "id": "NC-01",
+      "kind": "notice_content",
+      "item": "Service Offering FedRAMP ID",
+      "supplied": "No: not in the inputs",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-02",
+      "kind": "notice_content",
+      "item": "Assessor Name (if applicable)",
+      "supplied": "No: no assessor is named",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-03",
+      "kind": "notice_content",
+      "item": "Related Vulnerability (if applicable)",
+      "supplied": "None stated",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-04",
+      "kind": "notice_content",
+      "item": "Significant Change type and explanation of categorization",
+      "supplied": "Yes, once DQ-001 is decided: EV-1 to EV-4",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-05",
+      "kind": "notice_content",
+      "item": "Short description of change",
+      "supplied": "Yes: CR-014 What changes",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-06",
+      "kind": "notice_content",
+      "item": "Reason for change",
+      "supplied": "Yes: CR-014 Why",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-07",
+      "kind": "notice_content",
+      "item": "Summary of customer impact, including changes to services and customer configuration responsibilities",
+      "supplied": "Partly: agency administrators turn the channel on and add addresses; who is responsible for the chat channel's own settings is not stated",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-08",
+      "kind": "notice_content",
+      "item": "Plan and timeline for the change, including for the verification, assessment, and/or validation of impacted Key Security Indicators or Rev5 Controls",
+      "supplied": "Partly: dates and testing are stated; the impacted KSIs are not identified",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-09",
+      "kind": "notice_content",
+      "item": "Copy of the business or security impact analysis",
+      "supplied": "No: not provided",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "NC-10",
+      "kind": "notice_content",
+      "item": "Name and title of approver",
+      "supplied": "No: the requester is named, the approver is not",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "whole request"
+        },
+        {
+          "frmr": "SCN-CSO-INF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "SL-1",
+      "kind": "scope_log",
+      "title": "Draft scope change log entry",
+      "detail": {
+        "id": "SC-003 (draft, not yet in the log)",
+        "date": "2027-02-26 (planned finish)",
+        "change_type": "added",
+        "resources": "T6, P2",
+        "scn_category": "transformative (proposed, DQ-001)",
+        "summary": "Team chat notification channel through a new third-party chat messaging service (T6), with a new outbound flow from P2 and chat channel addresses stored with the routing policy (D2).",
+        "evaluation": "EV-1 to EV-4 in this deliverable",
+        "needs_before_entry": "T6 entry with the MAS-CSO-TPR information (Q-004), new flow ID, consultant decision on the type"
+      },
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "What changes"
+        },
+        {
+          "input": "I-13",
+          "location": "entry format"
+        },
+        {
+          "frmr": "SCN-CSO-MAR"
+        }
+      ],
+      "confirmed": false
+    },
+    {
+      "id": "CRV-1",
+      "kind": "client_review",
+      "title": "Protection review under POL-CNA CNA-7b",
+      "detail": {
+        "requirement": "CNA-7b, transformative: before the change starts, and again within 5 business days after it is finished",
+        "before_start": "before 2027-02-01",
+        "after_finish": "by 2027-03-05",
+        "owner": "Platform Lead (CNA-7b)",
+        "note": "The policy review recommended moving the pre-change review before the final plans notice (R-007). If the client adopts it, the pre-change review is due before the SCN-TRF-NFP date in the notices table"
+      },
+      "sources": [
+        {
+          "input": "I-02",
+          "location": "CNA-7b"
+        },
+        {
+          "frmr": "KSI-CNA-RVP"
+        }
+      ],
+      "confirmed": true
+    }
+  ],
+  "decisions_needed": [
+    {
+      "id": "DQ-001",
+      "question": "Is CR-014 transformative or adaptive?",
+      "options": [
+        "Transformative",
+        "Adaptive"
+      ],
+      "recommendation": "Transformative",
+      "reason": "It adds a capability agencies configure and a new third party in the delivery path, which needs new MAS-CSO-TPR documentation and an assessment of the new flow. Choosing adaptive drops the 30 and 10 business day notices before the start",
+      "decision_ref": null
+    },
+    {
+      "id": "DQ-002",
+      "question": "How should business days be counted?",
+      "options": [
+        "Monday to Friday, skipping US federal holidays (client to supply the list)",
+        "Monday to Friday only"
+      ],
+      "recommendation": "Monday to Friday, skipping US federal holidays (client to supply the list)",
+      "reason": "FedRAMP does not define business days. With weekdays only, the final plans notice falls on 2027-01-18, which is the Martin Luther King Jr. federal holiday; skipping holidays moves the earlier notices earlier and gives a safer date",
+      "decision_ref": null
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "Q-001",
+      "question": "Are the two pilot agencies using the offering, and what is the offering's FedRAMP ID?",
+      "why": "All necessary parties include any agency using the offering (FRD-ANP). The change log recorded on 2026-11-19 that no agency was relying on it",
+      "blocks": [
+        "NC-01"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-002",
+      "question": "Who approves CR-014 (name and title)?",
+      "why": "SCN-CSO-INF requires it in the notice",
+      "blocks": [
+        "NC-10"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-003",
+      "question": "Is there a security impact analysis for CR-014?",
+      "why": "SCN-CSO-INF requires a copy",
+      "blocks": [
+        "NC-09"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-004",
+      "question": "Which chat messaging service is T6, and what are its usage and configuration, justification, mitigation measures and compensating controls?",
+      "why": "MAS-CSO-TPR requires them before the scope log entry",
+      "blocks": [
+        "SL-1"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-005",
+      "question": "Which KSIs does the change affect, and how will they be validated?",
+      "why": "SCN-CSO-INF requires the plan for validating impacted KSIs. The SME identifies them from the change and the validator designs",
+      "blocks": [
+        "NC-08"
+      ],
+      "answer": null
+    }
+  ],
+  "sme_validation": {
+    "status": "draft",
+    "validated_by": null,
+    "role": null,
+    "date": null,
+    "corrections": [],
+    "rejected": []
+  }
+}

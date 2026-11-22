@@ -1,0 +1,212 @@
+{
+  "title": "Assessor review: KSI results, CNA and RPL designs, and two draft deliverables",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C (CR26)",
+  "frmr_version": "2026.11.02.01",
+  "date": "2026-11-22",
+  "sme_validation": "Draft: pending SME validation",
+  "sheets": [
+    {
+      "name": "Findings",
+      "columns": [
+        "ID",
+        "Title",
+        "Area",
+        "Test",
+        "Lesson",
+        "Observation",
+        "Criteria",
+        "Rating",
+        "Recommendation",
+        "Occurrences",
+        "Sources",
+        "Confirmed"
+      ],
+      "rows": [
+        [
+          "F-001",
+          "28 KSIs report pass while their coverage notes describe a gap",
+          "results",
+          "R1 Coverage note",
+          "L11",
+          "The status model defines pass as two or more passing methods with no known gap, and partial as passing with a known gap against the official statement. In the latest result, 28 of the 38 passing KSIs carry a coverage note that says the methods prove less than the KSI, and every one has coverage_gap set to null. For example, the note on KSI-CNA-EIS says the methods detect drift but do not check automatic enforcement, which is a part of that KSI. The result therefore reports pass where the status model's own definition gives partial.",
+          [
+            "FRC-CSX-VVK",
+            "KSI-CNA-EIS"
+          ],
+          "Moderate",
+          "For each KSI listed, decide whether the note describes a part of the KSI that no method proves. If it does, record it as a known gap so the KSI rolls up to partial, or add a method that proves the missing part. Keep a coverage note only for limits that leave every part of the KSI proven.",
+          [
+            "KSI-CMT-LMC",
+            "KSI-CNA-DFP",
+            "KSI-CNA-EIS",
+            "KSI-CNA-IBP",
+            "KSI-CNA-MAT",
+            "KSI-CNA-OFA",
+            "KSI-CNA-ULN",
+            "KSI-IAM-AAM",
+            "KSI-IAM-JIT",
+            "KSI-IAM-SUS",
+            "KSI-MLA-ALA",
+            "KSI-MLA-EVC",
+            "KSI-MLA-LET",
+            "KSI-MLA-OSM",
+            "KSI-MLA-RVL",
+            "KSI-PIY-GIV",
+            "KSI-PIY-RSD",
+            "KSI-RPL-ABO",
+            "KSI-RPL-ARP",
+            "KSI-RPL-TRC",
+            "KSI-SCR-MIT",
+            "KSI-SCR-MON",
+            "KSI-SVC-ASM",
+            "KSI-SVC-PRR",
+            "KSI-SVC-RUD",
+            "KSI-SVC-SIN",
+            "KSI-SVC-VCM",
+            "KSI-SVC-VRI"
+          ],
+          "I-09 ksis[].coverage_note and coverage_gap; I-10 Honest status model; FRC-CSX-VVK; KSI-CNA-EIS",
+          "yes"
+        ],
+        [
+          "F-002",
+          "The policy review was written without the incident response plan",
+          "deliverable",
+          "X5 Inputs missing",
+          "L9",
+          "The policy review lists the incident response plan as not provided (Q-001). The plan answers part of three of its items: section 9 names the Security Operations Lead as lead of the past incident review and sets at least every 90 days (G-010, Q-006); section 10 states where plan reviews and past incident reviews are recorded (G-009 for INR-3 and INR-4); section 8 requires a ticket or change reference for each lesson (G-001). The plan also differs from INR-4 on the owner and the cycle, which the policy review could not see.",
+          [
+            "KSI-INR-RPI",
+            "KSI-INR-AAR",
+            "KSI-INR-RIR"
+          ],
+          "Low",
+          "Add the plan as an input and rerun the policy review for POL-INR. Keep G-010 open as a difference between policy and plan until the client decides the owner and cycle (validator design decisions DQ-001 and DQ-002).",
+          [
+            "G-001",
+            "G-009",
+            "G-010",
+            "Q-001",
+            "Q-006"
+          ],
+          "I-07 not_provided; G-001; G-009; G-010; Q-001; Q-006; I-05 sections 8, 9 and 10; I-08 DQ-001; DQ-002",
+          "yes"
+        ],
+        [
+          "F-003",
+          "A past protection review was edited",
+          "results",
+          "R4 Edited history",
+          "L4",
+          "The CNA design records that the 2026-06-10 protection review had its resources_covered list added on 2026-11-21, before the rule that records only grow was adopted. The design discloses the edit. The record no longer shows what the 2026 June review covered at the time.",
+          [
+            "KSI-CNA-RVP"
+          ],
+          "Observation",
+          "Keep the disclosure. If the original coverage of the June review is known, record it in a new entry that states it was added on 2026-11-21, rather than relying on the edited entry.",
+          [
+            "protection_reviews 2026-06-10"
+          ],
+          "I-11 KSI-CNA-RVP decisions; KSI-CNA-RVP",
+          "yes"
+        ],
+        [
+          "F-004",
+          "A recovery objectives method has no break test",
+          "design",
+          "D8 Break test",
+          "L3",
+          "The RPL design records a break test for rpl-rro-live and states for the static method: not yet run. The design status is Built, which is consistent, but KSI-RPL-RRO cannot reach Verified until rpl-rro-static is shown to fail.",
+          [
+            "KSI-RPL-RRO",
+            "FRC-CSX-VVK"
+          ],
+          "Observation",
+          "Run a break test for rpl-rro-static, for example with the review cadence removed, and record the message.",
+          [
+            "rpl-rro-static"
+          ],
+          "I-12 KSI-RPL-RRO break test; KSI-RPL-RRO",
+          "yes"
+        ],
+        [
+          "F-005",
+          "Both example deliverables are drafts with open questions",
+          "deliverable",
+          "X3 Status",
+          "",
+          "The policy review and the validator designs are marked draft, with unconfirmed items and open questions. This is the correct status. They cannot be relied on as client deliverables until SME validation.",
+          [],
+          "Observation",
+          "Complete SME validation for each before sharing it with the client.",
+          [
+            "policy review: G-004, G-008 unconfirmed",
+            "validator designs: V-001, V-002 unconfirmed"
+          ],
+          "I-07 sme_validation; items; I-08 sme_validation; items",
+          "yes"
+        ]
+      ]
+    },
+    {
+      "name": "Not assessed",
+      "columns": [
+        "Rules",
+        "Reason",
+        "Starts when",
+        "Basis"
+      ],
+      "rows": [
+        [
+          [
+            "FRC-APP subset",
+            "MKT"
+          ],
+          "The client is preparing and has not applied for certification or a Marketplace listing",
+          "The client applies",
+          "Consultant: client stage is preparing"
+        ],
+        [
+          [
+            "CCM-OCR subset",
+            "CCM-QTR subset",
+            "IVV-CSO-FIA"
+          ],
+          "Ongoing reports, quarterly reviews and annual assessments follow certification",
+          "Certification",
+          "Consultant: client stage is preparing"
+        ],
+        [
+          [
+            "SCN notification rules (SCN-ADP-NTF, SCN-TRF-NIP, SCN-TRF-NFP, SCN-TRF-NAF)"
+          ],
+          "No agency relies on the offering yet, as the scope change log records for SC-001",
+          "The first agency uses the offering",
+          "I-13 SC-001 evaluation"
+        ]
+      ]
+    },
+    {
+      "name": "Questions",
+      "columns": [
+        "ID",
+        "Type",
+        "Question",
+        "Detail",
+        "Recommendation or blocks",
+        "Answer"
+      ],
+      "rows": [
+        [
+          "Q-001",
+          "Open question",
+          "Can the earlier assessor findings (A1 to A12) be provided?",
+          "Their status, open or closed, can only be reported from the findings themselves",
+          [],
+          "open"
+        ]
+      ]
+    }
+  ]
+}

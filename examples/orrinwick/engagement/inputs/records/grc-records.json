@@ -1,0 +1,129 @@
+{
+  "_notice": "FICTIONAL. GRC records for Orrinwick Beacon. The author fills this file in by hand. Dates use YYYY-MM-DD. null means not done yet, so the matching check fails until you enter a date. Incidents are rated with the Potential Agency Impact N-rating (pain_rating, 0 to 5) and marked reportable to FedRAMP or not.",
+  "training": {
+    "cadence_days": 365,
+    "people": [
+      {
+        "id": "P-001",
+        "role": "engineer",
+        "general_completed": null,
+        "role_specific_completed": null,
+        "secure_delivery_completed": null,
+        "incident_or_recovery_completed": null
+      }
+    ],
+    "effectiveness_reviews": [
+      {
+        "date": null,
+        "summary": ""
+      }
+    ]
+  },
+  "ir_plan": {
+    "doc": "docs/incident-response-plan.md",
+    "review_cadence_days": 365,
+    "reviews": [
+      {
+        "date": "2026-08-04",
+        "reviewed_by": "CISO"
+      },
+      {
+        "date": "2026-11-21",
+        "reviewed_by": "CISO",
+        "summary": "Plan rewritten and approved as version 1.0: incidents rated with PAIN, reportability decided within 1 hour, and the reporting clock starts at the reportability decision (SD-006)."
+      }
+    ]
+  },
+  "incidents": [
+    {
+      "id": "INC-001",
+      "pain_rating": null,
+      "reportable": null,
+      "opened": null,
+      "closed": null,
+      "aar_completed": null,
+      "lessons_incorporated": null,
+      "plan_change_required": null
+    }
+  ],
+  "incident_pattern_reviews": [
+    {
+      "date": null,
+      "summary": ""
+    }
+  ],
+  "exec_reviews": [
+    {
+      "date": null,
+      "topic": "security status and risks",
+      "minutes_ref": null
+    }
+  ],
+  "security_investment_reviews": [
+    {
+      "date": null,
+      "summary": ""
+    }
+  ],
+  "vulnerability_disclosure": {
+    "policy_url": null,
+    "inbox": null,
+    "response_target_business_days": 3,
+    "last_program_review": null,
+    "reports": [
+      {
+        "id": "VDR-RPT-001",
+        "received": null,
+        "first_response": null,
+        "closed": null
+      }
+    ]
+  },
+  "change_procedure": {
+    "doc": "policies/policy-set.json#POL-CMT",
+    "review_cadence_days": 365,
+    "reviews": [
+      {
+        "date": "2026-10-02",
+        "reviewed_by": "Platform Lead",
+        "summary": "Review after failed change CHG-0412. The database migration had no tested rollback step. Added a rule that a migration must pass a rollback test in staging before it is released."
+      }
+    ],
+    "failed_or_emergency_changes": [
+      {
+        "id": "CHG-0412",
+        "date": "2026-09-24",
+        "type": "failed",
+        "summary": "Database migration failed in production and was rolled back by hand."
+      }
+    ]
+  },
+  "protection_reviews": [
+    {
+      "date": "2026-06-10",
+      "reviewed_by": "Platform Lead",
+      "summary": "Annual review of WAF rules, rate limits and DDoS protection settings. No changes needed.",
+      "resources_covered": [
+        "aws_wafv2_web_acl.edge",
+        "aws_lb_listener.https",
+        "aws_lb_listener.webhooks",
+        "aws_guardduty_detector.main"
+      ]
+    },
+    {
+      "date": "2026-11-22",
+      "reviewed_by": "Platform Lead",
+      "changes_reviewed": [
+        "SC-001",
+        "SC-002"
+      ],
+      "summary": "Review of protections after scope changes SC-001 (cross-region backup vault and on-demand recovery environment) and SC-002 (support-derived data on managed endpoints). Neither change adds an internet-facing entry point. The recovery environment has no standing resources and falls under the same protections when it is built (POL-RPL RPL-5). WAF rules, rate limits, load balancer listeners and threat detection stay as they are. No changes needed.",
+      "resources_covered": [
+        "aws_wafv2_web_acl.edge",
+        "aws_lb_listener.https",
+        "aws_lb_listener.webhooks",
+        "aws_guardduty_detector.main"
+      ]
+    }
+  ]
+}

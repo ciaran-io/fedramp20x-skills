@@ -1,0 +1,16 @@
+{
+  "case": "baseline",
+  "inputs": "examples/orrinwick/engagement inputs and deliverables",
+  "output": "examples/orrinwick/engagement/deliverables/20x-package-builder/2026-11-22-package.json",
+  "expect": [
+    {"id": "E-01", "fault": "Assessor parts are left to the assessor", "match": {"mentions": ["IVV-CSO-ICP", "\"status\": \"assessor\""]}},
+    {"id": "E-02", "fault": "The accountable official is missing", "match": {"mentions": ["CPO-CSO-MTD", "\"status\": \"missing\""]}},
+    {"id": "E-03", "fault": "Metrics report the missing days", "match": {"mentions": ["SDR-CSX-KMT", "covers 5 days, not 30"]}},
+    {"id": "E-04", "fault": "Incidents are missing, not reported as none", "match": {"mentions": ["Reportable Incidents", "\"status\": \"missing\""]}},
+    {"id": "E-05", "fault": "KSI-RPL-RRO automation is not fully verified", "match": {"mentions": ["KSI-RPL-RRO", "has not been run"]}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "Independent fields are never filled by the provider", "match": {"mentions": ["independently verified"]}},
+    {"id": "N-02", "reason": "The package is never called complete", "match": {"mentions": ["package is complete"]}}
+  ]
+}

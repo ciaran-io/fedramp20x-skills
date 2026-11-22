@@ -1,0 +1,18 @@
+{
+  "_notice": "FICTIONAL. Example decisions for the fedramp20x-skills examples. The consultant and client are invented.",
+  "decisions": [
+    {
+      "id": "D-001",
+      "date": "2026-11-22",
+      "question": "Which cycle and owner apply to the past incident review (KSI-INR-RPI)? (validator design DQ-001 and DQ-002)",
+      "options": ["90 days, Security Operations Lead", "One calendar quarter, security team", "Another cycle or role"],
+      "recommended": "90 days, Security Operations Lead",
+      "decided": "90 days, Security Operations Lead",
+      "decided_by": "A. Example (consultant), confirmed with the Orrinwick CISO",
+      "reason": "The plan already sets 90 days and names the Security Operations Lead as lead; one number and one role give the check a single limit and reviewer",
+      "skill": "20x-validator-design",
+      "affects": ["KSI-INR-RPI", "POL-INR/INR-4"],
+      "supersedes": null
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "case": "seeded",
+  "inputs": "tests/20x-assessor-review/seeded/inputs/results.json, client stage: preparing",
+  "expect": [
+    {"id": "E-01", "fault": "KSI-CMT-VTD passes with one method", "match": {"mentions": ["KSI-CMT-VTD"], "cites": ["FRC-CSX-VVK"]}},
+    {"id": "E-02", "fault": "The plan review was recorded by a GRC Analyst; POL-INR names the CISO", "match": {"test": "R5", "mentions": ["GRC Analyst"]}},
+    {"id": "E-03", "fault": "rir-live measures against a fixed date (2025-09-01) and cannot fail", "match": {"test": "R2", "mentions": ["2025-09-01"]}},
+    {"id": "E-04", "fault": "A past review record was edited", "match": {"test": "R4"}},
+    {"id": "E-05", "fault": "S9 is excluded on a condition with no evidence", "match": {"test": "S2", "mentions": ["S9"]}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "Nothing in the inputs says the client applied; application rules are not findings", "match": {"cites": ["FRC-APP-FIA"]}}
+  ]
+}

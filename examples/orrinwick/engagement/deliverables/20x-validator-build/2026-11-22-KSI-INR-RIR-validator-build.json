@@ -1,0 +1,142 @@
+{
+  "skill": "20x-validator-build",
+  "skill_version": "0.1.0",
+  "title": "Validator build: KSI-INR-RIR",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C",
+  "date": "2026-11-22",
+  "frmr_version": "2026.11.02.01",
+  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+  "prepared_by": "Claude, for A. Example",
+  "ksi": "KSI-INR-RIR",
+  "design": "I-18, KSI-INR-RIR. Reviewed and marked Verified by the fedramp20x repository owner; used here as the validated design",
+  "code": {
+    "module": "inr-rir/inr_rir.py",
+    "tests": "inr-rir/test_inr_rir.py",
+    "break_tests": "inr-rir/break-tests.json",
+    "run": "python inr_rir.py ../../../inputs/policies/POL-INR.md ../../../inputs/plans/incident-response-plan.md ../../../inputs/records/grc-records.json --as-of 2026-11-22",
+    "test_command": "python -m pytest inr-rir/test_inr_rir.py"
+  },
+  "unit_tests": {
+    "count": 9,
+    "passed": 9,
+    "run_on": "2026-11-22"
+  },
+  "proposed_status": "Verified",
+  "inputs": [
+    {
+      "id": "I-18",
+      "file": "designs/INR.md",
+      "sha256": "3a0a48809d5edcea539b4f9525e0efecc9c662c41f47fa8880084e526c7690aa",
+      "description": "Validator design, INR theme: KSI-INR-RIR, status Verified in fedramp20x"
+    },
+    {
+      "id": "I-01",
+      "file": "policies/POL-INR.md",
+      "sha256": "9ffc1187d687207e5c78e76cdb4f0cb8415cc54bb685b7ff30a47e6d00c5b973",
+      "description": "POL-INR Incident response policy, version 1.1"
+    },
+    {
+      "id": "I-05",
+      "file": "plans/incident-response-plan.md",
+      "sha256": "443df3674b1bb04ed809ed494b359b15f849d3e3ce611842242193b1d78ec40b",
+      "description": "Incident response plan, version 1.0"
+    },
+    {
+      "id": "I-06",
+      "file": "records/grc-records.json",
+      "sha256": "d93312286eddedf10e43a1938b72746aeb7e647c6fb3534b718f57bf23148e3f",
+      "description": "GRC records export"
+    }
+  ],
+  "items": [
+    {
+      "id": "M-01",
+      "method": "inr-rir-static",
+      "kind": "static",
+      "reads": "POL-INR (owner and requirements table), the incident response plan, ir_plan.review_cadence_days in the GRC records",
+      "conditions_checked": [
+        "a POL-INR requirement lists KSI-INR-RIR",
+        "POL-INR names an owner",
+        "the cadence is a positive number of 365 days or less",
+        "the plan exists and has no TODO lines"
+      ],
+      "break_tests": [
+        {
+          "change": "plan: appended 'TODO: write the containment steps'",
+          "observed_message": "The incident response plan is not finished: TODO on line(s) 148",
+          "result": "failed as required"
+        },
+        {
+          "change": "policy: replaced '| Owner | CISO |' with '| Owner | |'",
+          "observed_message": "POL-INR names no owner",
+          "result": "failed as required"
+        }
+      ],
+      "gap": "Proves the plan is written and the cycle is documented. Does not prove the plan's procedures are effective.",
+      "sources": [
+        {
+          "input": "I-18",
+          "location": "KSI-INR-RIR static method"
+        },
+        {
+          "frmr": "KSI-INR-RIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "M-02",
+      "method": "inr-rir-live",
+      "kind": "live",
+      "reads": "ir_plan.reviews, incidents and incident_pattern_reviews in the GRC records, measured against the run date",
+      "conditions_checked": [
+        "a dated review exists",
+        "the newest review is not after the run date",
+        "the newest review is no older than the cadence",
+        "the newest review was recorded by the POL-INR owner",
+        "a review follows each after action report or past incident review that required a plan change"
+      ],
+      "break_tests": [
+        {
+          "change": "records: set ir_plan.reviews.-1.reviewed_by to \"GRC Lead\"",
+          "observed_message": "The plan review dated 2026-11-21 was recorded by 'GRC Lead', POL-INR names 'CISO'",
+          "result": "failed as required"
+        },
+        {
+          "change": "run date set to 2027-11-22",
+          "observed_message": "The newest plan review is 366 days old, the cadence is 365 days",
+          "result": "failed as required"
+        }
+      ],
+      "gap": "Proves the owner reviewed the plan on time and after each required change. Does not prove the review judged the procedures effective, or that a report correctly decided whether a change was needed. The current incident and past incident review records hold no dated entries, so the plan-change condition is tested only by the unit tests.",
+      "sources": [
+        {
+          "input": "I-18",
+          "location": "KSI-INR-RIR live method"
+        },
+        {
+          "input": "I-06",
+          "location": "ir_plan; incidents; incident_pattern_reviews"
+        },
+        {
+          "frmr": "KSI-INR-RIR"
+        },
+        {
+          "frmr": "VDR-TFR-NMV"
+        }
+      ],
+      "confirmed": true
+    }
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {
+    "status": "draft",
+    "validated_by": null,
+    "role": null,
+    "date": null,
+    "corrections": [],
+    "rejected": []
+  }
+}

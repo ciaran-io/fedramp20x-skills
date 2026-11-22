@@ -1,0 +1,300 @@
+{
+  "skill": "20x-validator-design",
+  "skill_version": "0.1.0",
+  "title": "Validator designs: KSI-INR-RPI and KSI-INR-AAR",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C",
+  "date": "2026-11-22",
+  "frmr_version": "2026.11.02.01",
+  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+  "prepared_by": "Claude, for A. Example",
+  "inputs": [
+    {
+      "id": "I-01",
+      "file": "policies/POL-INR.md",
+      "sha256": "9ffc1187d687207e5c78e76cdb4f0cb8415cc54bb685b7ff30a47e6d00c5b973",
+      "description": "POL-INR Incident response policy, version 1.1"
+    },
+    {
+      "id": "I-05",
+      "file": "plans/incident-response-plan.md",
+      "sha256": "443df3674b1bb04ed809ed494b359b15f849d3e3ce611842242193b1d78ec40b",
+      "description": "Incident response plan, version 1.0"
+    },
+    {
+      "id": "I-06",
+      "file": "records/grc-records.json",
+      "sha256": "d93312286eddedf10e43a1938b72746aeb7e647c6fb3534b718f57bf23148e3f",
+      "description": "GRC records export: incidents, incident_pattern_reviews, ir_plan"
+    },
+    {
+      "id": "I-07",
+      "file": "../deliverables/20x-policy-review/2026-11-22-policy-review.json",
+      "sha256": "a6e7788337db124112d652fc547e00b8fd266a0d4c098f34c81c5fd07fb04933",
+      "description": "KSI policy coverage review, 2026-11-22 (draft)"
+    }
+  ],
+  "items": [
+    {
+      "id": "V-001",
+      "ksi": "KSI-INR-RPI",
+      "name": "Reviewing Past Incidents",
+      "parts": [
+        "Past incidents are reviewed on a documented cycle",
+        "The review looks for patterns and weaknesses that single incidents did not show"
+      ],
+      "requirement": "Orrinwick must review its past incidents on a repeated, documented cycle to find patterns and weaknesses that no single incident showed. FRD-PER requires the cycle to be documented and its status always known.",
+      "policy_requirement": "POL-INR / INR-4; incident response plan section 9 (past incident review)",
+      "resource_type": "Non-machine: the quarterly past incident review and its record",
+      "cadence": "Every validation run. VDR-TFR-NMV sets a minimum of every 3 months for the check; the review's own cycle comes from INR-4 and the plan",
+      "methods": [
+        {
+          "id": "inr-rpi-static",
+          "kind": "static",
+          "reads": "POL-INR INR-4 and the past incident review row in plan section 9",
+          "passes_when": "a POL-INR requirement lists KSI-INR-RPI, it states a cycle of 92 days or less, it names one owner role, and the plan names the record location"
+        },
+        {
+          "id": "inr-rpi-live",
+          "kind": "live",
+          "reads": "incident_pattern_reviews and incidents in the GRC records export, measured against the run date",
+          "passes_when": "the newest review is no older than the cycle, is not dated after the run date, was recorded by the owner role, lists the incidents it covered, includes every incident and near miss opened since the previous review, and has a findings summary"
+        }
+      ],
+      "fails_when": [
+        "No POL-INR requirement lists KSI-INR-RPI.",
+        "The cycle is missing or longer than 92 days.",
+        "No owner role is named, or the owner is a group with no lead.",
+        "No review is recorded, or the newest review is dated after the run date or is older than the cycle.",
+        "The review was recorded by a role other than the owner.",
+        "The review does not list the incidents it covered, or misses an incident or near miss opened since the previous review.",
+        "The review has no findings summary."
+      ],
+      "break_tests": [
+        {
+          "method": "inr-rpi-static",
+          "change": "Remove the cycle from INR-4 in a copy of the policy.",
+          "expected": "POL-INR INR-4 states no review cycle for KSI-INR-RPI",
+          "status": "Planned"
+        },
+        {
+          "method": "inr-rpi-live",
+          "change": "Add an incident opened after the newest review's start date and leave it out of incidents_covered.",
+          "expected": "Past incident review dated <date> does not cover INC-<id> opened <date>",
+          "status": "Planned"
+        },
+        {
+          "method": "inr-rpi-live",
+          "change": "Set the run date 93 days after the newest review.",
+          "expected": "Past incident review is 93 days old, the cycle is <cycle> days",
+          "status": "Planned"
+        }
+      ],
+      "production_source": "The incident tracker named in plan section 10, for incidents and near misses by opened date. The review record in incident_pattern_reviews. The tracker's product and API are not named in the material: [source: client to confirm]",
+      "gap": "The methods prove that a review happened on time, by the owner, and covered every incident. They do not prove that the review found the patterns that exist, or that its findings led to action. Near misses are covered only if they are recorded in the incident tracker.",
+      "status": "Designed",
+      "decisions": [
+        "The cycle limit is 92 days pending DQ-001: the plan says at least every 90 days and INR-4 says every quarter. A quarter can be 92 days long.",
+        "The reviewer check waits for DQ-002: the policy names the security team and the plan names the team led by the Security Operations Lead.",
+        "The live method needs reviewed_by, incidents_covered and findings fields that the record does not hold yet (DQ-003)."
+      ],
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "INR-4"
+        },
+        {
+          "input": "I-05",
+          "location": "section 9; section 10"
+        },
+        {
+          "input": "I-06",
+          "location": "incident_pattern_reviews; incidents"
+        },
+        {
+          "input": "I-07",
+          "location": "G-010; Q-006"
+        },
+        {
+          "frmr": "KSI-INR-RPI"
+        },
+        {
+          "frmr": "FRD-PER"
+        },
+        {
+          "frmr": "VDR-TFR-NMV"
+        },
+        {
+          "frmr": "FRC-CSX-VVK"
+        }
+      ],
+      "confirmed": false
+    },
+    {
+      "id": "V-002",
+      "ksi": "KSI-INR-AAR",
+      "name": "Generating After Action Reports",
+      "parts": [
+        "An after action report is produced for each incident that needs one",
+        "Lessons learned are carried into the service on a documented cycle"
+      ],
+      "requirement": "Orrinwick must write an after action report for each incident that needs one, and keep carrying the lessons from those reports into its procedures and service on a documented cycle.",
+      "policy_requirement": "POL-INR / INR-2; incident response plan section 8",
+      "resource_type": "Non-machine: after action reports and the lessons they record",
+      "cadence": "Every validation run. VDR-TFR-NMV sets a minimum of every 3 months for the check",
+      "methods": [
+        {
+          "id": "inr-aar-static",
+          "kind": "static",
+          "reads": "POL-INR INR-2 and plan section 8",
+          "passes_when": "a POL-INR requirement lists KSI-INR-AAR, sets the reports' scope (reportable incidents and N2 or above) and a 10 business day deadline, and the plan requires each lesson to carry a ticket or change reference"
+        },
+        {
+          "id": "inr-aar-reports",
+          "kind": "live",
+          "reads": "incidents in the GRC records export (pain_rating, reportable, closed, aar_completed), measured against the run date",
+          "passes_when": "every closed incident that is reportable or rated N2 or above has aar_completed within 10 business days of closed. A reportable incident with no rating is treated as N5. A report not yet due is a due-by note"
+        },
+        {
+          "id": "inr-aar-lessons",
+          "kind": "live",
+          "reads": "the lessons recorded for each completed report, with their ticket or change reference and status",
+          "passes_when": "every lesson in a completed report has a ticket or change reference, and every open lesson has an owner and a due date that has not passed"
+        }
+      ],
+      "fails_when": [
+        "No POL-INR requirement lists KSI-INR-AAR, or it sets no scope or no deadline.",
+        "The plan does not require a ticket or change reference for each lesson.",
+        "A closed incident that needs a report has none 10 business days after closing, or the report is dated after the run date.",
+        "A reportable incident with no rating is not treated as N5.",
+        "A lesson has no ticket or change reference.",
+        "An open lesson has no owner, no due date, or a due date before the run date."
+      ],
+      "break_tests": [
+        {
+          "method": "inr-aar-static",
+          "change": "Remove the 10 business day deadline from INR-2 in a copy of the policy.",
+          "expected": "POL-INR INR-2 sets no deadline for after action reports",
+          "status": "Planned"
+        },
+        {
+          "method": "inr-aar-reports",
+          "change": "Add a closed reportable incident with no rating and no aar_completed, and set the run date 11 business days after it closed.",
+          "expected": "INC-<id> (reportable, unrated, treated as N5) has no after action report 11 business days after closing",
+          "status": "Planned"
+        },
+        {
+          "method": "inr-aar-lessons",
+          "change": "Add a lesson with no ticket reference to a completed report.",
+          "expected": "Lesson <n> in the report for INC-<id> has no ticket or change reference",
+          "status": "Planned"
+        }
+      ],
+      "production_source": "The incident tracker named in plan section 10, where after action reports are linked from the incident record, and the backlog that holds the lesson tickets. Neither tool is named in the material: [source: client to confirm]",
+      "gap": "The methods prove that reports exist on time and that each lesson has a tracked ticket. They do not prove that a report found the right root cause, or that a closed ticket changed what it should have. The record field lessons_incorporated is a single value and cannot show each lesson, so inr-aar-lessons needs a lessons list (DQ-003).",
+      "status": "Designed",
+      "decisions": [
+        "The deadline counts from the date the incident is closed, as plan section 8 states. INR-2 does not say where the 10 days start; the plan settles it.",
+        "Lessons are checked by a third method so the evidence shows reports and lessons separately. This answers policy review gap G-001 only if the client adopts a lesson cycle (R-001).",
+        "An unrated reportable incident is treated as N5, following INR-2 and IEC-CSO-DPR."
+      ],
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "INR-2"
+        },
+        {
+          "input": "I-05",
+          "location": "section 8; section 10"
+        },
+        {
+          "input": "I-06",
+          "location": "incidents"
+        },
+        {
+          "input": "I-07",
+          "location": "G-001; R-001"
+        },
+        {
+          "frmr": "KSI-INR-AAR"
+        },
+        {
+          "frmr": "IEC-CSO-DPR"
+        },
+        {
+          "frmr": "VDR-TFR-NMV"
+        },
+        {
+          "frmr": "FRC-CSX-VVK"
+        }
+      ],
+      "confirmed": false
+    }
+  ],
+  "decisions_needed": [
+    {
+      "id": "DQ-001",
+      "question": "Which cycle applies to the past incident review: every quarter (INR-4) or at least every 90 days (plan section 9)?",
+      "options": [
+        "90 days, and change INR-4 to match",
+        "One calendar quarter, and change the plan to match",
+        "Keep both and check against 92 days"
+      ],
+      "recommendation": "90 days, and change INR-4 to match",
+      "reason": "A fixed number of days gives a check one limit, and the plan already uses it",
+      "decision_ref": null
+    },
+    {
+      "id": "DQ-002",
+      "question": "Which role must record the past incident review?",
+      "options": [
+        "Security Operations Lead (plan section 9)",
+        "CISO",
+        "Another role the client names"
+      ],
+      "recommendation": "Security Operations Lead (plan section 9)",
+      "reason": "The plan already names this role as the lead, and it closes policy review gap G-010 once INR-4 uses the same role",
+      "decision_ref": null
+    },
+    {
+      "id": "DQ-003",
+      "question": "Will the client add fields to the records: reviewed_by, incidents_covered and findings on each past incident review, and a lessons list (reference, owner, due date, status) on each incident?",
+      "options": [
+        "Yes, add the fields",
+        "No: design against the fields that exist and record the gap"
+      ],
+      "recommendation": "Yes, add the fields",
+      "reason": "Without them inr-rpi-live cannot check the reviewer or coverage, and inr-aar-lessons cannot run",
+      "decision_ref": null
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "Q-001",
+      "question": "Which product is the incident tracker, and can it export incidents, near misses and linked after action reports with their dates?",
+      "why": "Both designs read it in production. The plan names it only as the incident tracker",
+      "blocks": [
+        "V-001",
+        "V-002"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-002",
+      "question": "Are near misses recorded in the incident tracker, or somewhere else?",
+      "why": "INR-4 and the plan include near misses. The live method can only check what is recorded",
+      "blocks": [
+        "V-001"
+      ],
+      "answer": null
+    }
+  ],
+  "sme_validation": {
+    "status": "draft",
+    "validated_by": null,
+    "role": null,
+    "date": null,
+    "corrections": [],
+    "rejected": []
+  }
+}

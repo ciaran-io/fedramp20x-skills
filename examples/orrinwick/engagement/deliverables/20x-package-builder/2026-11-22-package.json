@@ -1,0 +1,618 @@
+{
+  "skill": "20x-package-builder",
+  "skill_version": "0.1.0",
+  "title": "Certification Package draft: outline, KSI summaries and an example Ongoing Certification Report",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C",
+  "date": "2026-11-22",
+  "frmr_version": "2026.11.02.01",
+  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+  "prepared_by": "Claude, for A. Example",
+  "ocr_period": "Example report, 2026-11-18 to 2026-11-22",
+  "metrics": {
+    "as_of": "2026-11-22",
+    "first_day": "2026-11-18",
+    "days_with_history": 5,
+    "synthetic_days_excluded": [],
+    "ksis": {
+      "KSI-INR-RIR": {
+        "daily": {
+          "2026-11-18": "not_implemented",
+          "2026-11-19": "not_implemented",
+          "2026-11-20": "not_implemented",
+          "2026-11-21": "pass",
+          "2026-11-22": "pass"
+        },
+        "past_30_days": {
+          "not_implemented": 3,
+          "pass": 2
+        },
+        "up_to_past_year": {
+          "not_implemented": 3,
+          "pass": 2
+        },
+        "latest": "pass"
+      },
+      "KSI-RPL-RRO": {
+        "daily": {
+          "2026-11-18": "not_implemented",
+          "2026-11-19": "not_implemented",
+          "2026-11-20": "pass",
+          "2026-11-21": "pass",
+          "2026-11-22": "pass"
+        },
+        "past_30_days": {
+          "not_implemented": 2,
+          "pass": 3
+        },
+        "up_to_past_year": {
+          "not_implemented": 2,
+          "pass": 3
+        },
+        "latest": "pass"
+      },
+      "KSI-CNA-RVP": {
+        "daily": {
+          "2026-11-18": "not_implemented",
+          "2026-11-19": "not_implemented",
+          "2026-11-20": "not_implemented",
+          "2026-11-21": "not_implemented",
+          "2026-11-22": "pass"
+        },
+        "past_30_days": {
+          "not_implemented": 4,
+          "pass": 1
+        },
+        "up_to_past_year": {
+          "not_implemented": 4,
+          "pass": 1
+        },
+        "latest": "pass"
+      }
+    },
+    "past_30_days_window": {
+      "from": "2026-11-18",
+      "days_expected": 5,
+      "days_present": 5,
+      "missing_days": []
+    },
+    "up_to_past_year_window": {
+      "from": "2026-11-18",
+      "days_expected": 5,
+      "days_present": 5,
+      "missing_days": []
+    }
+  },
+  "inputs": [
+    {
+      "id": "I-14",
+      "file": "scope/mas-record.json",
+      "sha256": "b44e3cde2a752abb05195ffec5e3ccff17d2fd219763b06626a44f3c90d4fd3e",
+      "description": "Minimum Assessment Scope record, version 0.1.0, draft"
+    },
+    {
+      "id": "I-13",
+      "file": "scope/scope-changes.json",
+      "sha256": "e19051ba42713b52b5f3d4d9e6b477caca17e41ca144d4240a3fc6ba133cf18b",
+      "description": "Scope change log, SC-001 and SC-002"
+    },
+    {
+      "id": "I-01",
+      "file": "policies/POL-INR.md",
+      "sha256": "9ffc1187d687207e5c78e76cdb4f0cb8415cc54bb685b7ff30a47e6d00c5b973",
+      "description": "POL-INR, version 1.1"
+    },
+    {
+      "id": "I-02",
+      "file": "policies/POL-CNA.md",
+      "sha256": "f59fddbcc83122d1e5bddca343417503a02ad8baf6f2168fcb1c1a46330ab87c",
+      "description": "POL-CNA, version 1.0"
+    },
+    {
+      "id": "I-03",
+      "file": "policies/POL-RPL.md",
+      "sha256": "92a2ead47583390da45e31fd5f988351e98675be23550181a3983e26f12d8ff0",
+      "description": "POL-RPL, version 1.2"
+    },
+    {
+      "id": "I-04",
+      "file": "policies/POL-CMT.md",
+      "sha256": "1c75e7ff679d2ef2afc5cefe251801efa855bfc43c85dc7d292674dea02c381b",
+      "description": "POL-CMT, version 1.0"
+    },
+    {
+      "id": "I-18",
+      "file": "designs/INR.md",
+      "sha256": "3a0a48809d5edcea539b4f9525e0efecc9c662c41f47fa8880084e526c7690aa",
+      "description": "Validator design, INR"
+    },
+    {
+      "id": "I-11",
+      "file": "designs/CNA.md",
+      "sha256": "e1c5f8d7070a9a7e254e46ae932cf8a05676896b5a4a98fe1f4e19dba08018e0",
+      "description": "Validator design, CNA"
+    },
+    {
+      "id": "I-12",
+      "file": "designs/RPL.md",
+      "sha256": "9a16377133a9bb1c567f7cf96275e8a283d153aeb183c2157d845cfcd7d988ea",
+      "description": "Validator design, RPL"
+    },
+    {
+      "id": "I-09",
+      "file": "evidence/latest.json",
+      "sha256": "d5b682c19c2216e31435fe5d08bdddd97aeb915160d61db832cc69371ec6d855",
+      "description": "Latest KSI validation result, 2026-11-22"
+    },
+    {
+      "id": "I-06",
+      "file": "records/grc-records.json",
+      "sha256": "d93312286eddedf10e43a1938b72746aeb7e647c6fb3534b718f57bf23148e3f",
+      "description": "GRC records export"
+    },
+    {
+      "id": "I-16",
+      "file": "changes/CR-014.md",
+      "sha256": "46f84377c0a534c590dc7dbe430fde228306a825b7ac05be38e5c2a315fbd13e",
+      "description": "Change request CR-014, planned 2027-02"
+    },
+    {
+      "id": "I-20",
+      "file": "evidence/history",
+      "sha256": null,
+      "description": "Daily validation history, 2026-11-18 to 2026-11-22 (5 files)"
+    }
+  ],
+  "items": [
+    {
+      "id": "PK-01",
+      "kind": "outline",
+      "part": "Overview metadata: accountable official, version, last update, source",
+      "rule": "CPO-CSO-MTD",
+      "status": "missing",
+      "detail": "The inputs name no accountable official for the package (Q-001)",
+      "sources": [
+        {
+          "frmr": "CPO-CSO-MTD"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-02",
+      "kind": "outline",
+      "part": "Public information and service list",
+      "rule": "CDS-CSO-PUB",
+      "status": "missing",
+      "detail": "Not in the inputs",
+      "sources": [
+        {
+          "frmr": "CDS-CSO-PUB"
+        },
+        {
+          "frmr": "CDS-CSO-SVC"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-03",
+      "kind": "outline",
+      "part": "Relevant policies",
+      "rule": "CDS-CSO-IRP",
+      "status": "partial",
+      "detail": "4 of the 10 policies are inputs (POL-INR, POL-CNA, POL-RPL, POL-CMT); all are drafts under the policy review",
+      "sources": [
+        {
+          "frmr": "CDS-CSO-IRP"
+        },
+        {
+          "input": "I-01",
+          "location": "header"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-04",
+      "kind": "outline",
+      "part": "Scope: resources, flows and categories, third parties",
+      "rule": "MAS-CSO-IIR",
+      "status": "partial",
+      "detail": "The scope record covers all three rules but is a draft (version 0.1.0), and its exclusion conditions have no check (scope review F-001, F-004)",
+      "sources": [
+        {
+          "frmr": "MAS-CSO-IIR"
+        },
+        {
+          "frmr": "MAS-CSO-FLO"
+        },
+        {
+          "frmr": "MAS-CSO-TPR"
+        },
+        {
+          "input": "I-14",
+          "location": "status"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-05",
+      "kind": "outline",
+      "part": "Cryptographic module documentation",
+      "rule": "CMU-CSO-CMD",
+      "status": "missing",
+      "detail": "Not in the inputs",
+      "sources": [
+        {
+          "frmr": "CMU-CSO-CMD"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-06",
+      "kind": "outline",
+      "part": "Independent assessment in the package",
+      "rule": "IVV-CSO-ICP",
+      "status": "assessor",
+      "detail": "Supplied by a FedRAMP Recognized assessor",
+      "sources": [
+        {
+          "frmr": "IVV-CSO-ICP"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-07",
+      "kind": "outline",
+      "part": "Overall summary of assessment",
+      "rule": "CPO-CSO-OSA",
+      "status": "assessor",
+      "detail": "Supplied by the assessor",
+      "sources": [
+        {
+          "frmr": "CPO-CSO-OSA"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-08",
+      "kind": "outline",
+      "part": "Security Decision Record, per rule",
+      "rule": "SDR-CSO-FRR",
+      "status": "missing",
+      "detail": "Not drafted in this run; the consultant asked for KSI summaries first",
+      "sources": [
+        {
+          "frmr": "SDR-CSO-FRR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-09",
+      "kind": "outline",
+      "part": "KSI summaries",
+      "rule": "SDR-CSX-KSI",
+      "status": "partial",
+      "detail": "Drafted for KSI-INR-RIR, KSI-RPL-RRO and KSI-CNA-RVP (the KSIs with designs in the inputs)",
+      "sources": [
+        {
+          "frmr": "SDR-CSX-KSI"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-10",
+      "kind": "outline",
+      "part": "KSI metrics",
+      "rule": "SDR-CSX-KMT",
+      "status": "partial",
+      "detail": "Five days of history (2026-11-18 to 2026-11-22). History starts on 2026-11-18, so the 30-day summary covers 5 days, not 30",
+      "sources": [
+        {
+          "frmr": "SDR-CSX-KMT"
+        },
+        {
+          "input": "I-20",
+          "location": "all files"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-11",
+      "kind": "outline",
+      "part": "Ongoing Certification Report",
+      "rule": "CCM-OCR-AVL",
+      "status": "partial",
+      "detail": "Example report drafted for 2026-11-18 to 2026-11-22; four items lack records",
+      "sources": [
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "PK-12",
+      "kind": "outline",
+      "part": "JSON valid against FedRAMP schemas",
+      "rule": "FRC-CSO-JSN",
+      "status": "missing",
+      "detail": "This skill's JSON is a working format, not the FedRAMP schema",
+      "sources": [
+        {
+          "frmr": "FRC-CSO-JSN"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "KS-01",
+      "kind": "ksi_summary",
+      "independent": "Assessor: not supplied by the provider",
+      "confirmed": true,
+      "ksi": "KSI-INR-RIR",
+      "measures": "inr-rir-static checks that POL-INR covers the KSI, names an owner, sets a cycle of 365 days or less and that the plan has no TODO lines. inr-rir-live checks that the newest plan review is inside the cycle, was recorded by the CISO, and follows any report or review that required a plan change.",
+      "cycle": "Each year, and when an after action report or a quarterly incident review finds that the plan needs to change (POL-INR INR-3).",
+      "verification_measures": "The methods show that the owner reviewed the plan on time and after each required change. They do not show that the review judged the procedures effective (design gap).",
+      "verification_automation": "Design status Verified: both methods were made to fail by recorded break tests (the live method on 2026-11-21). The validator build in this engagement repeated four break tests on 2026-11-22.",
+      "validation": "Latest result pass, both methods pass. History: 3 not_implemented, 2 pass.",
+      "sources": [
+        {
+          "input": "I-18",
+          "location": "KSI-INR-RIR"
+        },
+        {
+          "input": "I-01",
+          "location": "INR-3"
+        },
+        {
+          "input": "I-09",
+          "location": "KSI-INR-RIR"
+        },
+        {
+          "input": "I-20",
+          "location": "KSI-INR-RIR"
+        },
+        {
+          "frmr": "SDR-CSX-KSI"
+        }
+      ]
+    },
+    {
+      "id": "KS-02",
+      "kind": "ksi_summary",
+      "independent": "Assessor: not supplied by the provider",
+      "confirmed": true,
+      "ksi": "KSI-RPL-RRO",
+      "measures": "rpl-rro-static checks that the RTO, RPO and review cycle are set and that POL-RPL covers the KSI. rpl-rro-live checks that the newest review of the objectives is inside the 90-day cycle and was recorded by the Platform Lead.",
+      "cycle": "At least every 90 days (POL-RPL RPL-1).",
+      "verification_measures": "The methods show that objectives exist and are reviewed on time by the owner. They do not show what the review concluded or that the objectives match the restore test results (design gap).",
+      "verification_automation": "Design status Built: the live method failed in a recorded break test; the static method's break test has not been run (assessor review F-004).",
+      "validation": "Latest result pass, both methods pass. History: 2 not_implemented, 3 pass.",
+      "sources": [
+        {
+          "input": "I-12",
+          "location": "KSI-RPL-RRO"
+        },
+        {
+          "input": "I-03",
+          "location": "RPL-1"
+        },
+        {
+          "input": "I-09",
+          "location": "KSI-RPL-RRO"
+        },
+        {
+          "input": "I-20",
+          "location": "KSI-RPL-RRO"
+        },
+        {
+          "frmr": "SDR-CSX-KSI"
+        }
+      ]
+    },
+    {
+      "id": "KS-03",
+      "kind": "ksi_summary",
+      "independent": "Assessor: not supplied by the provider",
+      "confirmed": true,
+      "ksi": "KSI-CNA-RVP",
+      "measures": "cna-rvp-static checks that POL-CNA requires an annual review and a review after each recorded change with a deadline by change type. cna-rvp-live checks the newest protection review's age, summary, reviewer and coverage of every protection resource. cna-rvp-change checks a review follows each change in the scope change log by its deadline.",
+      "cycle": "At least once a year, and after each change in the scope change log by a deadline that depends on the change type (POL-CNA CNA-7a, CNA-7b).",
+      "verification_measures": "The methods show dated reviews by the right person, covering every protection resource and following every recorded change. They do not show that a review judged the protections effective, and changes missing from the scope change log cannot trigger a review (design gap).",
+      "verification_automation": "Design status Built: unit tests and a manual break test of the change method on 2026-11-22.",
+      "validation": "Latest result pass, all three methods pass. History: 4 not_implemented, 1 pass.",
+      "sources": [
+        {
+          "input": "I-11",
+          "location": "KSI-CNA-RVP"
+        },
+        {
+          "input": "I-02",
+          "location": "CNA-7a; CNA-7b"
+        },
+        {
+          "input": "I-09",
+          "location": "KSI-CNA-RVP"
+        },
+        {
+          "input": "I-20",
+          "location": "KSI-CNA-RVP"
+        },
+        {
+          "frmr": "SDR-CSX-KSI"
+        }
+      ]
+    },
+    {
+      "id": "OC-01",
+      "kind": "ocr_item",
+      "item": "Changes to FedRAMP Certification Data",
+      "summary": "SC-001 (2026-11-19): baseline recovery model, added the backup vault and recovery environment. SC-002 (2026-11-21): support-derived data recorded on managed endpoints. Both evaluated as not significant.",
+      "status": "drafted",
+      "sources": [
+        {
+          "input": "I-13",
+          "location": "SC-001; SC-002"
+        },
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "OC-02",
+      "kind": "ocr_item",
+      "item": "Planned changes during at least the next 3 months",
+      "summary": "CR-014, team chat notification channel, planned 2027-02-01 to 2027-02-26; change type not yet decided.",
+      "status": "drafted",
+      "sources": [
+        {
+          "input": "I-16",
+          "location": "header"
+        },
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "OC-03",
+      "kind": "ocr_item",
+      "item": "Accepted vulnerabilities",
+      "summary": "No vulnerability records are in the inputs.",
+      "status": "missing",
+      "sources": [
+        {
+          "frmr": "FRD-ACV"
+        },
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "OC-04",
+      "kind": "ocr_item",
+      "item": "Transformative changes",
+      "summary": "None in the scope change log for the period. The log covers changes to the scope record only; other changes need the change records.",
+      "status": "none recorded",
+      "sources": [
+        {
+          "input": "I-13",
+          "location": "entries"
+        },
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "OC-05",
+      "kind": "ocr_item",
+      "item": "Updated recommendations or best practices",
+      "summary": "No record in the inputs.",
+      "status": "missing",
+      "sources": [
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "OC-06",
+      "kind": "ocr_item",
+      "item": "Agencies directly using the offering",
+      "summary": "SC-001 records that no agency was relying on the offering on 2026-11-19. No later record.",
+      "status": "drafted",
+      "sources": [
+        {
+          "input": "I-13",
+          "location": "SC-001 evaluation"
+        },
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "OC-07",
+      "kind": "ocr_item",
+      "item": "FedRAMP Reportable Incidents, or an attestation that none occurred",
+      "summary": "The incident records hold one entry with no dates or values, so they do not show whether incidents occurred. An attestation needs the CISO.",
+      "status": "missing",
+      "sources": [
+        {
+          "input": "I-06",
+          "location": "incidents"
+        },
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "OC-08",
+      "kind": "ocr_item",
+      "item": "Lessons learned from FedRAMP Reportable Incidents",
+      "summary": "Depends on the incident item.",
+      "status": "missing",
+      "sources": [
+        {
+          "input": "I-06",
+          "location": "incidents"
+        },
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    }
+  ],
+  "decisions_needed": [],
+  "open_questions": [
+    {
+      "id": "Q-001",
+      "question": "Who is the official accountable for the package (name, title, contact)?",
+      "why": "CPO-CSO-MTD requires it",
+      "blocks": [
+        "PK-01"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-002",
+      "question": "Can the client provide its vulnerability records and an incident log for the period, or the CISO's attestation that no reportable incident occurred?",
+      "why": "Three report items need them",
+      "blocks": [
+        "OC-03",
+        "OC-07",
+        "OC-08"
+      ],
+      "answer": null
+    }
+  ],
+  "sme_validation": {
+    "status": "draft",
+    "validated_by": null,
+    "role": null,
+    "date": null,
+    "corrections": [],
+    "rejected": []
+  }
+}

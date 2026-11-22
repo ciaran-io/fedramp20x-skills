@@ -1,0 +1,1224 @@
+{
+  "title": "KSI policy coverage review",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C (CR26)",
+  "frmr_version": "2026.11.02.01",
+  "date": "2026-11-22",
+  "sme_validation": "Draft: pending SME validation",
+  "sheets": [
+    {
+      "name": "Coverage",
+      "columns": [
+        "KSI",
+        "Name",
+        "Requirements",
+        "Coverage",
+        "Gaps",
+        "Note"
+      ],
+      "rows": [
+        [
+          "KSI-CED-RAT",
+          "Reviewing All Training",
+          [],
+          "not reviewed",
+          [],
+          "POL-CED was not provided"
+        ],
+        [
+          "KSI-CMT-LMC",
+          "Logging Changes",
+          [
+            "POL-CMT/CMT-1",
+            "POL-CMT/CMT-5",
+            "POL-CMT/CMT-6"
+          ],
+          "partial",
+          [
+            "G-006"
+          ],
+          "Logging stated; monitoring not stated"
+        ],
+        [
+          "KSI-CMT-RMV",
+          "Redeploying vs Modifying",
+          [
+            "POL-CMT/CMT-2"
+          ],
+          "partial",
+          [
+            "G-008"
+          ],
+          "Covered in substance; actor pending DQ-001"
+        ],
+        [
+          "KSI-CMT-RVP",
+          "Reviewing Change Procedures",
+          [
+            "POL-CMT/CMT-3"
+          ],
+          "covered",
+          [
+            "G-014"
+          ],
+          "Owner, yearly and failed-change cycle, and record location stated"
+        ],
+        [
+          "KSI-CMT-VTD",
+          "Validating Throughout Deployment",
+          [
+            "POL-CMT/CMT-4"
+          ],
+          "partial",
+          [
+            "G-008",
+            "G-009"
+          ],
+          "Every deployment; actor and record location not stated"
+        ],
+        [
+          "KSI-CNA-DFP",
+          "Defining Functionality and Privileges",
+          [
+            "POL-CNA/CNA-1"
+          ],
+          "partial",
+          [
+            "G-008"
+          ],
+          "Covered in substance; actor pending DQ-001"
+        ],
+        [
+          "KSI-CNA-EIS",
+          "Enforcing Intended State",
+          [
+            "POL-CNA/CNA-2"
+          ],
+          "partial",
+          [
+            "G-002",
+            "G-003",
+            "G-008"
+          ],
+          "No review cycle; no automated enforcement"
+        ],
+        [
+          "KSI-CNA-IBP",
+          "Implementing Best Practices",
+          [
+            "POL-CNA/CNA-3"
+          ],
+          "partial",
+          [
+            "G-008",
+            "G-009"
+          ],
+          "Cycle stated; actor and record location not stated"
+        ],
+        [
+          "KSI-CNA-MAT",
+          "Minimizing Attack Surface",
+          [
+            "POL-CNA/CNA-4"
+          ],
+          "partial",
+          [
+            "G-002",
+            "G-004",
+            "G-008"
+          ],
+          "No review cycle; lateral movement not addressed"
+        ],
+        [
+          "KSI-CNA-OFA",
+          "Optimizing for Availability",
+          [
+            "POL-CNA/CNA-5"
+          ],
+          "partial",
+          [
+            "G-002",
+            "G-008"
+          ],
+          "No review cycle"
+        ],
+        [
+          "KSI-CNA-RNT",
+          "Restricting Network Traffic",
+          [
+            "POL-CNA/CNA-6"
+          ],
+          "partial",
+          [
+            "G-002",
+            "G-008"
+          ],
+          "No review cycle"
+        ],
+        [
+          "KSI-CNA-RVP",
+          "Reviewing Protections",
+          [
+            "POL-CNA/CNA-7a",
+            "POL-CNA/CNA-7b"
+          ],
+          "partial",
+          [
+            "G-009",
+            "G-011"
+          ],
+          "Owner, cycle and change deadlines stated; record location not stated"
+        ],
+        [
+          "KSI-CNA-ULN",
+          "Using Logical Networking",
+          [
+            "POL-CNA/CNA-8"
+          ],
+          "partial",
+          [
+            "G-002",
+            "G-008"
+          ],
+          "No review cycle"
+        ],
+        [
+          "KSI-IAM-AAM",
+          "Automating Account Management",
+          [],
+          "not reviewed",
+          [],
+          "POL-IAM was not provided"
+        ],
+        [
+          "KSI-IAM-APM",
+          "Adopting Passwordless Methods",
+          [],
+          "not reviewed",
+          [],
+          "POL-IAM was not provided"
+        ],
+        [
+          "KSI-IAM-ELP",
+          "Ensuring Least Privilege",
+          [],
+          "not reviewed",
+          [],
+          "POL-IAM was not provided"
+        ],
+        [
+          "KSI-IAM-JIT",
+          "Authorizing Just-in-Time",
+          [],
+          "not reviewed",
+          [],
+          "POL-IAM was not provided"
+        ],
+        [
+          "KSI-IAM-SNU",
+          "Securing Non-User Authentication",
+          [],
+          "not reviewed",
+          [],
+          "POL-IAM was not provided"
+        ],
+        [
+          "KSI-IAM-SUS",
+          "Responding to Suspicious Activity",
+          [],
+          "not reviewed",
+          [],
+          "POL-IAM was not provided"
+        ],
+        [
+          "KSI-INR-AAR",
+          "Generating After Action Reports",
+          [
+            "POL-INR/INR-2"
+          ],
+          "partial",
+          [
+            "G-001",
+            "G-008"
+          ],
+          "Reports are required; incorporating lessons is not"
+        ],
+        [
+          "KSI-INR-RIR",
+          "Reviewing Incident Response Procedures",
+          [
+            "POL-INR/INR-1",
+            "POL-INR/INR-3"
+          ],
+          "partial",
+          [
+            "G-008",
+            "G-009"
+          ],
+          "Owner and cycle stated; record location not stated"
+        ],
+        [
+          "KSI-INR-RPI",
+          "Reviewing Past Incidents",
+          [
+            "POL-INR/INR-4"
+          ],
+          "partial",
+          [
+            "G-010",
+            "G-009"
+          ],
+          "Cycle stated; owner is a team; record location not stated"
+        ],
+        [
+          "KSI-MLA-ALA",
+          "Authorizing Log Access",
+          [],
+          "not reviewed",
+          [],
+          "POL-MLA was not provided"
+        ],
+        [
+          "KSI-MLA-EVC",
+          "Evaluating Configurations",
+          [],
+          "not reviewed",
+          [],
+          "POL-MLA was not provided"
+        ],
+        [
+          "KSI-MLA-LET",
+          "Logging Event Types",
+          [],
+          "not reviewed",
+          [],
+          "POL-MLA was not provided"
+        ],
+        [
+          "KSI-MLA-OSM",
+          "Operating SIEM Capability",
+          [],
+          "not reviewed",
+          [],
+          "POL-MLA was not provided"
+        ],
+        [
+          "KSI-MLA-RVL",
+          "Reviewing Logs",
+          [],
+          "not reviewed",
+          [],
+          "POL-MLA was not provided"
+        ],
+        [
+          "KSI-PIY-GIV",
+          "Generating Inventories",
+          [],
+          "not reviewed",
+          [],
+          "POL-PIY was not provided"
+        ],
+        [
+          "KSI-PIY-RES",
+          "Reviewing Executive Support",
+          [],
+          "not reviewed",
+          [],
+          "POL-PIY was not provided"
+        ],
+        [
+          "KSI-PIY-RIS",
+          "Reviewing Investments in Security",
+          [],
+          "not reviewed",
+          [],
+          "POL-PIY was not provided"
+        ],
+        [
+          "KSI-PIY-RSD",
+          "Reviewing Security in the SDLC",
+          [],
+          "not reviewed",
+          [],
+          "POL-PIY was not provided"
+        ],
+        [
+          "KSI-PIY-RVD",
+          "Reviewing Vulnerability Disclosures",
+          [],
+          "not reviewed",
+          [],
+          "POL-PIY was not provided"
+        ],
+        [
+          "KSI-RPL-ABO",
+          "Aligning Backups with Objectives",
+          [
+            "POL-RPL/RPL-2"
+          ],
+          "partial",
+          [
+            "G-008",
+            "G-009"
+          ],
+          "Cycle stated; acknowledging role and record location not stated"
+        ],
+        [
+          "KSI-RPL-ARP",
+          "Aligning Recovery Plan",
+          [
+            "POL-RPL/RPL-3",
+            "POL-RPL/RPL-5"
+          ],
+          "partial",
+          [
+            "G-005",
+            "G-008",
+            "G-013"
+          ],
+          "No review against the objectives"
+        ],
+        [
+          "KSI-RPL-RRO",
+          "Reviewing Recovery Objectives",
+          [
+            "POL-RPL/RPL-1"
+          ],
+          "covered",
+          [],
+          "Owner, 90-day cycle and record location stated"
+        ],
+        [
+          "KSI-RPL-TRC",
+          "Testing Recovery Capabilities",
+          [
+            "POL-RPL/RPL-4"
+          ],
+          "partial",
+          [
+            "G-012",
+            "G-008",
+            "G-009"
+          ],
+          "Six-month cycle stated; no comparison with the objectives"
+        ],
+        [
+          "KSI-SCR-MIT",
+          "Mitigating Supply Chain Risk",
+          [],
+          "not reviewed",
+          [],
+          "POL-SCR was not provided"
+        ],
+        [
+          "KSI-SCR-MON",
+          "Monitoring Supply Chain Risk",
+          [],
+          "not reviewed",
+          [],
+          "POL-SCR was not provided"
+        ],
+        [
+          "KSI-SVC-ACM",
+          "Automating Configuration Management",
+          [],
+          "not reviewed",
+          [],
+          "POL-SVC was not provided"
+        ],
+        [
+          "KSI-SVC-ASM",
+          "Automating Secret Management",
+          [],
+          "not reviewed",
+          [],
+          "POL-SVC was not provided"
+        ],
+        [
+          "KSI-SVC-EIS",
+          "Evaluating and Improving Security",
+          [],
+          "not reviewed",
+          [],
+          "POL-SVC was not provided"
+        ],
+        [
+          "KSI-SVC-PRR",
+          "Preventing Residual Risk",
+          [],
+          "not reviewed",
+          [],
+          "POL-SVC was not provided"
+        ],
+        [
+          "KSI-SVC-RUD",
+          "Removing Unwanted Data",
+          [],
+          "not reviewed",
+          [],
+          "POL-SVC was not provided"
+        ],
+        [
+          "KSI-SVC-SIN",
+          "Securing Information",
+          [],
+          "not reviewed",
+          [],
+          "POL-SVC was not provided"
+        ],
+        [
+          "KSI-SVC-VCM",
+          "Validating Communications",
+          [],
+          "not reviewed",
+          [],
+          "POL-SVC was not provided"
+        ],
+        [
+          "KSI-SVC-VRI",
+          "Validating Resource Integrity",
+          [],
+          "not reviewed",
+          [],
+          "POL-SVC was not provided"
+        ]
+      ]
+    },
+    {
+      "name": "Gaps",
+      "columns": [
+        "ID",
+        "Title",
+        "Requirement",
+        "Test",
+        "Criteria",
+        "Rating",
+        "Observation",
+        "Recommendation",
+        "Rewrite",
+        "Sources",
+        "Confirmed"
+      ],
+      "rows": [
+        [
+          "G-001",
+          "Lessons learned have no cycle, owner or record",
+          "POL-INR/INR-2",
+          "T2 Cycle; T7 Mapping",
+          [
+            "KSI-INR-AAR",
+            "FRD-PER",
+            "POL-INR/INR-2"
+          ],
+          "Moderate",
+          "INR-2 requires an after action report within 10 business days. KSI-INR-AAR has a second part: lessons learned are persistently incorporated. INR-3 covers lessons that change the incident response plan. No requirement covers lessons that change anything else, and none states who tracks them, how often, or where.",
+          "Add a sentence to INR-2 that records each lesson as an action with an owner and a due date, and reviews open actions in the quarterly review under INR-4.",
+          "R-001",
+          "I-01 INR-2; I-01 INR-3; I-01 INR-4; KSI-INR-AAR; FRD-PER",
+          "yes"
+        ],
+        [
+          "G-002",
+          "Five CNA KSIs have no stated review cycle",
+          "POL-CNA/CNA-2, CNA-4, CNA-5, CNA-6, CNA-8",
+          "T2 Cycle",
+          [
+            "KSI-CNA-EIS",
+            "KSI-CNA-MAT",
+            "KSI-CNA-OFA",
+            "KSI-CNA-RNT",
+            "KSI-CNA-ULN",
+            "FRD-PER",
+            "VDR-TFR-MVX"
+          ],
+          "Moderate",
+          "Each of these KSIs requires that the resources are persistently reviewed or assessed. CNA-2, CNA-4, CNA-5, CNA-6 and CNA-8 state the configuration rule but no cycle for reviewing it, no owner of the review and no record. CNA-3 is the only CNA requirement that states a cycle (every validation run, and at least every 3 days).",
+          "Add one requirement that applies the CNA-3 cycle to the configuration rules in CNA-2, CNA-4, CNA-5, CNA-6 and CNA-8 (decision DQ-002).",
+          "R-002",
+          "I-02 CNA-2; I-02 CNA-3; I-02 CNA-4; I-02 CNA-5; I-02 CNA-6; I-02 CNA-8; KSI-CNA-EIS; KSI-CNA-MAT; KSI-CNA-OFA; KSI-CNA-RNT; KSI-CNA-ULN; FRD-PER; VDR-TFR-MVX; DQ-002",
+          "yes"
+        ],
+        [
+          "G-003",
+          "Intended state is not enforced automatically",
+          "POL-CNA/CNA-2",
+          "T7 Mapping",
+          [
+            "KSI-CNA-EIS",
+            "POL-CNA/CNA-2"
+          ],
+          "Moderate",
+          "KSI-CNA-EIS requires automated services that assess machine-based resources and enforce their intended state automatically. CNA-2 treats a resource outside the code as a defect to be removed or brought into code within 5 business days. It names no automated assessment and allows the correction to be manual.",
+          "State the automated service that detects drift and restores the declared state, and keep the 5 business day limit for differences it cannot restore. The tool must come from the client (Q-007).",
+          "R-003",
+          "I-02 CNA-2; KSI-CNA-EIS",
+          "yes"
+        ],
+        [
+          "G-004",
+          "Lateral movement is not addressed",
+          "POL-CNA/CNA-4",
+          "T7 Mapping",
+          [
+            "KSI-CNA-MAT",
+            "POL-CNA/CNA-4"
+          ],
+          "Moderate",
+          "KSI-CNA-MAT has two parts: a minimal attack surface, and minimal lateral movement if a resource is compromised. CNA-4 limits public exposure. No requirement mapped to KSI-CNA-MAT addresses lateral movement. CNA-8 separates tenants' workloads from operations tooling and other trust zones, which may be meant to cover it, but it is mapped only to KSI-CNA-ULN.",
+          "If CNA-8 is meant to limit lateral movement, map it to KSI-CNA-MAT and say so in the text. Otherwise add a requirement. Confirm with the client (Q-005).",
+          "",
+          "I-02 CNA-4; I-02 CNA-8; KSI-CNA-MAT",
+          "no"
+        ],
+        [
+          "G-005",
+          "Recovery plan is not reviewed against the objectives",
+          "POL-RPL/RPL-3",
+          "T2 Cycle; T7 Mapping",
+          [
+            "KSI-RPL-ARP",
+            "FRD-PER",
+            "POL-RPL/RPL-3"
+          ],
+          "Moderate",
+          "KSI-RPL-ARP requires that the alignment of the recovery plan with the recovery objectives is persistently reviewed. RPL-3 says the plan is kept in step with the architecture. It does not require a review against the RTO and RPO in RPL-1, and names no owner, cycle or record.",
+          "Add a review of the recovery plan against RPL-1, with an owner, a cycle and a record location the client sets.",
+          "R-004",
+          "I-03 RPL-1; I-03 RPL-3; KSI-RPL-ARP; FRD-PER",
+          "yes"
+        ],
+        [
+          "G-006",
+          "Change logs are kept but monitoring is not stated",
+          "POL-CMT/CMT-1",
+          "T7 Mapping",
+          [
+            "KSI-CMT-LMC",
+            "POL-CMT/CMT-1"
+          ],
+          "Moderate",
+          "KSI-CMT-LMC requires that changes are logged and monitored. CMT-1 requires the pipeline to log each change. No requirement in POL-CMT states that anyone monitors the log, how often, or what happens when a change did not follow CMT-1 to CMT-6.",
+          "Add who monitors the change log, how often, and where the review is recorded (Q-008).",
+          "R-005",
+          "I-04 CMT-1; I-04 CMT-6; KSI-CMT-LMC",
+          "yes"
+        ],
+        [
+          "G-007",
+          "CMT-7 cites rules that apply to Rev5 only",
+          "POL-CMT/CMT-7",
+          "T8 Rule IDs",
+          [
+            "FRC-CCL-UCC",
+            "FRC-CCL-DCC",
+            "SCN-CSO-EVA"
+          ],
+          "Low",
+          "CMT-7 cites FRC-CCL-UCC and FRC-CCL-DCC. In FRMR 2026.11.02.01 these rules sit in the FRC-CCL subset, which applies to Rev5 only. For 20x, the evaluation steps listed under SCN-CSO-EVA say that a change of certification class needs a new assessment and is not handled under the significant change rules. CMT-7 states the same in substance, so only the citation is wrong.",
+          "Cite SCN-CSO-EVA in CMT-7 in place of FRC-CCL-UCC and FRC-CCL-DCC.",
+          "R-009",
+          "I-04 CMT-7; FRC-CCL-UCC; FRC-CCL-DCC; SCN-CSO-EVA",
+          "yes"
+        ],
+        [
+          "G-008",
+          "Eighteen requirements name no actor",
+          "INR-1, INR-2, CNA-1 to CNA-6, CNA-8, RPL-2 to RPL-5, CMT-1, CMT-2, CMT-4, CMT-6, CMT-7",
+          "T1 Owner",
+          [
+            "FRD-PER"
+          ],
+          "Low",
+          "Each policy names an owner in its header (CISO for POL-INR, Platform Lead for the others). The listed requirements name no role that does the activity. RPL-2 says a failed job alert is acknowledged by a named person but does not say which role. Whether the header owner owns these requirements is not stated.",
+          "If the header owner owns every requirement that names no actor, say so once in each policy (decision DQ-001). Name the role that acknowledges RPL-2 alerts.",
+          "",
+          "I-01 INR-1; I-01 INR-2; I-02 CNA-1; I-03 RPL-2; I-03 RPL-3; I-04 CMT-2; FRD-PER; DQ-001",
+          "no"
+        ],
+        [
+          "G-009",
+          "Review and test records have no stated location",
+          "INR-3, INR-4, CNA-3, CNA-7a, CNA-7b, RPL-2, RPL-4, CMT-4",
+          "T3 Record",
+          [
+            "FRD-PER",
+            "VDR-TFR-NMV"
+          ],
+          "Low",
+          "These requirements set a cycle but do not say where its record is kept. RPL-1 and CMT-3 do state a record location. A check cannot confirm the status of a cycle without a known record.",
+          "State the record location in each requirement (decision DQ-003).",
+          "",
+          "I-01 INR-3; I-01 INR-4; I-02 CNA-3; I-02 CNA-7a; I-02 CNA-7b; I-03 RPL-2; I-03 RPL-4; I-04 CMT-4; I-03 RPL-1; I-04 CMT-3; FRD-PER; VDR-TFR-NMV; DQ-003",
+          "yes"
+        ],
+        [
+          "G-010",
+          "Past incident review is owned by a team",
+          "POL-INR/INR-4",
+          "T1 Owner; T4 Reviewer",
+          [
+            "KSI-INR-RPI",
+            "POL-INR/INR-4"
+          ],
+          "Moderate",
+          "INR-4 assigns the quarterly review of past incidents to the security team. A check that compares the reviewer with the policy needs one accountable role. INR-3 names the CISO for the plan review.",
+          "Name the role that runs and records the quarterly review (Q-006).",
+          "R-006",
+          "I-01 INR-3; I-01 INR-4; KSI-INR-RPI",
+          "yes"
+        ],
+        [
+          "G-011",
+          "Transformative change review may come after the notices",
+          "POL-CNA/CNA-7b",
+          "T5 Change deadline",
+          [
+            "KSI-CNA-RVP",
+            "SCN-TRF-NIP",
+            "SCN-TRF-NFP",
+            "POL-CNA/CNA-7b"
+          ],
+          "Low",
+          "CNA-7b requires a review of protections before a transformative change starts. SCN-TRF-NIP and SCN-TRF-NFP require notices of initial and final plans 30 and 10 business days before the change starts. A review held just before the start meets CNA-7b but cannot inform those notices.",
+          "Set the pre-change review before the final plans notice under SCN-TRF-NFP.",
+          "R-007",
+          "I-02 CNA-7b; KSI-CNA-RVP; SCN-TRF-NIP; SCN-TRF-NFP",
+          "yes"
+        ],
+        [
+          "G-012",
+          "Restore test results are not compared with the objectives",
+          "POL-RPL/RPL-4",
+          "T7 Mapping",
+          [
+            "KSI-RPL-TRC",
+            "POL-RPL/RPL-4"
+          ],
+          "Low",
+          "KSI-RPL-TRC requires recovery testing aligned with the recovery objectives. RPL-4 records the time taken and the data age restored, but does not require a comparison with the RTO and RPO in RPL-1 or say what happens when a result falls outside them.",
+          "Require the comparison with RPL-1 and record a result outside an objective as a finding.",
+          "R-008",
+          "I-03 RPL-1; I-03 RPL-4; KSI-RPL-TRC",
+          "yes"
+        ],
+        [
+          "G-013",
+          "RPL-5 is mapped to plan alignment but is a scope rule",
+          "POL-RPL/RPL-5",
+          "T7 Mapping",
+          [
+            "KSI-RPL-ARP",
+            "MAS-CSO-IIR"
+          ],
+          "Observation",
+          "RPL-5 places the recovery environment under the same scope record and controls as production. That is a scope requirement. It does not address the review of plan alignment that KSI-RPL-ARP requires. RPL-3 is the requirement that maps to KSI-RPL-ARP.",
+          "Keep RPL-5, and map it to the scope record rather than to KSI-RPL-ARP.",
+          "",
+          "I-03 RPL-3; I-03 RPL-5; KSI-RPL-ARP; MAS-CSO-IIR",
+          "yes"
+        ],
+        [
+          "G-014",
+          "CMT-5 is mapped to procedure review but covers notices",
+          "POL-CMT/CMT-5",
+          "T7 Mapping",
+          [
+            "KSI-CMT-RVP"
+          ],
+          "Observation",
+          "CMT-5 is mapped to KSI-CMT-RVP. It covers the significant change log and notices, not the review of the change procedure. CMT-3 covers KSI-CMT-RVP.",
+          "Remove KSI-CMT-RVP from the CMT-5 mapping.",
+          "",
+          "I-04 CMT-3; I-04 CMT-5; KSI-CMT-RVP",
+          "yes"
+        ]
+      ]
+    },
+    {
+      "name": "Rewrites",
+      "columns": [
+        "ID",
+        "Requirement",
+        "Current text",
+        "Recommended text",
+        "Closes"
+      ],
+      "rows": [
+        [
+          "R-001",
+          "POL-INR/INR-2",
+          "Each FedRAMP Reportable Incident, and each incident rated N2 or above, ends with an after action report within 10 business days. A reportable incident with no rating is treated as N5 (IEC-CSO-DPR).",
+          "Each FedRAMP Reportable Incident, and each incident rated N2 or above, ends with an after action report within 10 business days. A reportable incident with no rating is treated as N5 (IEC-CSO-DPR). [owner: client to confirm] records each lesson learned as an action with an owner and a due date in [record: client to confirm]. The quarterly review under INR-4 checks the open actions.",
+          [
+            "G-001"
+          ]
+        ],
+        [
+          "R-002",
+          "POL-CNA/CNA-9 (new)",
+          "None",
+          "The Platform Lead's automated validation checks the configuration that CNA-2, CNA-4, CNA-5, CNA-6 and CNA-8 require on every validation run, and at least every 3 days. Each run's result is kept in [record: client to confirm]. A failed check is fixed or accepted as an exception under the policy exception process.",
+          [
+            "G-002"
+          ]
+        ],
+        [
+          "R-003",
+          "POL-CNA/CNA-2",
+          "Infrastructure is declared in code. A resource that exists outside the code is a defect and is removed or brought into the code within 5 business days.",
+          "Infrastructure is declared in code. [tool: client to confirm] compares the running state with the code on every validation run, and at least every 3 days, and restores the declared state automatically. A difference it cannot restore is a defect and is removed or brought into the code within 5 business days.",
+          [
+            "G-003"
+          ]
+        ],
+        [
+          "R-004",
+          "POL-RPL/RPL-3",
+          "The recovery plan describes how a recovery environment is built from infrastructure code and how data is restored into it. It is kept in step with the architecture.",
+          "The recovery plan describes how a recovery environment is built from infrastructure code and how data is restored into it. It is kept in step with the architecture. [owner: client to confirm] reviews the plan against the recovery objectives in RPL-1 [cadence: client to confirm] and after each restore test under RPL-4, and records the review in [record: client to confirm].",
+          [
+            "G-005"
+          ]
+        ],
+        [
+          "R-005",
+          "POL-CMT/CMT-1",
+          "Every change to a production resource is made through the pipeline. The pipeline logs the change, the author, the reviewer and the result.",
+          "Every change to a production resource is made through the pipeline. The pipeline logs the change, the author, the reviewer and the result. [owner: client to confirm] reviews the pipeline log [cadence: client to confirm] for changes that did not follow CMT-1 to CMT-6, and records the review in [record: client to confirm].",
+          [
+            "G-006"
+          ]
+        ],
+        [
+          "R-006",
+          "POL-INR/INR-4",
+          "The security team reviews all past incidents and near misses, of any rating, every quarter for repeated causes. The review lists the incidents it covered and records its findings.",
+          "[owner: client to confirm] reviews all past incidents and near misses, of any rating, every quarter for repeated causes. The review lists the incidents it covered and records its findings. The review is recorded in [record: client to confirm].",
+          [
+            "G-010",
+            "G-009"
+          ]
+        ],
+        [
+          "R-007",
+          "POL-CNA/CNA-7b",
+          "The Platform Lead also reviews protections after each change recorded in mas/scope-changes.json. The deadline depends on the change type in the SCN rules. Transformative: before the change starts, and again within 5 business days after it is finished. Adaptive: within 10 business days after the change is finished, before the notice under SCN-ADP-NTF. Not significant: within 20 business days after the change is finished. Routine recurring: no separate review, because the annual review covers these changes.",
+          "The Platform Lead also reviews protections after each change recorded in mas/scope-changes.json. The deadline depends on the change type in the SCN rules. Transformative: before the notice of final plans under SCN-TRF-NFP, and again within 5 business days after it is finished. Adaptive: within 10 business days after the change is finished, before the notice under SCN-ADP-NTF. Not significant: within 20 business days after the change is finished. Routine recurring: no separate review, because the annual review covers these changes.",
+          [
+            "G-011"
+          ]
+        ],
+        [
+          "R-009",
+          "POL-CMT/CMT-7",
+          "A change of certification class is not a significant change. It needs a new certification before the offering operates at the new class (FRC-CCL-UCC, FRC-CCL-DCC).",
+          "A change of certification class is not a significant change. It needs a new certification before the offering operates at the new class (SCN-CSO-EVA).",
+          [
+            "G-007"
+          ]
+        ],
+        [
+          "R-008",
+          "POL-RPL/RPL-4",
+          "A restore test runs at least every 6 months. It records the time taken, the data age restored and any failure.",
+          "A restore test runs at least every 6 months. It records the time taken, the data age restored and any failure. The results are compared with the recovery objectives in RPL-1. A result outside an objective is recorded as a finding in [record: client to confirm].",
+          [
+            "G-012"
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "Requirements",
+      "columns": [
+        "Policy",
+        "Requirement",
+        "Text",
+        "Owner",
+        "Cadence or deadline",
+        "Record location",
+        "KSIs (client mapping)"
+      ],
+      "rows": [
+        [
+          "POL-INR",
+          "INR-1",
+          "The incident response plan defines roles, evaluation steps and the communication timelines for the IEC rules. Each incident is rated with the Potential Agency Impact N-rating (PAIN, N0 to N5) and marked as reportable or not reportable to FedRAMP.",
+          "not stated",
+          "not stated",
+          "not stated",
+          [
+            "KSI-INR-RIR"
+          ]
+        ],
+        [
+          "POL-INR",
+          "INR-2",
+          "Each FedRAMP Reportable Incident, and each incident rated N2 or above, ends with an after action report within 10 business days. A reportable incident with no rating is treated as N5 (IEC-CSO-DPR).",
+          "not stated",
+          "within 10 business days",
+          "not stated",
+          [
+            "KSI-INR-AAR"
+          ]
+        ],
+        [
+          "POL-INR",
+          "INR-3",
+          "The CISO reviews the plan each year, and when an after action report or a quarterly incident review finds that the plan needs to change.",
+          "CISO",
+          "each year, and when an after action report or a quarterly incident review finds that the plan needs to change",
+          "not stated",
+          [
+            "KSI-INR-RIR",
+            "KSI-INR-RPI"
+          ]
+        ],
+        [
+          "POL-INR",
+          "INR-4",
+          "The security team reviews all past incidents and near misses, of any rating, every quarter for repeated causes. The review lists the incidents it covered and records its findings.",
+          "The security team",
+          "every quarter",
+          "not stated",
+          [
+            "KSI-INR-RPI"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-1",
+          "Each resource has a documented function in the scope record and its own role declared in code. A role grants only the named actions its function needs: no wildcard actions, no role shared between services, and permissions unused for 90 days are removed (POL-IAM IAM-3). Network access follows CNA-6, and data access follows SVC-6.",
+          "not stated",
+          "permissions unused for 90 days are removed",
+          "not stated",
+          [
+            "KSI-CNA-DFP"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-2",
+          "Infrastructure is declared in code. A resource that exists outside the code is a defect and is removed or brought into the code within 5 business days.",
+          "not stated",
+          "within 5 business days (drift removal)",
+          "not stated",
+          [
+            "KSI-CNA-EIS"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-3",
+          "Each third-party machine-based resource is compared with its provider's best-practice guidance on every validation run, and at least every 3 days: the CIS AWS Foundations Benchmark for the AWS account, and the vendor's security baseline for each SaaS tool (E1, E7, E9). Failed controls are fixed or accepted as exceptions under the policy exception process.",
+          "not stated",
+          "on every validation run, and at least every 3 days",
+          "not stated",
+          [
+            "KSI-CNA-IBP"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-4",
+          "Public exposure is limited to the load balancer, gateway and web application firewall (P8). Each open port and public endpoint is justified in the scope record.",
+          "not stated",
+          "not stated",
+          "scope record (justification of each open port and endpoint)",
+          [
+            "KSI-CNA-MAT"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-5",
+          "Production runs in more than one availability zone. Cross-region encrypted backups meet the recovery objectives in policy POL-RPL.",
+          "not stated",
+          "not stated",
+          "not stated",
+          [
+            "KSI-CNA-OFA"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-6",
+          "Inbound and outbound traffic is denied by default. Allowed flows match the flows in the scope record.",
+          "not stated",
+          "not stated",
+          "not stated",
+          [
+            "KSI-CNA-RNT"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-7a",
+          "The Platform Lead reviews protections at least once a year.",
+          "Platform Lead",
+          "at least once a year",
+          "not stated",
+          [
+            "KSI-CNA-RVP"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-7b",
+          "The Platform Lead also reviews protections after each change recorded in mas/scope-changes.json. The deadline depends on the change type in the SCN rules. Transformative: before the change starts, and again within 5 business days after it is finished. Adaptive: within 10 business days after the change is finished, before the notice under SCN-ADP-NTF. Not significant: within 20 business days after the change is finished. Routine recurring: no separate review, because the annual review covers these changes.",
+          "Platform Lead",
+          "deadline by SCN change type after each change in mas/scope-changes.json",
+          "not stated",
+          [
+            "KSI-CNA-RVP"
+          ]
+        ],
+        [
+          "POL-CNA",
+          "CNA-8",
+          "Production uses logical networks and security groups to separate tenants' workloads from operations tooling and from other trust zones.",
+          "not stated",
+          "not stated",
+          "not stated",
+          [
+            "KSI-CNA-ULN"
+          ]
+        ],
+        [
+          "POL-RPL",
+          "RPL-1",
+          "The recovery objectives are a recovery time of 8 hours and a recovery point of 4 hours. The Platform Lead reviews them at least every 90 days and records the result in environment/recovery-objectives.json.",
+          "Platform Lead",
+          "at least every 90 days",
+          "environment/recovery-objectives.json",
+          [
+            "KSI-RPL-RRO"
+          ]
+        ],
+        [
+          "POL-RPL",
+          "RPL-2",
+          "Backups run at least every 2 hours, are encrypted and are copied to a second US region (P12) into a vault that has a compliance-mode lock. Backup jobs and copy jobs are monitored every day. A failed job raises an alert within 60 minutes, and a named person acknowledges it.",
+          "a named person (alert acknowledgement)",
+          "backups at least every 2 hours; jobs monitored every day; alert within 60 minutes",
+          "not stated",
+          [
+            "KSI-RPL-ABO"
+          ]
+        ],
+        [
+          "POL-RPL",
+          "RPL-3",
+          "The recovery plan describes how a recovery environment is built from infrastructure code and how data is restored into it. It is kept in step with the architecture.",
+          "not stated",
+          "not stated",
+          "not stated",
+          [
+            "KSI-RPL-ARP"
+          ]
+        ],
+        [
+          "POL-RPL",
+          "RPL-4",
+          "A restore test runs at least every 6 months. It records the time taken, the data age restored and any failure.",
+          "not stated",
+          "at least every 6 months",
+          "not stated",
+          [
+            "KSI-RPL-TRC"
+          ]
+        ],
+        [
+          "POL-RPL",
+          "RPL-5",
+          "The recovery environment, once built, falls under the same scope record and controls as production.",
+          "not stated",
+          "not stated",
+          "not stated",
+          [
+            "KSI-RPL-ARP"
+          ]
+        ],
+        [
+          "POL-CMT",
+          "CMT-1",
+          "Every change to a production resource is made through the pipeline. The pipeline logs the change, the author, the reviewer and the result.",
+          "not stated",
+          "every change",
+          "pipeline log",
+          [
+            "KSI-CMT-LMC"
+          ]
+        ],
+        [
+          "POL-CMT",
+          "CMT-2",
+          "Production machine-based resources are replaced from a trusted image or build. Staff do not modify running resources by hand.",
+          "not stated",
+          "not stated",
+          "not stated",
+          [
+            "KSI-CMT-RMV"
+          ]
+        ],
+        [
+          "POL-CMT",
+          "CMT-3",
+          "The Platform Lead reviews the change procedure each year, and within 10 business days after any failed or emergency change. Each review is recorded as a new entry in environment/grc-records.json.",
+          "Platform Lead",
+          "each year, and within 10 business days after any failed or emergency change",
+          "environment/grc-records.json",
+          [
+            "KSI-CMT-RVP"
+          ]
+        ],
+        [
+          "POL-CMT",
+          "CMT-4",
+          "Every deployment runs automated tests for integrity and security before release and checks that the deployed state matches the intended state after release.",
+          "not stated",
+          "every deployment",
+          "not stated",
+          [
+            "KSI-CMT-VTD"
+          ]
+        ],
+        [
+          "POL-CMT",
+          "CMT-5",
+          "A change that matches a significant change rule is entered in the significant change log. The GRC Lead sends the required notice within the rule timeline (SCN rules).",
+          "GRC Lead (notice)",
+          "within the rule timeline (SCN rules)",
+          "significant change log",
+          [
+            "KSI-CMT-LMC",
+            "KSI-CMT-RVP"
+          ]
+        ],
+        [
+          "POL-CMT",
+          "CMT-6",
+          "Every change made through the pipeline is assessed for its change type before release: routine recurring, adaptive, transformative or not significant. Every change gets one of these four types, so no change skips the assessment. Routine recurring and not significant changes need no notice. The type is recorded with the change in the pipeline log (CMT-1), and a change that alters the scope record is also logged in mas/scope-changes.json.",
+          "not stated",
+          "before release",
+          "pipeline log; mas/scope-changes.json for scope changes",
+          [
+            "KSI-CMT-LMC"
+          ]
+        ],
+        [
+          "POL-CMT",
+          "CMT-7",
+          "A change of certification class is not a significant change. It needs a new certification before the offering operates at the new class (FRC-CCL-UCC, FRC-CCL-DCC).",
+          "not stated",
+          "not stated",
+          "not stated",
+          []
+        ]
+      ]
+    },
+    {
+      "name": "Questions",
+      "columns": [
+        "ID",
+        "Type",
+        "Question",
+        "Detail",
+        "Recommendation or blocks",
+        "Answer"
+      ],
+      "rows": [
+        [
+          "DQ-001",
+          "Decision",
+          "Does the policy header owner own every requirement that names no actor?",
+          "Yes: add one sentence to each policy saying so; No: name the actor in each requirement; Mixed: name the actor where it differs from the header owner",
+          "Mixed: name the actor where it differs from the header owner",
+          "open"
+        ],
+        [
+          "DQ-002",
+          "Decision",
+          "How should the review cycle for KSI-CNA-EIS, MAT, OFA, RNT and ULN be stated?",
+          "One new requirement (CNA-9) that applies the CNA-3 cycle to all five; Add the cycle to each of CNA-2, CNA-4, CNA-5, CNA-6 and CNA-8",
+          "One new requirement (CNA-9) that applies the CNA-3 cycle to all five",
+          "open"
+        ],
+        [
+          "DQ-003",
+          "Decision",
+          "Where should review and test records be kept for the requirements in G-009?",
+          "The same records as RPL-1 and CMT-3 (environment/recovery-objectives.json and environment/grc-records.json); A location the client names for each requirement",
+          "The same records as RPL-1 and CMT-3 (environment/recovery-objectives.json and environment/grc-records.json)",
+          "open"
+        ],
+        [
+          "Q-001",
+          "Open question",
+          "Can the client provide the incident response plan?",
+          "INR-1 depends on the plan defining roles, evaluation steps and timelines. Test T6 cannot be applied without it",
+          [],
+          "open"
+        ],
+        [
+          "Q-002",
+          "Open question",
+          "Can the client provide the recovery plan?",
+          "G-005 and test T6 for RPL-3 depend on what the plan contains",
+          [
+            "G-005"
+          ],
+          "open"
+        ],
+        [
+          "Q-003",
+          "Open question",
+          "Can the client provide POL-CED, POL-IAM, POL-MLA, POL-PIY, POL-SCR and POL-SVC, and the scope record?",
+          "27 KSIs are not reviewed without them, and CNA-1, CNA-4 and CNA-6 refer to them",
+          [],
+          "open"
+        ],
+        [
+          "Q-005",
+          "Open question",
+          "Is CNA-8 meant to limit lateral movement for KSI-CNA-MAT?",
+          "Decides whether G-004 needs a new requirement or a change of mapping",
+          [
+            "G-004"
+          ],
+          "open"
+        ],
+        [
+          "Q-006",
+          "Open question",
+          "Which role runs and records the quarterly past incident review in INR-4?",
+          "A check compares the reviewer with the role the policy names",
+          [
+            "G-010"
+          ],
+          "open"
+        ],
+        [
+          "Q-007",
+          "Open question",
+          "Which service detects drift and restores the declared state?",
+          "R-003 names it; it cannot be assumed",
+          [
+            "G-003"
+          ],
+          "open"
+        ],
+        [
+          "Q-008",
+          "Open question",
+          "Who reviews the pipeline log, how often, and where is the review recorded?",
+          "R-005 needs all three",
+          [
+            "G-006"
+          ],
+          "open"
+        ]
+      ]
+    }
+  ]
+}

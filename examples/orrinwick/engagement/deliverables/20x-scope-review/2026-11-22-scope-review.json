@@ -1,0 +1,339 @@
+{
+  "skill": "20x-scope-review",
+  "skill_version": "0.1.0",
+  "title": "Minimum Assessment Scope review",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "C",
+  "date": "2026-11-22",
+  "frmr_version": "2026.11.02.01",
+  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+  "prepared_by": "Claude, for A. Example",
+  "mode": "review",
+  "record_reviewed": "I-14, version 0.1.0",
+  "inputs": [
+    {
+      "id": "I-14",
+      "file": "scope/mas-record.json",
+      "sha256": "b44e3cde2a752abb05195ffec5e3ccff17d2fd219763b06626a44f3c90d4fd3e",
+      "description": "Minimum Assessment Scope record, version 0.1.0, status draft"
+    },
+    {
+      "id": "I-13",
+      "file": "scope/scope-changes.json",
+      "sha256": "e19051ba42713b52b5f3d4d9e6b477caca17e41ca144d4240a3fc6ba133cf18b",
+      "description": "Scope change log, SC-001 and SC-002"
+    },
+    {
+      "id": "I-15",
+      "file": "tools/check_scope_changes.py",
+      "sha256": "b027d49a7d63ea58b836747469629c8d5d2ab10861ce30a989717fd15dca2665",
+      "description": "Check that compares the scope record with the change log"
+    }
+  ],
+  "items": [
+    {
+      "id": "F-001",
+      "kind": "finding",
+      "title": "Exclusion conditions have evidence but no owner, cycle, record or check",
+      "test": "M3 Conditions",
+      "rating": "Moderate",
+      "observation": "10 conditions keep 8 resources out of scope (C4, C5, E10, E11, S1, S2, S3, T4). Each names the evidence that shows it holds. None names who checks the evidence, how often, or where the result is recorded, and no validator in the inputs reads the evidence. An exclusion is valid only while its condition holds, so the record cannot show that these resources are still outside the offering.",
+      "criteria": [
+        "MAS-CSO-IIR"
+      ],
+      "recommendation": "Give each condition an owner, a cycle and a record location, and add a check that reads the named evidence. Until then, treat each excluded resource as a scope risk.",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "information_resources[].conditions: COND-E10-1, COND-E10-2, COND-E11-1, COND-S1-1, COND-S1-2, COND-S2-1, COND-S3-1, COND-C4-1, COND-C5-1, COND-T4-1"
+        },
+        {
+          "frmr": "MAS-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "F-002",
+      "kind": "finding",
+      "title": "The change log check cannot see a change to a condition",
+      "test": "M8 Change log",
+      "rating": "Moderate",
+      "observation": "The fingerprint in check_scope_changes.py records conditions only when they are text. The conditions in the record are objects with an ID, text and evidence, so the fingerprint falls back to the list of resources that have conditions. A change to a condition's text or evidence does not change the fingerprint. In a test on 2026-11-22, COND-S1-1 was changed to allow alert content in tickets and its evidence was removed; the check still reported that the change log matches the scope record. The log has a condition_changed type that this check cannot trigger.",
+      "criteria": [
+        "SCN-CSO-EVA",
+        "SCN-CSO-MAR"
+      ],
+      "recommendation": "Include each condition's ID, text and evidence in the fingerprint, and add a test that edits a condition and expects the check to fail.",
+      "sources": [
+        {
+          "input": "I-15",
+          "location": "fingerprint(), conditions key"
+        },
+        {
+          "input": "I-14",
+          "location": "S1 COND-S1-1"
+        },
+        {
+          "input": "I-13",
+          "location": "change types"
+        },
+        {
+          "frmr": "SCN-CSO-EVA"
+        },
+        {
+          "frmr": "SCN-CSO-MAR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "F-003",
+      "kind": "finding",
+      "title": "Third-party providers are not yet selected",
+      "test": "M5 Third parties",
+      "rating": "Observation",
+      "observation": "All 7 third-party entries record each item that MAS-CSO-TPR lists. The authorization status of 7 of them is 'To be verified before provider selection', so the usage and configuration describe a planned setup, not a selected provider.",
+      "criteria": [
+        "MAS-CSO-TPR"
+      ],
+      "recommendation": "When each provider is selected, update its entry with the provider and its actual configuration, and log the change in the scope change log.",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "third_party_resources: TPR-T1, TPR-T2, TPR-T3, TPR-T5, TPR-E1, TPR-E7, TPR-E9"
+        },
+        {
+          "frmr": "MAS-CSO-TPR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "F-004",
+      "kind": "finding",
+      "title": "The scope record is still a draft",
+      "test": "M10 Status",
+      "rating": "Observation",
+      "observation": "The record has status 'draft' and version 0.1.0. The policies and validator designs cite its resource IDs, and the change log treats SC-001 as the baseline.",
+      "criteria": [
+        "MAS-CSO-IIR"
+      ],
+      "recommendation": "Approve the record, or state in it which parts are still open, so that work that relies on it can cite an approved version.",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "status; record_version"
+        },
+        {
+          "input": "I-13",
+          "location": "SC-001"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-E10-1",
+      "kind": "condition",
+      "resource": "E10",
+      "text": "Staging runs in separate cloud accounts with no network path or shared credentials to production.",
+      "evidence": "Account and network configuration checks; credential-sharing scan.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "E10 COND-E10-1"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-E10-2",
+      "kind": "condition",
+      "resource": "E10",
+      "text": "Production data, snapshots and backups are never restored or copied into staging.",
+      "evidence": "Snapshot sharing deny policy and restore-event audit.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "E10 COND-E10-2"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-E11-1",
+      "kind": "condition",
+      "resource": "E11",
+      "text": "Only company-managed devices passing posture checks can use the production access gateway (E6).",
+      "evidence": "Gateway device posture policy and denied-access logs.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "E11 COND-E11-1"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-S1-1",
+      "kind": "condition",
+      "resource": "S1",
+      "text": "Structured intake rejects attachments and free-text alert content; redaction is applied to inbound text.",
+      "evidence": "Intake configuration test with sample payloads.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "S1 COND-S1-1"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-S1-2",
+      "kind": "condition",
+      "resource": "S1",
+      "text": "Support staff are trained and attest that tickets carry no customer alert content.",
+      "evidence": "Training records and quarterly ticket sampling.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "S1 COND-S1-2"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-S2-1",
+      "kind": "condition",
+      "resource": "S2",
+      "text": "Data loss prevention rules block alert content, contact lists and credentials in outbound and internal mail.",
+      "evidence": "DLP rule export and test messages.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "S2 COND-S2-1"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-S3-1",
+      "kind": "condition",
+      "resource": "S3",
+      "text": "Chat retention and DLP detect and remove customer content; policy prohibits sharing it.",
+      "evidence": "DLP configuration and sampled search results.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "S3 COND-S3-1"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-C4-1",
+      "kind": "condition",
+      "resource": "C4",
+      "text": "Only aggregate monthly counts per tenant leave the platform; no alert, user or content detail is exported.",
+      "evidence": "Billing export schema check and sample review.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "C4 COND-C4-1"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-C5-1",
+      "kind": "condition",
+      "resource": "C5",
+      "text": "Secret scanning and policy keep credentials and customer data out of the wiki; access limited to staff.",
+      "evidence": "Secret scan results and access list.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "C5 COND-C5-1"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "COND-T4-1",
+      "kind": "condition",
+      "resource": "T4",
+      "text": "Scrubbing removes tenant, user and alert identifiers and all D1 to D4 content before any telemetry leaves the platform.",
+      "evidence": "Automated outbound payload test in the pipeline.",
+      "owner": null,
+      "cadence": null,
+      "record_location": null,
+      "check": "none in the inputs",
+      "sources": [
+        {
+          "input": "I-14",
+          "location": "T4 COND-T4-1"
+        }
+      ],
+      "confirmed": true
+    }
+  ],
+  "decisions_needed": [
+    {
+      "id": "DQ-001",
+      "question": "Who checks the exclusion conditions, and how often?",
+      "options": [
+        "The GRC Lead, every 3 months, recorded in the GRC records",
+        "Each resource owner, on a cycle the client sets",
+        "Automated checks where the evidence is machine-readable, plus a 3-monthly review by the GRC Lead for the rest"
+      ],
+      "recommendation": "Automated checks where the evidence is machine-readable, plus a 3-monthly review by the GRC Lead for the rest",
+      "reason": "Several conditions name machine evidence (configuration checks, scans, pipeline tests) and others name people evidence (training, sampling). The GRC Lead already records exceptions in the policies. Three months matches the minimum check cadence for non-machine resources (VDR-TFR-NMV); the client may choose a shorter cycle",
+      "decision_ref": null
+    }
+  ],
+  "open_questions": [],
+  "sme_validation": {
+    "status": "draft",
+    "validated_by": null,
+    "role": null,
+    "date": null,
+    "corrections": [],
+    "rejected": []
+  }
+}

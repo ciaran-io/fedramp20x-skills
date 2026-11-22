@@ -1,0 +1,20 @@
+{
+  "skill": "20x-sanity-check",
+  "skill_version": "0.1.0",
+  "title": "Sanity check: {decision}",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "decision": {"id": "D-001", "text": "{the decision in one sentence}", "decided_by": "{from the decision log}", "elements": ["{ID or value it sets}"]},
+  "search_terms": ["{term}"],
+  "inputs": [{"id": "I-01", "file": "{path}", "sha256": "{sha256}", "description": "{what it is}"}],
+  "items": [
+    {"id": "P-01", "kind": "place", "status": "agrees | disagrees | silent | affected", "finding": "{what the document says at this location, or what depends on the decision}", "sources": [{"input": "I-01", "location": "{section, line or ID}"}, {"decision": "D-001"}], "confirmed": true},
+    {"id": "FU-01", "kind": "followup", "change": "{what to change}", "where": "{document and location}", "approver": "{role from the decision or the policy owner}", "status": "proposed", "places": ["P-01"], "sources": [{"decision": "D-001"}], "confirmed": true}
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}

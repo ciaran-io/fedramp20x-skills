@@ -1,0 +1,41 @@
+{
+  "skill": "20x-assessor-review",
+  "skill_version": "0.1.0",
+  "title": "Assessor review",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "client_stage": "preparing | applying | certified",
+  "independence": "{who produced the work and who reviewed it, as the consultant stated}",
+  "areas": ["scope", "policy", "design", "results", "evidence", "deliverable"],
+  "inputs": [
+    {"id": "I-01", "file": "{path}", "sha256": "{sha256}", "description": "{what it is}"}
+  ],
+  "items": [
+    {
+      "id": "F-001",
+      "title": "{short title}",
+      "area": "{area}",
+      "test": "{test ID from review-areas.md}",
+      "lesson": "{L1 to L12, or null}",
+      "observation": "{what the evidence shows}",
+      "criteria": ["{rule or KSI ID}", "{client policy requirement}"],
+      "rating": "High | Moderate | Low | Observation",
+      "recommendation": "{what to do}",
+      "occurrences": ["{each place the pattern occurs}"],
+      "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "{ID}"}],
+      "confirmed": true
+    }
+  ],
+  "earlier_findings": [
+    {"id": "{earlier ID}", "status": "closed | open | partly closed", "evidence": "{source}"}
+  ],
+  "not_assessed": [
+    {"rules": ["{ID or subset}"], "reason": "{why not now}", "starts_when": "{event}", "basis": "{input and location, or the consultant's statement of the client stage}"}
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}

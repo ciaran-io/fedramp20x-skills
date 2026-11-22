@@ -1,0 +1,42 @@
+{
+  "skill": "20x-validator-design",
+  "skill_version": "0.1.0",
+  "title": "Validator designs",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "inputs": [
+    {"id": "I-01", "file": "{path in inputs}", "sha256": "{sha256}", "description": "{what it is}"}
+  ],
+  "items": [
+    {
+      "id": "V-001",
+      "ksi": "{KSI-ID}",
+      "name": "{KSI name}",
+      "parts": ["{part 1 of the KSI in plain words}", "{part 2}"],
+      "requirement": "{what the KSI requires, in plain words}",
+      "policy_requirement": "{POL-X / X-1}",
+      "resource_type": "{Machine-based or Non-machine, and what the resource is}",
+      "cadence": "{how often the check runs, and VDR-TFR-MVX or VDR-TFR-NMV}",
+      "methods": [
+        {"id": "{xxx-yyy-static}", "kind": "static", "reads": "{named client source and field}", "passes_when": "{condition}"},
+        {"id": "{xxx-yyy-live}", "kind": "live", "reads": "{named client source and field}", "passes_when": "{condition}"}
+      ],
+      "fails_when": ["{condition}"],
+      "break_tests": [
+        {"method": "{xxx-yyy-static}", "change": "{the change made}", "expected": "{the message expected}", "status": "Planned"}
+      ],
+      "production_source": "{client system, or [source: client to confirm]}",
+      "gap": "{what the methods do not prove}",
+      "status": "Designed",
+      "decisions": ["{choice made, option rejected and why, decision ID}"],
+      "sources": [{"input": "I-01", "location": "{section or requirement}"}, {"frmr": "{KSI-ID}"}],
+      "confirmed": true
+    }
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}
