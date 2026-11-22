@@ -1,0 +1,13 @@
+{
+  "case": "seeded",
+  "inputs": "tests/20x-incident-reporting/seeded/inputs/plan-draft.md; plan review mode",
+  "expect": [
+    {"id": "E-01", "fault": "The clock starts at detection", "match": {"test": "I4"}},
+    {"id": "E-02", "fault": "A one-hour target is presented as a FedRAMP requirement", "match": {"test": "I10"}},
+    {"id": "E-03", "fault": "No PAIN rating; unrated incidents treated as Low", "match": {"test": "I3", "cites": ["IEC-CSO-DPR"]}},
+    {"id": "E-04", "fault": "No reportability test", "match": {"test": "I1", "cites": ["IEC-CSO-EFR"]}},
+    {"id": "E-05", "fault": "Ongoing reports have no cadence", "match": {"test": "I6"}},
+    {"id": "E-06", "fault": "No point for the final report", "match": {"test": "I7"}}
+  ],
+  "must_not": []
+}

@@ -1,0 +1,20 @@
+{
+  "_notice": "TEST INPUT. Seeded faults for the 20x-assessor-review tests.",
+  "status_model": "pass: two or more methods, all passing, no known gap. partial: passing with fewer than two methods or a known gap.",
+  "run_date": "2026-11-22",
+  "ksis": [
+    {"id": "KSI-CMT-VTD", "status": "pass", "methods": [{"id": "vtd-live", "status": "pass"}], "coverage_note": null},
+    {"id": "KSI-INR-RIR", "status": "pass", "methods": [{"id": "rir-static", "status": "pass"}, {"id": "rir-live", "status": "pass"}], "coverage_note": null}
+  ],
+  "records": {
+    "ir_plan_reviews": [{"date": "2026-10-01", "reviewed_by": "GRC Analyst"}],
+    "policy_owner": {"POL-INR": "CISO"}
+  },
+  "history": [
+    {"run": "2026-09-01", "KSI-INR-RIR": "pass", "ir_plan_newest_review": "2025-08-01", "rir_live_as_of": "2025-09-01"},
+    {"run": "2026-10-01", "KSI-INR-RIR": "pass", "ir_plan_newest_review": "2025-08-01", "rir_live_as_of": "2025-09-01"},
+    {"run": "2026-11-01", "KSI-INR-RIR": "pass", "ir_plan_newest_review": "2026-10-01", "rir_live_as_of": "2025-09-01"}
+  ],
+  "history_edits": [{"record": "ir_plan_reviews[0]", "field": "reviewed_by", "old": "GRC Analyst", "new": "CISO", "edited_on": "2026-11-15"}],
+  "scope": {"exclusions": [{"resource": "S9 support chat tool", "decision": "excluded", "condition": "No customer data is pasted into chats", "evidence": null}]}
+}

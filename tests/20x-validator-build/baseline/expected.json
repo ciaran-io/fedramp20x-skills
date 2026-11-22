@@ -1,0 +1,14 @@
+{
+  "case": "baseline",
+  "inputs": "examples/orrinwick/engagement/inputs/designs/INR.md (KSI-INR-RIR), POL-INR, the incident response plan, the GRC records",
+  "output": "examples/orrinwick/engagement/deliverables/20x-validator-build/2026-11-22-KSI-INR-RIR-validator-build.json",
+  "expect": [
+    {"id": "E-01", "fault": "Static method fails on TODO lines in the plan", "match": {"mentions": ["inr-rir-static", "TODO on line"]}},
+    {"id": "E-02", "fault": "Live method fails on the wrong reviewer, with the observed message", "match": {"mentions": ["inr-rir-live", "'GRC Lead', POL-INR names 'CISO'"]}},
+    {"id": "E-03", "fault": "Live method fails when the review is older than the cadence", "match": {"mentions": ["inr-rir-live", "366 days old"]}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "A break test that did not fail must not be reported as passing", "match": {"mentions": ["DID NOT FAIL"]}}
+  ],
+  "commands": ["python -m pytest examples/orrinwick/engagement/deliverables/20x-validator-build/inr-rir/test_inr_rir.py"]
+}

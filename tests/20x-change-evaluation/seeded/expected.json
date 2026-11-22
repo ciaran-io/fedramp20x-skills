@@ -1,0 +1,14 @@
+{
+  "case": "seeded",
+  "inputs": "tests/20x-change-evaluation/seeded/inputs/changes.md. Run once per change; collect the four deliverables.",
+  "expect_per_change": {
+    "CH-1": {"type": "routine_recurring", "cites": ["SCN-RTR-NNR"], "notices": 0},
+    "CH-2": {"type": "adaptive or transformative, asked of the SME", "cites": ["SCN-CSO-EVA"], "must_ask": true},
+    "CH-3": {"type": "class_change", "cites": ["SCN-CSO-EVA", "FRD-CCC"], "notices": 0, "note": "new assessment, outside the notification rules"},
+    "CH-4": {"type": "not_significant", "cites": ["SCN-CSO-MAR"], "notices": 0, "note": "evaluation still recorded"}
+  },
+  "expect": [],
+  "must_not": [
+    {"id": "N-01", "reason": "Not applicable is not a change type", "match": {"mentions": ["not applicable"], "in": "items"}}
+  ]
+}

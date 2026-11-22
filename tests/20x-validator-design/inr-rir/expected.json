@@ -1,0 +1,15 @@
+{
+  "case": "inr-rir",
+  "inputs": "POL-INR, the incident response plan and the GRC records from examples/orrinwick/engagement/inputs. Ask the skill to design KSI-INR-RIR.",
+  "reference": "github.com/ciaran-io/fedramp20x docs/validator-design/INR.md, KSI-INR-RIR (status Verified there)",
+  "expect": [
+    {"id": "E-01", "fault": "Static method reads the policy and the plan and fails on TODO lines", "match": {"cites": ["KSI-INR-RIR"], "mentions": ["TODO"]}},
+    {"id": "E-02", "fault": "Live method compares the reviewer with the CISO", "match": {"cites": ["KSI-INR-RIR"], "mentions": ["CISO", "reviewed_by"]}},
+    {"id": "E-03", "fault": "Live method measures the review age against the run date", "match": {"cites": ["KSI-INR-RIR"], "mentions": ["run date"]}},
+    {"id": "E-04", "fault": "A plan change required by a report or quarterly review must be followed by a plan review", "match": {"cites": ["KSI-INR-RIR"], "mentions": ["plan_change_required"]}},
+    {"id": "E-05", "fault": "Cadence rule for a non-machine resource", "match": {"cites": ["KSI-INR-RIR", "VDR-TFR-NMV"]}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "The design must not report a break test result it did not observe", "match": {"mentions": ["\"status\": \"Observed\""]}}
+  ]
+}

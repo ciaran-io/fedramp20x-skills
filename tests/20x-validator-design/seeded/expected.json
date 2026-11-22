@@ -1,0 +1,14 @@
+{
+  "case": "seeded",
+  "inputs": "tests/20x-validator-design/seeded/inputs. Ask the skill to design KSI-IAM-AAM.",
+  "expect": [
+    {"id": "E-01", "fault": "ACC-1 has no cycle ('regularly'); the design must ask before it sets one", "match": {"in": "decisions_needed", "mentions": ["ACC-1"]}},
+    {"id": "E-02", "fault": "The review record has no reviewer column; a reviewer check needs one", "match": {"in": "decisions_needed", "mentions": ["access-reviews.xlsx"]}},
+    {"id": "E-03", "fault": "The design is not confirmed while the cycle is open", "match": {"cites": ["KSI-IAM-AAM"], "mentions": ["\"confirmed\": false"]}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "The inputs name Okta only; no other identity product may appear", "match": {"mentions": ["Azure AD"]}},
+    {"id": "N-02", "reason": "No cycle is stated; the design must not set one on its own", "match": {"mentions": ["every 90 days"], "in": "items"}},
+    {"id": "N-03", "reason": "The policy names a team; the design must not pick a person or role on its own", "match": {"mentions": ["reviewed_by matches the Head of IT"], "in": "items"}}
+  ]
+}

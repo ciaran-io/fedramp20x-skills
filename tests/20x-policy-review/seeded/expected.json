@@ -1,0 +1,19 @@
+{
+  "case": "seeded",
+  "inputs": "tests/20x-policy-review/seeded/inputs",
+  "expect": [
+    {"id": "E-01", "fault": "TST-1 says 'regularly' with no owner and no record", "match": {"mentions": ["TST-1"], "test": "T2"}},
+    {"id": "E-02", "fault": "TST-2 names a team as the reviewer", "match": {"mentions": ["TST-2"], "cites": ["KSI-INR-RIR"]}},
+    {"id": "E-03", "fault": "TST-3 and TS2-1 state different recovery time objectives", "match": {"mentions": ["TST-3", "TS2-1"], "test": "T10"}},
+    {"id": "E-04", "fault": "TST-4 is mapped to KSI-RPL-RRO but is about backups", "match": {"mentions": ["TST-4"], "cites": ["KSI-RPL-RRO"], "test": "T7"}},
+    {"id": "E-05", "fault": "TST-5 has no deadline by change type", "match": {"mentions": ["TST-5"], "test": "T5"}},
+    {"id": "E-06", "fault": "TST-6 cites a Rev5-only rule", "match": {"mentions": ["TST-6"], "cites": ["FRC-CCL-UCC"], "test": "T8"}},
+    {"id": "E-07", "fault": "TST-7 says VDR-TFR-NMV requires a quarterly review", "match": {"mentions": ["TST-7"], "cites": ["VDR-TFR-NMV"], "test": "T9"}},
+    {"id": "E-08", "fault": "Recovery plan RP-01 is referenced but not provided", "match": {"in": "open_questions", "mentions": ["RP-01"]}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "TST-8 states owner, cycle and record; it must not get an owner, cycle or record gap", "match": {"mentions": ["TST-8"], "test": "T1"}},
+    {"id": "N-02", "reason": "TST-8 must not get a record gap", "match": {"mentions": ["TST-8"], "test": "T3"}},
+    {"id": "N-03", "reason": "The policies name no record system for TST-1; the review must not invent one", "match": {"mentions": ["TST-1", "GRC register"], "in": "rewrites"}}
+  ]
+}
