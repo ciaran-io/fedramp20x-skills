@@ -1,0 +1,19 @@
+{
+  "name": "20x-validator-design",
+  "version": "0.1.1",
+  "description": "Write a FedRAMP 20x Class C validator design for one or more KSIs, from the client's policy requirement and the client's own tools, stating every way each automated method fails and the break test that proves it. Use when a consultant needs to design how a KSI will be checked before any check code is written.",
+  "author": {
+    "name": "ciaran-io",
+    "url": "https://github.com/ciaran-io"
+  },
+  "homepage": "https://github.com/ciaran-io/fedramp20x-skills",
+  "repository": "https://github.com/ciaran-io/fedramp20x-skills",
+  "license": "MIT",
+  "keywords": [
+    "fedramp",
+    "fedramp-20x",
+    "ksi",
+    "grc",
+    "compliance"
+  ]
+}

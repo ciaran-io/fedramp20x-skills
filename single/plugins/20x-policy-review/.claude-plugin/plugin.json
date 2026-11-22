@@ -1,0 +1,19 @@
+{
+  "name": "20x-policy-review",
+  "version": "0.1.1",
+  "description": "Review a cloud service provider's security policies against every FedRAMP 20x Class C Key Security Indicator and return a KSI coverage matrix, rated gaps and rewritten requirement text with an owner, cadence and record location. Use when a consultant gives you a client's policies to review for FedRAMP 20x.",
+  "author": {
+    "name": "ciaran-io",
+    "url": "https://github.com/ciaran-io"
+  },
+  "homepage": "https://github.com/ciaran-io/fedramp20x-skills",
+  "repository": "https://github.com/ciaran-io/fedramp20x-skills",
+  "license": "MIT",
+  "keywords": [
+    "fedramp",
+    "fedramp-20x",
+    "ksi",
+    "grc",
+    "compliance"
+  ]
+}

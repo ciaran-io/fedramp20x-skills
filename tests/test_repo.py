@@ -61,14 +61,39 @@ def test_shared_files_in_sync():
     assert r.returncode == 0, r.stdout
 
 
-def test_marketplace_lists_every_skill():
-    m = json.loads((ROOT / ".claude-plugin" / "marketplace.json").read_text(encoding="utf-8"))
-    names = {p["name"] for p in m["plugins"]}
-    assert "fedramp20x-skills" in names
-    for s in SKILLS:
-        assert s.name in names
-        entry = next(p for p in m["plugins"] if p["name"] == s.name)
-        assert entry["skills"] == [f"./skills/{s.name}"]
+def _json(path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def test_main_marketplace_lists_the_full_plugin_only():
+    # Single-skill plugins live in the second marketplace, so no skill is listed twice.
+    m = _json(ROOT / ".claude-plugin" / "marketplace.json")
+    assert [p["name"] for p in m["plugins"]] == ["fedramp20x-skills"]
+    assert m["plugins"][0]["source"] == "./"
+    assert _json(ROOT / ".claude-plugin" / "plugin.json")["name"] == "fedramp20x-skills"
+
+
+def test_single_marketplace_lists_every_skill_with_matching_names():
+    # Each entry name must equal the name in that plugin's plugin.json (Claude Code rule).
+    m = _json(ROOT / "single" / ".claude-plugin" / "marketplace.json")
+    assert m["name"] == "fedramp20x-skills-single"
+    assert sorted(p["name"] for p in m["plugins"]) == [s.name for s in SKILLS]
+    for entry in m["plugins"]:
+        src = entry["source"]
+        assert src["source"] == "git-subdir" and src["url"] == "ciaran-io/fedramp20x-skills"
+        folder = ROOT / src["path"]
+        assert src["path"] == f"single/plugins/{entry['name']}"
+        assert _json(folder / ".claude-plugin" / "plugin.json")["name"] == entry["name"]
+        assert (folder / "skills" / entry["name"] / "SKILL.md").exists()
+
+
+def test_one_version_everywhere():
+    version = _json(ROOT / ".claude-plugin" / "plugin.json")["version"]
+    m = _json(ROOT / "single" / ".claude-plugin" / "marketplace.json")
+    for entry in m["plugins"]:
+        assert entry["version"] == version
+        assert _json(ROOT / entry["source"]["path"] / ".claude-plugin" / "plugin.json")["version"] == version
+    assert f"## v{version}" in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
 
 
 def test_skill_text_has_no_lint_errors():

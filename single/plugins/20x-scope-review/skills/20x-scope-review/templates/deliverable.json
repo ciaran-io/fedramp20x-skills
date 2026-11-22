@@ -1,0 +1,28 @@
+{
+  "skill": "20x-scope-review",
+  "skill_version": "0.1.0",
+  "title": "Minimum Assessment Scope review",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "mode": "build | review",
+  "record_reviewed": "{input ID and version, review mode only}",
+  "inputs": [
+    {"id": "I-01", "file": "{path}", "sha256": "{sha256}", "description": "{what it is}"}
+  ],
+  "items": [
+    {"id": "DC-01", "kind": "data_class", "name": "{name}", "federal_customer_data": "yes | no | mixed | metadata", "basis": "{who supplies it, from the input}", "security_category": "{client's category, or [category: client to set]}", "sources": [{"input": "I-01", "location": "{where}"}], "confirmed": true},
+    {"id": "R-01", "kind": "resource", "name": "{name}", "kind_of_resource": "machine-based | non-machine", "handles": ["DC-01"], "decision": "undecided", "proposed_decision": "{value from scope-guide.md}", "rationale": "{reason and rule}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "MAS-CSO-IIR"}], "confirmed": false},
+    {"id": "FL-01", "kind": "flow", "source": "R-01", "destination": "R-02", "data_classes": ["DC-01"], "protocol": "{as stated}", "crosses_boundary": "yes | no", "sources": [{"input": "I-02", "location": "{diagram and label}"}], "confirmed": true},
+    {"id": "TP-01", "kind": "third_party", "resource": "R-03", "usage_and_configuration": "{as stated}", "justification": "{as stated}", "mitigation_measures": "{as stated}", "compensating_controls": "{as stated, or null}", "sources": [{"input": "I-03", "location": "{where}"}, {"frmr": "MAS-CSO-TPR"}], "confirmed": true},
+    {"id": "C-01", "kind": "condition", "resource": "R-04", "text": "{condition}", "evidence": "{evidence}", "owner": "{owner or [owner: client to confirm]}", "cadence": "{cadence or placeholder}", "record_location": "{location or placeholder}", "check": "{check that reads the evidence, or none}", "sources": [{"input": "I-01", "location": "{where}"}], "confirmed": false},
+    {"id": "F-001", "kind": "finding", "title": "{review mode}", "test": "{M1 to M10}", "rating": "High | Moderate | Low | Observation", "observation": "{what the record shows}", "criteria": ["{rule ID}"], "recommendation": "{what to change}", "sources": [{"input": "I-01", "location": "{where}"}], "confirmed": true}
+  ],
+  "decisions_needed": [
+    {"id": "DQ-001", "question": "{boundary decision}", "options": ["in_scope", "out_conditional", "out_of_scope"], "recommendation": "{option}", "reason": "{reason and rule}", "decision_ref": null}
+  ],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}

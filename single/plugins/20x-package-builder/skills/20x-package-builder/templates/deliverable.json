@@ -1,0 +1,21 @@
+{
+  "skill": "20x-package-builder",
+  "skill_version": "0.1.0",
+  "title": "Certification Package draft",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "ocr_period": "{from and to dates; label an example report as an example}",
+  "metrics": "{the JSON printed by scripts/kmt_metrics.py}",
+  "inputs": [{"id": "I-01", "file": "{path}", "sha256": "{sha256}", "description": "{what it is}"}],
+  "items": [
+    {"id": "PK-01", "kind": "outline", "part": "{part}", "rule": "{rule ID}", "status": "ready | partial | missing | assessor", "detail": "{what is present or missing}", "sources": [{"frmr": "{rule ID}"}], "confirmed": true},
+    {"id": "KS-01", "kind": "ksi_summary", "ksi": "{KSI-ID}", "measures": "{from the design}", "cycle": "{from the policy}", "verification_measures": "{from the design gap}", "verification_automation": "{from the break tests}", "validation": "{from results and history}", "independent": "Assessor: not supplied by the provider", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "SDR-CSX-KSI"}], "confirmed": true},
+    {"id": "OC-01", "kind": "ocr_item", "item": "{item the rule lists}", "summary": "{summary for the period, or what is missing}", "status": "drafted | none recorded | missing", "sources": [{"input": "I-01", "location": "{record}"}, {"frmr": "CCM-OCR-AVL"}], "confirmed": true}
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}

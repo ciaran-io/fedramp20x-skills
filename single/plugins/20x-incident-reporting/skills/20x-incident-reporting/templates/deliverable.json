@@ -1,0 +1,24 @@
+{
+  "skill": "20x-incident-reporting",
+  "skill_version": "0.1.0",
+  "title": "Incident evaluation: {incident ID} | Incident response plan review",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "mode": "evaluate | plan_review",
+  "incident": "{incident ID, evaluate mode}",
+  "proposal": {"reportable": "{yes, no, or decided by the approver at time}", "rating_in_force": "{N5 default until an estimate is approved, or the approved rating}", "proposed_rating": "{N0 to N5, with the reason in EV items}"},
+  "timeline": "{the JSON printed by scripts/incident_timeline.py}",
+  "target_refs": {"{target name}": "{plan section that sets it}"},
+  "inputs": [{"id": "I-01", "file": "{path}", "sha256": "{sha256}", "description": "{what it is}"}],
+  "items": [
+    {"id": "EV-1", "kind": "evaluation", "question": "{question}", "answer": "{answer with evidence}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "IEC-CSO-EFR"}], "confirmed": true},
+    {"id": "RC-01", "kind": "report_content", "report": "initial | ongoing | final", "item": "{required item}", "supplied": "{yes, partly, or no: what is missing}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "IEC-CSO-IIR"}], "confirmed": true},
+    {"id": "F-001", "kind": "finding", "test": "{I1 to I11}", "rating": "High | Moderate | Low | Observation", "observation": "{what the plan says}", "recommendation": "{change}", "sources": [{"input": "I-02", "location": "{section}"}], "confirmed": true}
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}

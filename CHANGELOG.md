@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.1.1 (in progress)
+
+Fixes from the first model test run on 22 November 2026.
+
+### Installation
+
+- The main marketplace now lists the full plugin only. The single-skill plugins moved to a second marketplace in the same repository, `single/.claude-plugin/marketplace.json` (named `fedramp20x-skills-single`), so a skill is no longer listed twice.
+- Each single-skill plugin has its own folder, `single/plugins/<skill>/`, with a `plugin.json` whose name matches its marketplace entry. In v0.1.0 all nine entries pointed at the repository root, whose `plugin.json` is named `fedramp20x-skills`. Claude Code requires the two names to match.
+- `tools/sync_shared.py` builds `single/` from `skills/` and the root `plugin.json`. `--check`, the repository tests and CI fail when a copy differs.
+- Version 0.1.1 in every `plugin.json`. Claude Code installs a new copy only when the version changes, which is the likely reason a v0.1.0 install kept an older commit.
+- The README gives the exact install and run commands for both marketplaces, and how to update.
+
 ## v0.1.0 (beta), 22 November 2026
 
 First release. Class C (CR26) only.

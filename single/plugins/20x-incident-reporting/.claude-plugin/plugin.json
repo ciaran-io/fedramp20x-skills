@@ -1,0 +1,19 @@
+{
+  "name": "20x-incident-reporting",
+  "version": "0.1.1",
+  "description": "For a FedRAMP 20x Class C provider, evaluate an incident (reportability, PAIN rating, reporting timeline that starts at the reportability decision, report content) or review a draft incident response plan against the incident rules. Use when a consultant brings an incident to evaluate, or an incident response plan to check.",
+  "author": {
+    "name": "ciaran-io",
+    "url": "https://github.com/ciaran-io"
+  },
+  "homepage": "https://github.com/ciaran-io/fedramp20x-skills",
+  "repository": "https://github.com/ciaran-io/fedramp20x-skills",
+  "license": "MIT",
+  "keywords": [
+    "fedramp",
+    "fedramp-20x",
+    "ksi",
+    "grc",
+    "compliance"
+  ]
+}

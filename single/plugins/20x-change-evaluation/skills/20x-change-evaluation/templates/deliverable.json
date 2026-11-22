@@ -1,0 +1,24 @@
+{
+  "skill": "20x-change-evaluation",
+  "skill_version": "0.1.0",
+  "title": "Change evaluation: {change ID} {title}",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "change": {"id": "{change ID}", "title": "{title}", "start": "{YYYY-MM-DD}", "finish": "{YYYY-MM-DD}", "emergency": "{Yes or No}", "description": "{plain words, from the inputs}"},
+  "proposed_type": "transformative | adaptive | routine_recurring | not_significant | class_change",
+  "decided_type": null,
+  "timeline": "{the JSON printed by scripts/scn_timeline.py notices}",
+  "inputs": [{"id": "I-01", "file": "{path}", "sha256": "{sha256}", "description": "{what it is}"}],
+  "items": [
+    {"id": "EV-1", "kind": "evaluation", "question": "{question from change-types.md}", "answer": "{answer with evidence}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "FRD-SGC"}], "confirmed": true},
+    {"id": "NC-01", "kind": "notice_content", "item": "{item SCN-CSO-INF lists}", "supplied": "{yes, partly, or no: what is missing}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "SCN-CSO-INF"}], "confirmed": true},
+    {"id": "SL-1", "kind": "scope_log", "title": "Draft scope change log entry", "detail": {"id": "{draft ID}", "change_type": "{added, removed, moved, decision_changed, condition_changed, flow_changed, other}", "resources": "{IDs}", "scn_category": "{type, proposed until decided}", "summary": "{summary}"}, "sources": [{"input": "I-01", "location": "{where}"}], "confirmed": false},
+    {"id": "CRV-1", "kind": "client_review", "title": "{client review requirement}", "detail": {"requirement": "{policy and requirement}", "due": "{date from scripts/scn_timeline.py bizdays}"}, "sources": [{"input": "I-02", "location": "{requirement}"}], "confirmed": true}
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}
