@@ -80,7 +80,7 @@ def test_single_marketplace_lists_every_skill_with_matching_names():
     assert sorted(p["name"] for p in m["plugins"]) == [s.name for s in SKILLS]
     for entry in m["plugins"]:
         src = entry["source"]
-        assert src["source"] == "git-subdir" and src["url"] == "ciaran-io/fedramp20x-skills"
+        assert src["source"] == "git-subdir" and src["url"] == "https://github.com/ciaran-io/fedramp20x-skills.git"
         folder = ROOT / src["path"]
         assert src["path"] == f"single/plugins/{entry['name']}"
         assert _json(folder / ".claude-plugin" / "plugin.json")["name"] == entry["name"]
