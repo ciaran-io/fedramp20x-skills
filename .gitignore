@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# macOS
+.DS_Store
+
+# FedRAMP rules data is downloaded by scripts/fetch_frmr.py, never committed (upstream has no licence file).
+.frmr/
+
+# Client material must never be committed. Work on client files outside this repository.
+client/
+*.patch
+.env
+.env.*
+*.pem
+*.key

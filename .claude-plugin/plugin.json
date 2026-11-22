@@ -1,0 +1,13 @@
+{
+  "name": "fedramp20x-skills",
+  "version": "0.1.0",
+  "description": "Skills for a FedRAMP 20x consultant reviewing a client's Class C (CR26) program: scope, policies, validator designs, changes, incidents, assessor review and the certification package. Outputs cite FedRAMP rule and KSI IDs and never state that a client is compliant.",
+  "author": {
+    "name": "ciaran-io",
+    "url": "https://github.com/ciaran-io"
+  },
+  "homepage": "https://github.com/ciaran-io/fedramp20x-skills",
+  "repository": "https://github.com/ciaran-io/fedramp20x-skills",
+  "license": "MIT",
+  "keywords": ["fedramp", "fedramp-20x", "ksi", "grc", "compliance"]
+}

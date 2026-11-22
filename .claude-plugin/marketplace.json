@@ -1,0 +1,15 @@
+{
+  "name": "fedramp20x-skills",
+  "description": "Skills for a FedRAMP 20x Class C consultant. Install the full set, or one skill at a time.",
+  "owner": {
+    "name": "ciaran-io",
+    "url": "https://github.com/ciaran-io"
+  },
+  "plugins": [
+    {
+      "name": "fedramp20x-skills",
+      "source": "./",
+      "description": "All FedRAMP 20x consultant skills. Outputs cite rule and KSI IDs and never state that a client is compliant."
+    }
+  ]
+}
