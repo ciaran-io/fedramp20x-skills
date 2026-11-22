@@ -11,6 +11,7 @@ Fixes from the first model test run on 22 November 2026.
 - `tools/sync_shared.py` builds `single/` from `skills/` and the root `plugin.json`. `--check`, the repository tests and CI fail when a copy differs.
 - Version 0.1.1 in every `plugin.json`. Claude Code installs a new copy only when the version changes, which is the likely reason a v0.1.0 install kept an older commit.
 - The README gives the exact install and run commands for both marketplaces, and how to update.
+- Each single-skill marketplace entry now uses the full HTTPS URL, `https://github.com/ciaran-io/fedramp20x-skills.git`, because the short form `ciaran-io/fedramp20x-skills` cloned over SSH and failed with "Host key verification failed".
 
 ## v0.1.0 (beta), 22 November 2026
 

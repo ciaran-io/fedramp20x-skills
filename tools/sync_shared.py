@@ -26,7 +26,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SHARED = {"scripts": ROOT / "shared" / "scripts", "references": ROOT / "shared" / "references"}
 SINGLE = ROOT / "single"
-REPO = "ciaran-io/fedramp20x-skills"
+# The owner/repo shorthand clones over SSH, which fails without a GitHub SSH key.
+REPO = "https://github.com/ciaran-io/fedramp20x-skills.git"
 SKIP = {"__pycache__", ".pytest_cache"}
 
 
