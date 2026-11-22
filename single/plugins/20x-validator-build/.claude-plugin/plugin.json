@@ -1,0 +1,19 @@
+{
+  "name": "20x-validator-build",
+  "version": "0.1.1",
+  "description": "Build the check code for an SME-validated FedRAMP 20x Class C validator design, with at least two automated methods, unit tests that fix the run date, and recorded break tests that prove each method can fail. Use when a consultant has an approved validator design and sample data and wants working checks.",
+  "author": {
+    "name": "ciaran-io",
+    "url": "https://github.com/ciaran-io"
+  },
+  "homepage": "https://github.com/ciaran-io/fedramp20x-skills",
+  "repository": "https://github.com/ciaran-io/fedramp20x-skills",
+  "license": "MIT",
+  "keywords": [
+    "fedramp",
+    "fedramp-20x",
+    "ksi",
+    "grc",
+    "compliance"
+  ]
+}

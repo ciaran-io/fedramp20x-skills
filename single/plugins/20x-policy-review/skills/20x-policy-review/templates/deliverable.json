@@ -1,0 +1,53 @@
+{
+  "skill": "20x-policy-review",
+  "skill_version": "0.1.0",
+  "title": "KSI policy coverage review",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "inputs": [
+    {"id": "I-01", "file": "{path relative to the inputs folder}", "sha256": "{sha256}", "description": "{policy ID, title and version}"}
+  ],
+  "requirements": [
+    {
+      "policy": "{POL-X}",
+      "id": "{X-1}",
+      "text": "{client text, exact}",
+      "owner": "{as stated, or null}",
+      "cadence": "{as stated, or null}",
+      "record_location": "{as stated, or null}",
+      "client_ksis": ["{KSI-ID}"],
+      "source": {"input": "I-01", "location": "{X-1}"}
+    }
+  ],
+  "coverage": [
+    {"ksi": "{KSI-ID}", "name": "{name}", "requirements": ["{POL-X/X-1}"], "coverage": "covered | partial | not covered | not reviewed", "gaps": ["G-001"], "note": "{why, in plain words}"}
+  ],
+  "items": [
+    {
+      "id": "G-001",
+      "title": "{short title}",
+      "requirement": "{POL-X/X-1}",
+      "test": "{T1 to T10}",
+      "criteria": ["{KSI-ID or rule ID}", "{POL-X/X-1}"],
+      "rating": "High | Moderate | Low | Observation",
+      "observation": "{what the policy states and does not state}",
+      "recommendation": "{what to change}",
+      "rewrite": "R-001",
+      "sources": [{"input": "I-01", "location": "{X-1}"}, {"frmr": "{KSI-ID}"}],
+      "confirmed": true
+    }
+  ],
+  "rewrites": [
+    {"id": "R-001", "requirement": "{POL-X/X-1}", "current": "{client text}", "recommended": "{text with [placeholders]}", "closes": ["G-001"], "placeholders": ["{placeholder}"]}
+  ],
+  "decisions_needed": [
+    {"id": "DQ-001", "question": "{question}", "options": ["{option}"], "recommendation": "{option}", "reason": "{why}", "decision_ref": null}
+  ],
+  "open_questions": [
+    {"id": "Q-001", "question": "{question}", "why": "{why it matters}", "blocks": ["G-001"], "answer": null}
+  ],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}

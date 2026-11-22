@@ -1,6 +1,6 @@
 {
   "name": "fedramp20x-skills",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Skills for a FedRAMP 20x consultant reviewing a client's Class C (CR26) program: scope, policies, validator designs and builds, changes, incidents, assessor review, sanity checks and the certification package. Every finding cites a FedRAMP ID and a client source; every deliverable ends with SME validation; outputs never state that a client is compliant.",
   "author": {
     "name": "ciaran-io",

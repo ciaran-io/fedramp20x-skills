@@ -1,0 +1,19 @@
+{
+  "name": "20x-package-builder",
+  "version": "0.1.1",
+  "description": "Assemble FedRAMP 20x Class C Certification Package material from a client's scope, policies, validator designs, evidence history and decisions, and return Security Decision Record entries for each KSI, a draft Ongoing Certification Report and a package outline that shows what is ready and what is missing. Use when a consultant is preparing a client's package or a quarterly report.",
+  "author": {
+    "name": "ciaran-io",
+    "url": "https://github.com/ciaran-io"
+  },
+  "homepage": "https://github.com/ciaran-io/fedramp20x-skills",
+  "repository": "https://github.com/ciaran-io/fedramp20x-skills",
+  "license": "MIT",
+  "keywords": [
+    "fedramp",
+    "fedramp-20x",
+    "ksi",
+    "grc",
+    "compliance"
+  ]
+}

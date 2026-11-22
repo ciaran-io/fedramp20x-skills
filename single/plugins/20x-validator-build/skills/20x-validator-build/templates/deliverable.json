@@ -1,0 +1,24 @@
+{
+  "skill": "20x-validator-build",
+  "skill_version": "0.1.0",
+  "title": "Validator build: {KSI-ID}",
+  "client": "{client}",
+  "class": "C",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "ksi": "{KSI-ID}",
+  "design": "{input ID and location of the SME-validated design}",
+  "code": {"module": "{path}", "tests": "{path}", "break_tests": "{path to break-tests.json}", "run": "{command}", "test_command": "{command}"},
+  "unit_tests": {"count": 0, "passed": 0, "run_on": "{YYYY-MM-DD}"},
+  "proposed_status": "Built | Verified",
+  "inputs": [{"id": "I-01", "file": "{path}", "sha256": "{sha256}", "description": "{what it is}"}],
+  "items": [
+    {"id": "M-01", "method": "{method id}", "kind": "static | live | change", "reads": "{source}", "conditions_checked": ["{each pass or fail condition}"],
+     "break_tests": [{"change": "{from break-tests.json}", "observed_message": "{from break-tests.json}", "result": "failed as required"}],
+     "gap": "{what this method does not prove}", "sources": [{"input": "I-01", "location": "{design method}"}, {"frmr": "{KSI-ID}"}], "confirmed": true}
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}

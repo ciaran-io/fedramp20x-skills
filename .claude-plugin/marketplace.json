@@ -1,6 +1,6 @@
 {
   "name": "fedramp20x-skills",
-  "description": "Skills for a FedRAMP 20x Class C consultant. Install the full set, or one skill at a time.",
+  "description": "Skills for a FedRAMP 20x Class C consultant, as one plugin. For one plugin per skill, see the README.",
   "owner": {
     "name": "ciaran-io",
     "url": "https://github.com/ciaran-io"
@@ -10,78 +10,6 @@
       "name": "fedramp20x-skills",
       "source": "./",
       "description": "All FedRAMP 20x consultant skills. Outputs cite rule and KSI IDs and never state that a client is compliant."
-    },
-    {
-      "name": "20x-policy-review",
-      "source": "./",
-      "description": "Review a cloud service provider's security policies against every FedRAMP 20x Class C Key Security Indicator and return a KSI coverage matrix, rated gaps and rewritten requirement text with an owner, cadence and record location. Use when a consultant gives you a client's policies to review for FedRAMP 20x.",
-      "skills": [
-        "./skills/20x-policy-review"
-      ]
-    },
-    {
-      "name": "20x-validator-design",
-      "source": "./",
-      "description": "Write a FedRAMP 20x Class C validator design for one or more KSIs, from the client's policy requirement and the client's own tools, stating every way each automated method fails and the break test that proves it. Use when a consultant needs to design how a KSI will be checked before any check code is written.",
-      "skills": [
-        "./skills/20x-validator-design"
-      ]
-    },
-    {
-      "name": "20x-assessor-review",
-      "source": "./",
-      "description": "Review a FedRAMP 20x Class C client's finished work (scope record, policies, validator designs, check results, evidence, or deliverables from the other 20x skills) as an assessor would, and return rated findings with observation, criteria, rating and recommendation. Use when a consultant wants finished work challenged before a client or an assessor sees it.",
-      "skills": [
-        "./skills/20x-assessor-review"
-      ]
-    },
-    {
-      "name": "20x-scope-review",
-      "source": "./",
-      "description": "Build or review a FedRAMP 20x Class C Minimum Assessment Scope from a client's asset inventory, diagrams, data flows and third-party list, and return the scope record, the boundary decisions the consultant must make, and the evidence each conditional exclusion needs. Use when a consultant needs to set or check what is inside a client's cloud service offering.",
-      "skills": [
-        "./skills/20x-scope-review"
-      ]
-    },
-    {
-      "name": "20x-change-evaluation",
-      "source": "./",
-      "description": "Evaluate a described change to a FedRAMP 20x Class C cloud service offering and return its change type, the notice dates the Significant Change Notification rules set, the scope change log entry, and the review deadline the client's own policy sets. Use when a consultant or client describes a planned or finished change and needs to know what FedRAMP requires.",
-      "skills": [
-        "./skills/20x-change-evaluation"
-      ]
-    },
-    {
-      "name": "20x-sanity-check",
-      "source": "./",
-      "description": "After a FedRAMP 20x decision or change is made, find every other document, record, check or deliverable it applies to, list the ones that now disagree with it, and draft the follow-up items for approval. Use right after a consultant or client decides something (an owner, a cycle, a scope decision, a rewrite adopted) so nothing is left inconsistent.",
-      "skills": [
-        "./skills/20x-sanity-check"
-      ]
-    },
-    {
-      "name": "20x-validator-build",
-      "source": "./",
-      "description": "Build the check code for an SME-validated FedRAMP 20x Class C validator design, with at least two automated methods, unit tests that fix the run date, and recorded break tests that prove each method can fail. Use when a consultant has an approved validator design and sample data and wants working checks.",
-      "skills": [
-        "./skills/20x-validator-build"
-      ]
-    },
-    {
-      "name": "20x-incident-reporting",
-      "source": "./",
-      "description": "For a FedRAMP 20x Class C provider, evaluate an incident (reportability, PAIN rating, reporting timeline that starts at the reportability decision, report content) or review a draft incident response plan against the incident rules. Use when a consultant brings an incident to evaluate, or an incident response plan to check.",
-      "skills": [
-        "./skills/20x-incident-reporting"
-      ]
-    },
-    {
-      "name": "20x-package-builder",
-      "source": "./",
-      "description": "Assemble FedRAMP 20x Class C Certification Package material from a client's scope, policies, validator designs, evidence history and decisions, and return Security Decision Record entries for each KSI, a draft Ongoing Certification Report and a package outline that shows what is ready and what is missing. Use when a consultant is preparing a client's package or a quarterly report.",
-      "skills": [
-        "./skills/20x-package-builder"
-      ]
     }
   ]
 }

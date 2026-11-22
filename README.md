@@ -48,17 +48,36 @@ The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedra
 
 ## Install
 
-**Claude Code, all skills:**
+Install the full plugin or single skills, not both. With both, each skill is listed twice.
+
+**Claude Code, all skills.** In a session:
 
 ```bash
-/plugin install fedramp20x-skills --marketplace ciaran-io/fedramp20x-skills
+/plugin marketplace add ciaran-io/fedramp20x-skills
+/plugin install fedramp20x-skills@fedramp20x-skills
 ```
 
-**Claude Code, one skill.** Each skill is also a plugin of its own, for example:
+Run a skill as `/fedramp20x-skills:<skill>`, for example `/fedramp20x-skills:20x-policy-review`.
+
+**Claude Code, one skill.** The single-skill plugins are in a second marketplace in this repository. Add it by the URL of its file:
 
 ```bash
-/plugin install 20x-policy-review --marketplace ciaran-io/fedramp20x-skills
+/plugin marketplace add https://raw.githubusercontent.com/ciaran-io/fedramp20x-skills/main/single/.claude-plugin/marketplace.json
+/plugin install 20x-policy-review@fedramp20x-skills-single
 ```
+
+Run it as `/20x-policy-review:20x-policy-review`. The same pattern applies to each skill.
+
+From a shell, `claude plugin marketplace add` and `claude plugin install` take the same arguments.
+
+**Updates.** Auto-update is off by default for marketplaces outside Anthropic's own. Turn it on in `/plugin`, on the Marketplaces tab, or update by hand:
+
+```bash
+claude plugin marketplace update fedramp20x-skills
+claude plugin update fedramp20x-skills@fedramp20x-skills
+```
+
+For single skills, use the marketplace name `fedramp20x-skills-single`. Claude Code installs a new copy only when the version number changes, and every release changes it.
 
 **claude.ai.** Download the zip files from the [latest release](https://github.com/ciaran-io/fedramp20x-skills/releases/latest), or run `python tools/package_skills.py` to build `dist/<skill>.zip` for each skill and `dist/fedramp20x-skills.zip` for the full set, then upload a `.zip` as a custom skill. Each skill folder carries its own copy of the shared scripts and references, so it works on its own.
 
@@ -85,7 +104,8 @@ CI runs these on every push. They check the skills' structure, the shared files,
 
 | Folder | Contents |
 |---|---|
-| `.claude-plugin/` | `plugin.json` and `marketplace.json`: the full set and one plugin per skill |
+| `.claude-plugin/` | `plugin.json` and `marketplace.json` for the full plugin |
+| `single/` | The second marketplace: one plugin per skill. Built by `python tools/sync_shared.py`; never edit it by hand |
 | `shared/` | The scripts and references every skill uses. Edit here, then run `python tools/sync_shared.py` |
 | `skills/<skill>/` | `SKILL.md`, `references/`, `scripts/`, `templates/` |
 | `tools/` | Sync, packaging, scoring and the headless test runner |
