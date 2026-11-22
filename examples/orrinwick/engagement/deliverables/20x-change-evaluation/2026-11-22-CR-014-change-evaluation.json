@@ -21,7 +21,7 @@
   "timeline": {
     "type": "transformative",
     "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
-    "business_days": "Monday to Friday, no holidays skipped (FedRAMP does not define business days; confirm with the consultant)",
+    "business_days": "Monday to Friday, skipping US federal holidays on their observed dates (5 U.S.C. 6103) (FedRAMP does not define business days; confirm with the consultant)",
     "notices": [
       {
         "rule": "SCN-TRF-NIP",
@@ -30,7 +30,7 @@
         "counts_from": "start",
         "direction": "before",
         "timeframe": "30 bizdays",
-        "due": "2026-12-21",
+        "due": "2026-12-16",
         "due_meaning": "send on or before"
       },
       {
@@ -40,7 +40,7 @@
         "counts_from": "start",
         "direction": "before",
         "timeframe": "10 bizdays",
-        "due": "2027-01-18",
+        "due": "2027-01-15",
         "due_meaning": "send on or before"
       },
       {
@@ -414,13 +414,14 @@
     },
     {
       "id": "DQ-002",
-      "question": "How should business days be counted?",
+      "question": "Confirm the business day basis: Monday to Friday, skipping US federal holidays.",
       "options": [
-        "Monday to Friday, skipping US federal holidays (client to supply the list)",
+        "Confirm the default",
+        "Also skip the client's own holidays (client supplies the dates)",
         "Monday to Friday only"
       ],
-      "recommendation": "Monday to Friday, skipping US federal holidays (client to supply the list)",
-      "reason": "FedRAMP does not define business days. With weekdays only, the final plans notice falls on 2027-01-18, which is the Martin Luther King Jr. federal holiday; skipping holidays moves the earlier notices earlier and gives a safer date",
+      "recommendation": "Confirm the default",
+      "reason": "FedRAMP does not define business days. Counting weekdays only would put the final plans notice on 2027-01-18, the Martin Luther King Jr. federal holiday; the default moves it to 2027-01-15",
       "decision_ref": null
     }
   ],

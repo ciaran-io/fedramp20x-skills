@@ -34,13 +34,13 @@ If the description does not say what changes in the offering, stop and ask. Do n
 
 4. **Scope effect.** If the change adds, removes or moves a resource, changes a decision, a flow or an exclusion condition, draft a scope change log entry: change type, resources, summary, evaluation, and the change type. The entry is a draft until the consultant approves it.
 
-5. **Notice dates.** Run `python scripts/scn_timeline.py notices --type <type> --start <date> --finish <date>` (add `--verified` for transformative changes when known, and `--holidays <file>` if the client gives a holiday calendar). Copy the dates and the business day basis into the deliverable. Never type a timeframe from memory. For an emergency, read SCN-CSO-EMG and record what must be provided after the event.
+5. **Notice dates.** Run `python scripts/scn_timeline.py notices --type <type> --start <date> --finish <date>` (add `--verified` for transformative changes when known). Business days skip US federal holidays by default; add `--holidays <file>` for a client's extra holidays, or `--no-federal-holidays` if the consultant decides on weekdays only. Copy the dates and the business day basis into the deliverable. Never type a timeframe from memory. For an emergency, read SCN-CSO-EMG and record what must be provided after the event.
 
 6. **Notice content.** For a transformative or adaptive change, list the information SCN-CSO-INF requires and, for each item, whether the inputs supply it. A missing item is an open question.
 
 7. **Client review deadline.** If the client's policy sets a review after a change by type (for example a protection review), compute it with `python scripts/scn_timeline.py bizdays --from <date> --days <n>` and say which policy requirement sets it. If the policy sets none, say so; do not invent one.
 
-8. **Stop and ask.** Present the proposed type, the reasons and the alternatives with AskUserQuestion. Also ask the business day basis if the client has not stated one. Record the decision in `decisions.json`.
+8. **Stop and ask.** Present the proposed type, the reasons and the alternatives with AskUserQuestion. Also confirm the business day basis printed by the script. Record the decision in `decisions.json`.
 
 9. **Write the deliverable** in `deliverables/20x-change-evaluation/`: `<date>-<change-id>-change-evaluation.json` following `templates/deliverable.json`, then `python scripts/build_report.py <json>`.
 

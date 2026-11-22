@@ -18,6 +18,7 @@ Each skill has a folder here with one or more cases:
 |---|---|---|
 | `baseline` | The Orrinwick inputs in `examples/orrinwick/engagement/inputs` | The example deliverable reports the findings already known from fedramp20x |
 | `seeded` | Inputs with known faults in `<case>/inputs` | A run of the skill reports each seeded fault and does not invent what the inputs do not contain |
+| `fedramp20x-findings` (assessor review only) | fedramp20x at commit `31c11e5`, before the fixes | A run reproduces the author's own assessor findings A1 to A10 and A12 (A11 was never recorded) |
 
 `expected.json` lists the findings a run must report (`expect`) and the ones it must not (`must_not`), such as a tool name that appears in no input or a decision the skill must leave to the consultant. `tools/score.py` scores a deliverable against it.
 

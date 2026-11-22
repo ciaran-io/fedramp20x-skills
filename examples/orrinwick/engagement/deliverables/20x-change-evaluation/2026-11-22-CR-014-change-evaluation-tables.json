@@ -59,7 +59,7 @@
           "start",
           "30 bizdays",
           "before",
-          "2026-12-21",
+          "2026-12-16",
           "send on or before"
         ],
         [
@@ -68,7 +68,7 @@
           "start",
           "10 bizdays",
           "before",
-          "2027-01-18",
+          "2027-01-15",
           "send on or before"
         ],
         [
@@ -193,9 +193,9 @@
         [
           "DQ-002",
           "Decision",
-          "How should business days be counted?",
-          "Monday to Friday, skipping US federal holidays (client to supply the list); Monday to Friday only",
-          "Monday to Friday, skipping US federal holidays (client to supply the list)",
+          "Confirm the business day basis: Monday to Friday, skipping US federal holidays.",
+          "Confirm the default; Also skip the client's own holidays (client supplies the dates); Monday to Friday only",
+          "Confirm the default",
           "open"
         ],
         [

@@ -22,6 +22,9 @@ Apply the tests in the `20x-policy-review` skill's `policy-tests.md` when the po
 | P2 Rule IDs | A cited ID is unknown or does not apply at Class C for 20x | L12 |
 | P3 Cycle | A "persistently" KSI has no documented cycle | L1 |
 | P4 Policy and plan agree | A policy and its plan state different owners, cycles or records for the same activity | |
+| P5 Claims match reality | A plan or policy describes automation, a link, a report or a record as in place, and the inputs show it is planned, missing or broken | |
+| P6 Required exercise | A plan requires an exercise or test (tabletop, restore test) and no dated record of one exists within its cycle | L1 |
+| P7 Approval trace | A policy or plan approval is only a role and a date, with no record that can be traced (decision record entry, tagged commit, signed approval) | |
 
 ## Validator designs
 
@@ -34,7 +37,7 @@ Apply the tests in the `20x-policy-review` skill's `policy-tests.md` when the po
 | D5 Records only grow | A method reads a single record that is overwritten, not a list | L4 |
 | D6 Reviewer | A review method does not compare the reviewer with the policy owner | L5 |
 | D7 Change deadline | A change method has no deadline for a change type, or no "due by" note | L6 |
-| D8 Break test | A method has no break test, or its result is stated without being observed | L3 |
+| D8 Break test | A method has no break test, or its result is stated without being observed. A test suite should show every registered method failing at least once on bad data | L3 |
 | D9 Gap | The design's gap leaves part of the KSI unproven but the status claims more | L11 |
 
 ## Results and evidence

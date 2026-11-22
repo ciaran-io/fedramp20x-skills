@@ -27,7 +27,7 @@ The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedra
 | `20x-incident-reporting` | Evaluate an incident or review an incident response plan | Reportability, PAIN rating, timeline from the reportability decision, report content |
 | `20x-package-builder` | Prepare Certification Package material | Package outline, KSI summaries and metrics, a draft Ongoing Certification Report |
 
-Status: all nine skills are built and each has a worked example. They have not yet been run end to end by a model against the seeded test cases (see [Tests](#tests)).
+**Status: v0.1.0 beta.** All nine skills are built, each with a worked example, and the repository tests pass. The skills have not yet been run end to end by a model against their seeded test cases (see [Tests](#tests) and [`CHANGELOG.md`](CHANGELOG.md)).
 
 ## Rules every skill follows
 
@@ -60,7 +60,7 @@ Status: all nine skills are built and each has a worked example. They have not y
 /plugin install 20x-policy-review --marketplace ciaran-io/fedramp20x-skills
 ```
 
-**claude.ai.** Run `python tools/package_skills.py` to build `dist/<skill>.zip` for each skill and `dist/fedramp20x-skills.zip` for the full set, then upload a `.zip` as a custom skill. Each skill folder carries its own copy of the shared scripts and references, so it works on its own.
+**claude.ai.** Download the zip files from the [latest release](https://github.com/ciaran-io/fedramp20x-skills/releases/latest), or run `python tools/package_skills.py` to build `dist/<skill>.zip` for each skill and `dist/fedramp20x-skills.zip` for the full set, then upload a `.zip` as a custom skill. Each skill folder carries its own copy of the shared scripts and references, so it works on its own.
 
 **Requirements.** Python 3.10 or newer, and `pip install python-docx openpyxl` for the Word and Excel copies. The first run downloads the FedRAMP rules data to `~/.cache/fedramp20x-skills/` (set `FRMR_DIR` to use another folder):
 

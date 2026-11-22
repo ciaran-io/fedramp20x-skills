@@ -199,13 +199,32 @@ def test_check_deliverable_rules(data):
     assert any("Class C only" in e for e in err)
 
 
+def test_input_hash_ignores_line_endings(tmp_path):
+    a, b = tmp_path / "a.md", tmp_path / "b.md"
+    a.write_bytes(b"line one\nline two\n")
+    b.write_bytes(b"line one\r\nline two\r\n")
+    assert check_deliverable.file_sha256(a) == check_deliverable.file_sha256(b)
+
+
 def test_scn_timeline_reads_rules():
     r = run(ROOT / "skills" / "20x-change-evaluation" / "scripts" / "scn_timeline.py", "notices", "--type", "transformative",
             "--start", "2027-02-01", "--finish", "2027-02-26")
     out = json.loads(r.stdout)
     due = {n["rule"]: n["due"] for n in out["notices"]}
-    assert due["SCN-TRF-NIP"] == "2026-12-21" and due["SCN-TRF-NFP"] == "2027-01-18" and due["SCN-TRF-NAF"] == "2027-03-05"
-    assert "no holidays skipped" in out["business_days"]
+    # Federal holidays skipped by default: 25 Dec, 1 Jan and 18 Jan (Martin Luther King Jr. Day)
+    assert due["SCN-TRF-NIP"] == "2026-12-16" and due["SCN-TRF-NFP"] == "2027-01-15" and due["SCN-TRF-NAF"] == "2027-03-05"
+    assert "skipping US federal holidays" in out["business_days"]
+    r = run(ROOT / "skills" / "20x-change-evaluation" / "scripts" / "scn_timeline.py", "notices", "--type", "transformative",
+            "--start", "2027-02-01", "--no-federal-holidays")
+    assert {n["rule"]: n["due"] for n in json.loads(r.stdout)["notices"]}["SCN-TRF-NFP"] == "2027-01-18"
+
+
+def test_federal_holidays_observed_dates():
+    import bizdays
+    from datetime import date
+    h = bizdays.federal_holidays(2027)
+    assert date(2027, 7, 5) in h and date(2027, 6, 18) in h and date(2027, 12, 24) in h and date(2027, 12, 31) in h
+    assert date(2027, 1, 18) in h and date(2027, 11, 25) in h and len(h) == 12
 
 
 def test_incident_timeline_clock_starts_at_reportability():
