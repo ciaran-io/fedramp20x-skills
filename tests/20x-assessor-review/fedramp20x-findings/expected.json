@@ -1,0 +1,21 @@
+{
+  "case": "fedramp20x-findings",
+  "inputs": "github.com/ciaran-io/fedramp20x at commit 31c11e5 (the last commit on 2026-11-21, before the fixes). Give the skill the whole repository as finished work; client stage: preparing.",
+  "source": "Ciaran's assessor review of fedramp20x on 2026-11-21, recorded as follow-ups 7 to 16 in his project plan and in his session notes. A11 is not recorded anywhere and is not tested.",
+  "expect": [
+    {"id": "A1", "fault": "High: 28 passing KSIs have coverage notes", "match": {"test": "R1", "mentions": ["coverage note"]}},
+    {"id": "A2", "fault": "High: conditional exclusions have no evidence, and prohibited-flow checks are not built", "match": {"test": "S2"}},
+    {"id": "A3", "fault": "GRC checks measure record ages against a fixed date, not the run date", "match": {"mentions": ["run date"]}},
+    {"id": "A4", "fault": "Medium: review records are edited (the 2026-06-10 protection review was amended)", "match": {"test": "R4", "mentions": ["2026-06-10"]}},
+    {"id": "A5", "fault": "Medium: the CISO approval of the incident response plan on 2026-11-21 is not recorded as the latest plan review", "match": {"mentions": ["2026-11-21", "CISO"]}},
+    {"id": "A6", "fault": "Medium: recovery-objectives.json has no reviewer field, so the reviewer is not checked", "match": {"mentions": ["recovery-objectives.json", "reviewed_by"]}},
+    {"id": "A7", "fault": "Medium: the plan claims report-draft automation and vdr-report links that do not work yet", "match": {"test": "P5", "mentions": ["vdr-report"]}},
+    {"id": "A8", "fault": "Medium: no tabletop exercise with measured times is recorded", "match": {"test": "P6", "mentions": ["tabletop"]}},
+    {"id": "A9", "fault": "Medium: changes that do not touch the scope record are not evaluated for significance", "match": {"cites": ["SCN-CSO-EVA"]}},
+    {"id": "A10", "fault": "Medium: no test shows every registered method failing at least once on bad data", "match": {"test": "D8"}},
+    {"id": "A12", "fault": "Low: policy approvals are only a role and a date", "match": {"test": "P7"}}
+  ],
+  "must_not": [
+    {"id": "N-01", "reason": "No compliance verdict", "match": {"mentions": ["is compliant"]}}
+  ]
+}

@@ -61,7 +61,7 @@ Every deliverable JSON has this envelope. `scripts/check_deliverable.py` checks 
 | `skill`, `skill_version` | The skill that produced it |
 | `title`, `client`, `class`, `date` | Class is always `C` in version 1 |
 | `frmr_version`, `frmr_commit` | From `scripts/frmr.py info` |
-| `inputs` | Each client file used: `id` (I-01), `file`, `sha256`, `description` |
+| `inputs` | Each client file used: `id` (I-01), `file`, `sha256` (from `scripts/check_deliverable.py --sha256 <file>`, which ignores Windows and Unix line-ending differences in text files), `description` |
 | `items` | The findings, rows or entries. Each has an `id`, `sources` and `confirmed` |
 | `decisions_needed` | Each decision for the consultant: `id` (DQ-001, local to the deliverable), `question`, `options`, `recommendation`, `reason`, and `decision_ref`: the decision log ID (D-001) once decided |
 | `open_questions` | Each question for an SME: `id`, `question`, `why`, `blocks` (item IDs), `answer` |

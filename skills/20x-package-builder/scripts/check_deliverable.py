@@ -2,6 +2,7 @@
 """Check a deliverable JSON against the shared envelope rules.
 
   check_deliverable.py DELIVERABLE.json [--inputs DIR] [--decisions decisions.json]
+  check_deliverable.py --sha256 FILE      print the hash to record for an input file
 
 Errors (exit 1):
   - a required envelope field is missing, or class is not C
@@ -25,6 +26,18 @@ import frmr  # noqa: E402
 
 REQUIRED = ["skill", "skill_version", "title", "client", "class", "date", "frmr_version",
             "frmr_commit", "inputs", "items", "decisions_needed", "open_questions", "sme_validation"]
+TEXT_SUFFIXES = {".md", ".txt", ".json", ".csv", ".py", ".yml", ".yaml", ".xml", ".html"}
+
+
+def file_sha256(path: Path) -> str:
+    """SHA-256 of a file. Text files are hashed with CRLF line endings turned into LF, so a
+    checkout on Windows gives the same hash as one on Linux or macOS."""
+    data = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
+
+
 PLACEHOLDER = re.compile(r"\[(owner|cadence|deadline|record|tool|system|date|client)[^\]]*\]", re.IGNORECASE)
 
 
@@ -44,7 +57,7 @@ def check(doc: dict, inputs_dir: Path | None, decisions: set | None, known_ids: 
             p = inputs_dir / inp.get("file", "")
             if not p.exists():
                 err.append(f"input {inp.get('id')}: file {p} not found")
-            elif inp.get("sha256") and hashlib.sha256(p.read_bytes()).hexdigest() != inp["sha256"]:
+            elif inp.get("sha256") and file_sha256(p) != inp["sha256"]:
                 err.append(f"input {inp.get('id')}: {p} changed since the deliverable was written")
     local_decisions = {d.get("id") for d in doc["decisions_needed"]}
     item_ids = set()
@@ -99,6 +112,9 @@ def check(doc: dict, inputs_dir: Path | None, decisions: set | None, known_ids: 
 
 
 def main(argv=None):
+    if argv is None and len(sys.argv) == 3 and sys.argv[1] == "--sha256":
+        print(file_sha256(Path(sys.argv[2])))
+        return
     ap = argparse.ArgumentParser()
     ap.add_argument("file")
     ap.add_argument("--inputs", type=Path)

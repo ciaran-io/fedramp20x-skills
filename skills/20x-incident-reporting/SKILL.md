@@ -37,7 +37,7 @@ The reporting clock starts when the incident is judged reportable and rated, or 
 
 3. **Evaluate mode: PAIN rating.** Propose an N-rating using the scale in VER-EVA-EPA and the client's own examples in its plan. Give the reason, the number of agencies affected (from the client's records) and the effect (minimal, narrow, disruptive, debilitating). While no rating is approved, a reportable incident is N5. Where the evidence supports two ratings, the plan may say the higher applies; follow the plan.
 
-4. **Evaluate mode: timeline.** Take each target from the client's plan (reportability decision, rating, initial report, ongoing reports, final report) with its section reference. Run `python scripts/incident_timeline.py` with the incident's event times and those targets. Set `--clock-start` to the event the plan names; if the plan does not name one, ask. Copy the output into the deliverable.
+4. **Evaluate mode: timeline.** Take each target from the client's plan (reportability decision, rating, initial report, ongoing reports, final report) with its section reference. Run `python scripts/incident_timeline.py` with the incident's event times and those targets. Set `--clock-start` to the event the plan names; if the plan does not name one, ask. Business days skip US federal holidays by default (`--no-federal-holidays` to count weekdays only). Copy the output, including the business day basis, into the deliverable.
 
 5. **Evaluate mode: report content.** For the initial, ongoing and final reports, list the information the IEC rules require (IEC-CSO-IIR, IEC-CSO-OIR, IEC-CSO-FIR) and, for each item, whether the incident record supplies it. A missing item is an open question for the incident lead, not a gap to fill.
 

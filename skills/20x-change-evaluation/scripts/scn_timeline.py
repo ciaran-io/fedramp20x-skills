@@ -10,8 +10,9 @@ The direction of each rule (before the start, after the finish, after verificati
 listed in RULES below, from the rule statements.
 
 Business days: the FedRAMP rules do not define them. By default this script counts Monday to
-Friday and does not skip holidays. Pass --holidays with a file of YYYY-MM-DD dates (one per
-line) to skip them. The output states which basis was used, so the consultant can confirm it.
+Friday and skips US federal holidays on their observed dates. --no-federal-holidays counts
+weekdays only; --holidays adds a file of extra YYYY-MM-DD dates to skip (for example a client's
+own holidays). The output states which basis was used, so the consultant can confirm it.
 """
 import argparse
 import json
@@ -20,6 +21,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import bizdays  # noqa: E402
 import frmr  # noqa: E402
 
 # rule ID -> (event the timeframe counts from, direction)
@@ -41,12 +43,6 @@ NOTES = {
 }
 
 
-def load_holidays(path):
-    if not path:
-        return set()
-    return {date.fromisoformat(x.strip()) for x in Path(path).read_text().splitlines() if x.strip()}
-
-
 def add_bizdays(d: date, n: int, holidays: set, before: bool = False) -> date:
     step = -1 if before else 1
     left = n
@@ -59,7 +55,8 @@ def add_bizdays(d: date, n: int, holidays: set, before: bool = False) -> date:
 
 def notices(a):
     data = frmr.load()
-    hol = load_holidays(a.holidays)
+    known = [date.fromisoformat(x) for x in (a.start, a.finish, a.verified) if x] or [date.today()]
+    hol = bizdays.holiday_set(min(known), max(known), not a.no_federal_holidays, a.holidays)
     events = {"start": a.start, "finish": a.finish, "verified": a.verified}
     out = []
     for rid, event, direction in RULES[a.type]:
@@ -83,13 +80,13 @@ def notices(a):
             item["due_meaning"] = f"needs the {event} date"
         out.append(item)
     print(json.dumps({"type": a.type, "frmr_commit": frmr.COMMIT,
-                      "business_days": "Monday to Friday, holidays from " + a.holidays if a.holidays else
-                      "Monday to Friday, no holidays skipped (FedRAMP does not define business days; confirm with the consultant)",
+                      "business_days": bizdays.basis(not a.no_federal_holidays, a.holidays) + " (FedRAMP does not define business days; confirm with the consultant)",
                       "notices": out, "note": NOTES[a.type]}, indent=2))
 
 
-def bizdays(a):
-    d = add_bizdays(date.fromisoformat(a.from_), a.days, load_holidays(a.holidays), before=a.before)
+def cmd_bizdays(a):
+    start = date.fromisoformat(a.from_)
+    d = add_bizdays(start, a.days, bizdays.holiday_set(start, start, not a.no_federal_holidays, a.holidays), before=a.before)
     print(d.isoformat())
 
 
@@ -102,13 +99,15 @@ def main(argv=None):
     p.add_argument("--finish")
     p.add_argument("--verified")
     p.add_argument("--holidays")
+    p.add_argument("--no-federal-holidays", action="store_true")
     q = sub.add_parser("bizdays")
     q.add_argument("--from", dest="from_", required=True)
     q.add_argument("--days", type=int, required=True)
     q.add_argument("--before", action="store_true")
     q.add_argument("--holidays")
+    q.add_argument("--no-federal-holidays", action="store_true")
     a = ap.parse_args(argv)
-    (notices if a.cmd == "notices" else bizdays)(a)
+    (notices if a.cmd == "notices" else cmd_bizdays)(a)
 
 
 if __name__ == "__main__":

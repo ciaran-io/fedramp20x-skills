@@ -43,12 +43,12 @@ Adds a fifth notification channel: messages to an agency's team chat channel thr
 
 ## Notices
 
-Business days: Monday to Friday, no holidays skipped (FedRAMP does not define business days; confirm with the consultant).
+Business days: Monday to Friday, skipping US federal holidays on their observed dates (5 U.S.C. 6103) (FedRAMP does not define business days; confirm with the consultant).
 
 | Rule | Name | Counts from | Timeframe | Date | Meaning |
 |---|---|---|---|---|---|
-| SCN-TRF-NIP | Notification of Initial Plans | start | 30 bizdays before | 2026-12-21 | send on or before |
-| SCN-TRF-NFP | Notification of Final Plans | start | 10 bizdays before | 2027-01-18 | send on or before |
+| SCN-TRF-NIP | Notification of Initial Plans | start | 30 bizdays before | 2026-12-16 | send on or before |
+| SCN-TRF-NFP | Notification of Final Plans | start | 10 bizdays before | 2027-01-15 | send on or before |
 | SCN-TRF-NAF | Notification After Finishing | finish | 5 bizdays after | 2027-03-05 | latest date to send |
 | SCN-TRF-NAV | Notification After Verification | verified | 5 bizdays after | not stated | needs the verified date |
 | SCN-TRF-UPD | Update Documentation | finish | 30 bizdays after | 2027-04-09 | latest date to send |
@@ -102,7 +102,7 @@ Read SCN-TRF-TPR (third-party review before starting) and SCN-CSO-INF (required 
 | ID | Question | Options | Recommendation | Decision |
 |---|---|---|---|---|
 | DQ-001 | Is CR-014 transformative or adaptive? | Transformative, Adaptive | Transformative: It adds a capability agencies configure and a new third party in the delivery path, which needs new MAS-CSO-TPR documentation and an assessment of the new flow. Choosing adaptive drops the 30 and 10 business day notices before the start | open |
-| DQ-002 | How should business days be counted? | Monday to Friday, skipping US federal holidays (client to supply the list), Monday to Friday only | Monday to Friday, skipping US federal holidays (client to supply the list): FedRAMP does not define business days. With weekdays only, the final plans notice falls on 2027-01-18, which is the Martin Luther King Jr. federal holiday; skipping holidays moves the earlier notices earlier and gives a safer date | open |
+| DQ-002 | Confirm the business day basis: Monday to Friday, skipping US federal holidays. | Confirm the default, Also skip the client's own holidays (client supplies the dates), Monday to Friday only | Confirm the default: FedRAMP does not define business days. Counting weekdays only would put the final plans notice on 2027-01-18, the Martin Luther King Jr. federal holiday; the default moves it to 2027-01-15 | open |
 
 ## Open questions
 

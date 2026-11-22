@@ -12,12 +12,17 @@ and FROM is an event name or "clock". The reporting clock starts at the event na
 --clock-start (default: reportable, the reportability decision; lesson L8), never at
 detection unless the client's plan says so. A target whose event is unknown shows "needs <event>".
 With --now, each due time already passed is marked overdue unless --done NAME=TIME was given.
-Business days count Monday to Friday; --holidays skips listed dates (YYYY-MM-DD per line).
+Business days count Monday to Friday and skip US federal holidays on their observed dates by
+default; --no-federal-holidays counts weekdays only, and --holidays skips extra listed dates.
 """
 import argparse
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import bizdays  # noqa: E402
 
 
 def add(t: datetime, amount: str, holidays: set) -> datetime:
@@ -40,10 +45,12 @@ def main(argv=None):
     ap.add_argument("--done", action="append", default=[], help="NAME=ISO time the target was met")
     ap.add_argument("--now")
     ap.add_argument("--holidays")
+    ap.add_argument("--no-federal-holidays", action="store_true")
     a = ap.parse_args(argv)
     from datetime import date
-    hol = {date.fromisoformat(x.strip()) for x in Path(a.holidays).read_text().splitlines() if x.strip()} if a.holidays else set()
     ev = {k: datetime.fromisoformat(v) for k, v in (e.split("=", 1) for e in a.event)}
+    span = [t.date() for t in ev.values()] or [date.today()]
+    hol = bizdays.holiday_set(min(span), max(span), not a.no_federal_holidays, a.holidays)
     if a.clock_start in ev:
         ev["clock"] = ev[a.clock_start]
     done = {k: datetime.fromisoformat(v) for k, v in (x.split("=", 1) for x in a.done)}
@@ -68,7 +75,7 @@ def main(argv=None):
                 item["status"] = "due"
         out.append(item)
     print(json.dumps({"clock_starts_at": a.clock_start, "clock": ev.get("clock").isoformat() if "clock" in ev else None,
-                      "business_days": f"Monday to Friday, holidays from {a.holidays}" if a.holidays else "Monday to Friday, no holidays skipped",
+                      "business_days": bizdays.basis(not a.no_federal_holidays, a.holidays),
                       "timeline": out}, indent=2))
 
 

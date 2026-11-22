@@ -1,0 +1,45 @@
+name: frmr-update-check
+
+# Once a month, compare the pinned FedRAMP rules commit in shared/scripts/frmr.py with the
+# latest commit on FedRAMP/rules. If upstream has moved, open an issue (once) so the update is
+# made by pull request: change COMMIT and the hashes, run the tests, review what changed.
+
+on:
+  schedule:
+    - cron: "23 13 3 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803  # v6.1.0
+      - name: Compare the pinned commit with FedRAMP/rules
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pinned=$(grep -oP '^COMMIT = "\K[0-9a-f]{40}' shared/scripts/frmr.py)
+          latest=$(gh api repos/FedRAMP/rules/commits/HEAD --jq .sha)
+          echo "pinned $pinned, latest $latest"
+          if [ "$pinned" = "$latest" ]; then
+            echo "FedRAMP rules data is current"
+            exit 0
+          fi
+          title="FedRAMP rules data has a newer commit (${latest:0:7})"
+          if gh issue list --state open --search "$title in:title" --json number --jq '.[0].number' | grep -q .; then
+            echo "An open issue already tracks ${latest:0:7}"
+            exit 0
+          fi
+          gh issue create --title "$title" --body "FedRAMP/rules has moved from the pinned commit ${pinned:0:7} to ${latest:0:7}.
+
+          Compare: https://github.com/FedRAMP/rules/compare/${pinned}...${latest}
+
+          To update, on a branch:
+          1. Set COMMIT in shared/scripts/frmr.py to ${latest}, delete the cached data, run python shared/scripts/frmr.py fetch, and copy the new hashes it reports into FILES.
+          2. Run python tools/sync_shared.py and python -m pytest tests.
+          3. Review changed rule and KSI IDs, timeframes and class variants, and update the skills' references and the examples where they cite them.
+          4. Open a pull request."
