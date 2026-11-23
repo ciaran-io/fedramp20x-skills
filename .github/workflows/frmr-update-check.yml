@@ -3,6 +3,7 @@ name: frmr-update-check
 # Once a month, compare the pinned FedRAMP rules commit in shared/scripts/frmr.py with the
 # latest commit on FedRAMP/rules. If upstream has moved, open an issue (once) so the update is
 # made by pull request: change COMMIT and the hashes, run the tests, review what changed.
+# It also checks that each pinned FedRAMP JSON schema still has the pinned hash.
 
 on:
   schedule:
@@ -43,3 +44,23 @@ jobs:
           2. Run python tools/sync_shared.py and python -m pytest tests.
           3. Review changed rule and KSI IDs, timeframes and class variants, and update the skills' references and the examples where they cite them.
           4. Open a pull request."
+      - name: Compare the pinned FedRAMP JSON schemas with fedramp.gov
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if python shared/scripts/fedramp_export.py fetch; then
+            echo "FedRAMP schemas match their pins"
+            exit 0
+          fi
+          title="A pinned FedRAMP JSON schema has changed or moved"
+          if gh issue list --state open --search "$title in:title" --json number --jq '.[0].number' | grep -q .; then
+            echo "An open issue already tracks this"
+            exit 0
+          fi
+          gh issue create --title "$title" --body "python shared/scripts/fedramp_export.py fetch failed on $(date -u +%F). A schema at https://fedramp.gov/schemas/ no longer matches its SHA-256 in SCHEMAS, or could not be downloaded.
+
+          To update, on a branch:
+          1. Download the new schema and read it in full.
+          2. Update its hash in SCHEMAS (and the dated URL if FedRAMP published a new version).
+          3. Update the export blocks in the examples and the field maps in shared/references/fedramp-export.md where fields changed.
+          4. Run python -m pytest tests and open a pull request."
