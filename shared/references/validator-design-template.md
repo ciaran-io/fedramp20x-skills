@@ -15,13 +15,14 @@ Used by `20x-validator-design` (to write designs), `20x-validator-build` (to bui
 | Break test | For each method: the change made to prove it fails, and the message it gave. "Planned" until it is run |
 | Production source | The real system or API the check reads for the client, named from the client's material |
 | Gap | What the methods do not prove against the KSI |
-| Status | Designed, Built or Verified |
+| Status | Draft, Designed, Built or Verified |
 | Decisions | Each choice made, with the option rejected and why, and the decision log ID |
 
 ## Status
 
 | Status | Meaning |
 |---|---|
+| Draft | The design is written but not yet SME-validated, or an item is unconfirmed. Nothing may be built from it |
 | Designed | The design is written and SME-validated. No method exists yet |
 | Built | At least two automated methods exist (FRC-CSX-VVK) |
 | Verified | A break test made each method fail, and the result is recorded in the design |

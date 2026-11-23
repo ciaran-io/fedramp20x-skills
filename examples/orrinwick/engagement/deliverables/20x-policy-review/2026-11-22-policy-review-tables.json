@@ -741,7 +741,8 @@
         "Requirement",
         "Current text",
         "Recommended text",
-        "Closes"
+        "Closes",
+        "Sources"
       ],
       "rows": [
         [
@@ -751,7 +752,8 @@
           "Each FedRAMP Reportable Incident, and each incident rated N2 or above, ends with an after action report within 10 business days. A reportable incident with no rating is treated as N5 (IEC-CSO-DPR). [owner: client to confirm] records each lesson learned as an action with an owner and a due date in [record: client to confirm]. The quarterly review under INR-4 checks the open actions.",
           [
             "G-001"
-          ]
+          ],
+          "I-01 INR-2, INR-4; IEC-CSO-DPR"
         ],
         [
           "R-002",
@@ -760,7 +762,8 @@
           "The Platform Lead's automated validation checks the configuration that CNA-2, CNA-4, CNA-5, CNA-6 and CNA-8 require on every validation run, and at least every 3 days. Each run's result is kept in [record: client to confirm]. A failed check is fixed or accepted as an exception under the policy exception process.",
           [
             "G-002"
-          ]
+          ],
+          "I-02 CNA-2, CNA-4, CNA-5, CNA-6, CNA-8; VDR-TFR-MVX"
         ],
         [
           "R-003",
@@ -769,7 +772,8 @@
           "Infrastructure is declared in code. [tool: client to confirm] compares the running state with the code on every validation run, and at least every 3 days, and restores the declared state automatically. A difference it cannot restore is a defect and is removed or brought into the code within 5 business days.",
           [
             "G-003"
-          ]
+          ],
+          "I-02 CNA-2; VDR-TFR-MVX"
         ],
         [
           "R-004",
@@ -778,7 +782,8 @@
           "The recovery plan describes how a recovery environment is built from infrastructure code and how data is restored into it. It is kept in step with the architecture. [owner: client to confirm] reviews the plan against the recovery objectives in RPL-1 [cadence: client to confirm] and after each restore test under RPL-4, and records the review in [record: client to confirm].",
           [
             "G-005"
-          ]
+          ],
+          "I-03 RPL-1, RPL-3, RPL-4"
         ],
         [
           "R-005",
@@ -787,7 +792,8 @@
           "Every change to a production resource is made through the pipeline. The pipeline logs the change, the author, the reviewer and the result. [owner: client to confirm] reviews the pipeline log [cadence: client to confirm] for changes that did not follow CMT-1 to CMT-6, and records the review in [record: client to confirm].",
           [
             "G-006"
-          ]
+          ],
+          "I-04 CMT-1 to CMT-6"
         ],
         [
           "R-006",
@@ -797,7 +803,8 @@
           [
             "G-010",
             "G-009"
-          ]
+          ],
+          "I-01 INR-4"
         ],
         [
           "R-007",
@@ -806,7 +813,8 @@
           "The Platform Lead also reviews protections after each change recorded in mas/scope-changes.json. The deadline depends on the change type in the SCN rules. Transformative: before the notice of final plans under SCN-TRF-NFP, and again within 5 business days after it is finished. Adaptive: within 10 business days after the change is finished, before the notice under SCN-ADP-NTF. Not significant: within 20 business days after the change is finished. Routine recurring: no separate review, because the annual review covers these changes.",
           [
             "G-011"
-          ]
+          ],
+          "I-02 CNA-7b; SCN-TRF-NFP; SCN-ADP-NTF"
         ],
         [
           "R-009",
@@ -815,7 +823,8 @@
           "A change of certification class is not a significant change. It needs a new certification before the offering operates at the new class (SCN-CSO-EVA).",
           [
             "G-007"
-          ]
+          ],
+          "I-04 CMT-7; SCN-CSO-EVA"
         ],
         [
           "R-008",
@@ -824,7 +833,8 @@
           "A restore test runs at least every 6 months. It records the time taken, the data age restored and any failure. The results are compared with the recovery objectives in RPL-1. A result outside an objective is recorded as a finding in [record: client to confirm].",
           [
             "G-012"
-          ]
+          ],
+          "I-03 RPL-4"
         ]
       ]
     },

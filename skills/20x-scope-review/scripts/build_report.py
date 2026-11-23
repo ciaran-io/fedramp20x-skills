@@ -57,6 +57,6 @@ def build(path: Path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit(__doc__)
-    build(Path(sys.argv[1]))
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import report_lib  # noqa: E402
+    report_lib.main(build, __doc__)

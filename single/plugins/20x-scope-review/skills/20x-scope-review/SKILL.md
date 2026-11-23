@@ -45,17 +45,19 @@ The skill never decides that a resource is in or out of scope. It proposes, give
 
 6. **Third parties.** For each third-party resource, record the information MAS-CSO-TPR lists, from the client's material only. A missing item is a gap and an open question.
 
-7. **Review mode only.** Apply the tests in `references/scope-guide.md` to the existing record, and rate each finding with `references/finding-ratings.md`.
+7. **Review mode only.** Apply the tests in `references/scope-guide.md` to the existing record, and rate each finding with `references/finding-ratings.md`. For M8, if the client has a check that detects scope changes (for example a fingerprint of the record compared with the change log), test it by running it, not only by reading it: on a copy of the record, change one exclusion condition, one flow's protection and one third party's details, run the check after each change, and record whether it reported the change. A check that reports no change is a finding with the observed output as evidence.
 
-8. **Stop and ask.** Every boundary decision is the consultant's. Present them with AskUserQuestion, at most four at a time, each with options, the recommended option and the reason. Record the answers in `decisions.json`. A resource stays `undecided` until the consultant answers.
+8. **Stop and ask.** Every boundary decision is the consultant's. Present them with AskUserQuestion, at most four at a time, each with options, the recommended option and the reason. Record the consultant's answers in `decisions.json`. A resource stays `undecided` until the consultant answers.
 
-9. **Write the deliverable** in `deliverables/20x-scope-review/`: `<date>-scope-review.json` following `templates/deliverable.json`, then `python scripts/build_report.py <json>`. In build mode, `items` holds the resources, flows, third parties and exclusion conditions. In review mode, it holds the findings, and `scope` holds the record as reviewed.
+9. **Write the deliverable** in `deliverables/20x-scope-review/`: `<date>-scope-review.json` following `templates/deliverable.json`, then `python scripts/build_report.py <json>`. In build mode, `items` holds the resources, flows, third parties and exclusion conditions. In review mode, it holds the findings, and `record_reviewed` names the record and its version (the record itself stays in the inputs).
 
 10. **Check.** `python scripts/check_deliverable.py <json> --inputs <engagement>/inputs --decisions <engagement>/decisions.json` and `python scripts/frmr.py lint <md> <json>`.
 
 11. **SME Validate.** Follow `references/sme-validation.md`. The SME should know the architecture; ask the consultant to name one. Add to the checklist: every system in the inventory appears in the record, and every exclusion condition has evidence the client can produce.
 
 12. **Render** after validation with `scripts/render.py`.
+
+13. **Export to FedRAMP JSON** after validation, following `references/fedramp-export.md`: schema `certification-package-overview` (fragment `thirdPartyInformationResources`). Export the third-party resources only. Fill the `fedramp_export` block from the validated deliverable only, list every value it does not hold in `missing` and ask the consultant for it, then run `python scripts/fedramp_export.py export <json> --schema <schema> --out <file>`. The script refuses a draft, an undefined field, a null or placeholder, an unsourced field and anything the schema rejects. If it reports errors, fix the block or stop and ask; never edit the output by hand.
 
 ## Must not
 

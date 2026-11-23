@@ -9,7 +9,7 @@ SAMPLE = {}  # load the sample inputs here, parsed as the check's run() parses t
 
 
 def test_sample_passes():
-    assert m.static_method(SAMPLE)["status"] == "pass"
+    assert m.static_method(SAMPLE, AS_OF)["status"] == "pass"
     assert m.live_method(SAMPLE, AS_OF)["status"] == "pass"
 
 

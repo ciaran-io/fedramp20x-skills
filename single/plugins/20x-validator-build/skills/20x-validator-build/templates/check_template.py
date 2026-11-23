@@ -19,8 +19,9 @@ def result(method_id, kind, source, expected, observed, findings, notes=None):
             "observed": observed, "status": "fail" if findings else "pass", "findings": findings, "notes": notes or []}
 
 
-def static_method(declared: dict) -> dict:
+def static_method(declared: dict, as_of: date) -> dict:
     findings = []
+    # as_of is passed even when unused, so every method has the same signature and a future date can be tested.
     # One check per pass condition in the design. One message per failure.
     return result("{xxx-yyy-static}", "static", "{source}", "{pass condition}", "{what was seen}", findings)
 
@@ -33,7 +34,7 @@ def live_method(observed: dict, as_of: date) -> dict:
 
 def run(paths: dict, as_of: date) -> list:
     data = {k: json.loads(Path(p).read_text(encoding="utf-8")) for k, p in paths.items()}
-    return [static_method(data), live_method(data, as_of)]
+    return [static_method(data, as_of), live_method(data, as_of)]
 
 
 if __name__ == "__main__":

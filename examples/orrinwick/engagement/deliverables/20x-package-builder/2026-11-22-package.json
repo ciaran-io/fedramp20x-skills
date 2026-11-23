@@ -71,16 +71,22 @@
       }
     },
     "past_30_days_window": {
-      "from": "2026-11-18",
-      "days_expected": 5,
+      "from": "2026-10-24",
+      "to": "2026-11-22",
+      "days_in_window": 30,
       "days_present": 5,
-      "missing_days": []
+      "days_before_history": 25,
+      "missing_days": [],
+      "coverage": "covers 5 days, not 30"
     },
     "up_to_past_year_window": {
-      "from": "2026-11-18",
-      "days_expected": 5,
+      "from": "2025-11-23",
+      "to": "2026-11-22",
+      "days_in_window": 365,
       "days_present": 5,
-      "missing_days": []
+      "days_before_history": 360,
+      "missing_days": [],
+      "coverage": "covers 5 days, not 365"
     }
   },
   "inputs": [
@@ -614,5 +620,66 @@
     "date": null,
     "corrections": [],
     "rejected": []
-  }
+  },
+  "fedramp_export": [
+    {
+      "schema": "security-decision-record",
+      "fragment": null,
+      "document": {
+        "keySecurityIndicators": [
+          {
+            "ksiId": "KSI-INR-RIR",
+            "ksiValidation": [
+              "Latest result pass, both methods pass. History: 3 not_implemented, 2 pass."
+            ],
+            "ksiTests": [
+              "inr-rir-live",
+              "inr-rir-static"
+            ]
+          },
+          {
+            "ksiId": "KSI-RPL-RRO",
+            "ksiValidation": [
+              "Latest result pass, both methods pass. History: 2 not_implemented, 3 pass."
+            ],
+            "ksiTests": [
+              "rpl-rro-live",
+              "rpl-rro-static"
+            ]
+          },
+          {
+            "ksiId": "KSI-CNA-RVP",
+            "ksiValidation": [
+              "Latest result pass, all three methods pass. History: 4 not_implemented, 1 pass."
+            ],
+            "ksiTests": [
+              "cna-rvp-change",
+              "cna-rvp-live",
+              "cna-rvp-static"
+            ]
+          }
+        ]
+      },
+      "sources": {
+        "keySecurityIndicators": [
+          {
+            "item": "KS-01"
+          },
+          {
+            "item": "KS-02"
+          },
+          {
+            "item": "KS-03"
+          }
+        ]
+      },
+      "missing": [
+        "certificationPackageOverviewUri",
+        "fedRampRequirements",
+        "ksiImplementation",
+        "ksiAssessment",
+        "ksiEvidence"
+      ]
+    }
+  ]
 }

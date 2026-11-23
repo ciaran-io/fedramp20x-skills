@@ -17,7 +17,7 @@ The consultant keeps one folder per client engagement, outside the skills reposi
       <YYYY-MM-DD>-<name>.xlsx   Excel copy of the tables, rendered after SME Validate
 ```
 
-If `engagement.json` does not exist, the first skill run asks for the client name, the consultant's name and the SME names, then creates it. Do not guess them.
+If `engagement.json` does not exist, the first skill run asks for the client name, the consultant's name and the SME names, then creates it. Do not guess them. `stage` (preparing, applying or certified) is asked for by the first skill that needs it, usually the assessor review, and written back here; a later change of stage is also recorded in `decisions.json`. `fedramp_package_uri` (the Certification Package Overview URI) is added when the consultant gives it, for the FedRAMP JSON export.
 
 ```json
 {
@@ -26,9 +26,12 @@ If `engagement.json` does not exist, the first skill run asks for the client nam
   "class": "C",
   "consultant": "A. Example",
   "smes": [{"name": "B. Example", "role": "Cloud security architect", "areas": ["CNA", "SVC"]}],
-  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083"
+  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+  "stage": "preparing"
 }
 ```
+
+A folder of records (for example a daily results history) is registered as one input with the folder's path; `check_deliverable.py --sha256 <folder>` hashes its file list and contents together. An input that is another skill's deliverable is registered with its path from the engagement folder, for example `deliverables/20x-scope-review/2026-11-22-scope-review.json`. `check_deliverable.py --inputs <engagement>/inputs` looks for an input's file in `inputs/` first and then in the engagement folder.
 
 ## Decision log
 

@@ -5,6 +5,7 @@ tables JSON from it with these helpers, so every report has the same front matte
 decision and question sections and SME validation line.
 """
 import json
+import sys
 from pathlib import Path
 
 
@@ -60,7 +61,7 @@ def decisions_and_questions(d: dict) -> list:
     if d["decisions_needed"]:
         L += ["| ID | Question | Options | Recommendation | Decision |", "|---|---|---|---|---|"]
         for q in d["decisions_needed"]:
-            L.append(f"| {q['id']} | {cell(q['question'])} | {cell(q['options'])} | {cell(q['recommendation'])}: {cell(q['reason'])} | {cell(q.get('decision_ref') or 'open')} |")
+            L.append(f"| {q['id']} | {cell(q['question'])} | {cell(q['options'])} | {cell(q['recommendation'])}: {cell(q['reason'])} | {cell(q.get('decision_ref') or (('open; this run used: ' + q['unattended_choice']) if q.get('unattended_choice') else 'open'))} |")
     else:
         L.append("None.")
     L += ["", "## Open questions", ""]
@@ -85,7 +86,7 @@ def sme_section(d: dict) -> list:
 
 def questions_sheet(d: dict) -> dict:
     return {"name": "Questions", "columns": ["ID", "Type", "Question", "Detail", "Recommendation or blocks", "Answer"],
-            "rows": [[q["id"], "Decision", q["question"], "; ".join(q["options"]), q["recommendation"], q.get("decision_ref") or "open"] for q in d["decisions_needed"]]
+            "rows": [[q["id"], "Decision", q["question"], "; ".join(q["options"]), q["recommendation"], q.get("decision_ref") or (("open; this run used: " + q["unattended_choice"]) if q.get("unattended_choice") else "open")] for q in d["decisions_needed"]]
             + [[q["id"], "Open question", q["question"], q["why"], q["blocks"], q.get("answer") or "open"] for q in d["open_questions"]]}
 
 
@@ -97,3 +98,18 @@ def write(path: Path, lines: list, sheets: list, d: dict):
     t = path.with_name(path.stem + "-tables.json")
     t.write_text(json.dumps(tables, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {md} and {t}")
+
+
+def main(build, doc: str):
+    """Command line for build_report.py: help, one argument, and a clear message for a missing field."""
+    args = sys.argv[1:]
+    if len(args) != 1 or args[0] in ("-h", "--help"):
+        print(doc)
+        sys.exit(0 if args[:1] in (["-h"], ["--help"]) else 2)
+    path = Path(args[0])
+    if not path.exists():
+        sys.exit(f"ERROR: {path} not found")
+    try:
+        build(path)
+    except KeyError as e:
+        sys.exit(f"ERROR: {path}: field {e} is missing. Run check_deliverable.py on it for the full list.")

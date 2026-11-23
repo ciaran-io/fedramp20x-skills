@@ -94,7 +94,7 @@ def main(argv=None):
         res = next((r for r in results if r.get("method_id") == a.method), None)
         if res is None:
             sys.exit(f"method {a.method} not in the check output")
-        record = {"method": a.method, "date": datetime.now(timezone.utc).date().isoformat(), "change": "; ".join(changes),
+        record = {"method": a.method, "date": datetime.now().astimezone().date().isoformat(), "run_at": datetime.now().astimezone().isoformat(timespec="seconds"), "change": "; ".join(changes),
                   "observed_status": res["status"], "observed_message": (res.get("findings") or [""])[0],
                   "result": "failed as required" if res["status"] == "fail" else "DID NOT FAIL"}
         print(json.dumps(record, indent=2))

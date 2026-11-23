@@ -7,7 +7,9 @@ HISTORY_FOLDER holds one JSON file per day: {"date": "YYYY-MM-DD", "ksi_status":
 Files marked "synthetic": true are counted separately and never mixed into the summaries.
 For each KSI it prints the days covered, the count of each status over the past 30 days and
 up to the past year (only days on or before --as-of), the first and last day, and the daily
-statuses. It reports gaps: days with no file inside the window.
+statuses. Each window is the full 30 or 365 days ending on --as-of. Days in the window before the
+first history file are counted as days_before_history, and days after it with no file as
+missing_days, so a short history is never reported as a complete window.
 """
 import argparse
 import json
@@ -20,7 +22,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("folder", type=Path)
     ap.add_argument("--as-of", type=date.fromisoformat, required=True)
-    ap.add_argument("--ksi", action="append")
+    ap.add_argument("--ksi", action="extend", nargs="+", help="one or more KSI IDs; may repeat")
     a = ap.parse_args(argv)
     days, synthetic = {}, []
     for p in sorted(a.folder.glob("*.json")):
@@ -39,12 +41,14 @@ def main(argv=None):
     out = {"as_of": a.as_of.isoformat(), "first_day": first.isoformat(), "days_with_history": len(days),
            "synthetic_days_excluded": synthetic, "ksis": {}}
     for window, name in ((30, "past_30_days"), (365, "up_to_past_year")):
-        start = max(first, a.as_of - timedelta(days=window - 1))
-        expected = (a.as_of - start).days + 1
+        start = a.as_of - timedelta(days=window - 1)
         present = [d for d in days if d >= start]
-        out[f"{name}_window"] = {"from": start.isoformat(), "days_expected": expected, "days_present": len(present),
-                                 "missing_days": [(start + timedelta(days=i)).isoformat() for i in range(expected)
-                                                  if (start + timedelta(days=i)) not in days]}
+        before = max(0, (first - start).days)
+        out[f"{name}_window"] = {"from": start.isoformat(), "to": a.as_of.isoformat(), "days_in_window": window,
+                                 "days_present": len(present), "days_before_history": before,
+                                 "missing_days": [(start + timedelta(days=i)).isoformat() for i in range(window)
+                                                  if start + timedelta(days=i) >= first and (start + timedelta(days=i)) not in days],
+                                 "coverage": f"covers {len(present)} days, not {window}" if len(present) < window else f"covers all {window} days"}
     for k in ksis:
         daily = {d.isoformat(): days[d].get(k, "absent") for d in sorted(days)}
         entry = {"daily": daily}

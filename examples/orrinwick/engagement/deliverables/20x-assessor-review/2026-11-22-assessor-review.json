@@ -25,13 +25,13 @@
     {
       "id": "I-07",
       "file": "../deliverables/20x-policy-review/2026-11-22-policy-review.json",
-      "sha256": "a6e7788337db124112d652fc547e00b8fd266a0d4c098f34c81c5fd07fb04933",
+      "sha256": "4332375b0afc5473b1e104202c28737623ce7638fdb6173287590d9bceaac8bf",
       "description": "KSI policy coverage review, 2026-11-22 (draft)"
     },
     {
       "id": "I-08",
       "file": "../deliverables/20x-validator-design/2026-11-22-validator-design.json",
-      "sha256": "986602e18e7b341ace1710dc4b682047d9d4af69d821d275f6314cd22be18198",
+      "sha256": "c4931812765238ef91ada90c5fa94f914bd13e4b17649df355c8ef2fd5c5ced2",
       "description": "Validator designs for KSI-INR-RPI and KSI-INR-AAR, 2026-11-22 (draft)"
     },
     {

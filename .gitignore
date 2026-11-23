@@ -18,5 +18,8 @@ client/
 *.pem
 *.key
 
+# FedRAMP JSON schemas are downloaded at run time (shared/scripts/fedramp_export.py fetch), never committed.
+.schemas-cache/
+
 # Built by tools/package_skills.py
 dist/

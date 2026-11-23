@@ -1406,6 +1406,15 @@
       "placeholders": [
         "owner",
         "record"
+      ],
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "INR-2, INR-4"
+        },
+        {
+          "frmr": "IEC-CSO-DPR"
+        }
       ]
     },
     {
@@ -1418,6 +1427,15 @@
       ],
       "placeholders": [
         "record"
+      ],
+      "sources": [
+        {
+          "input": "I-02",
+          "location": "CNA-2, CNA-4, CNA-5, CNA-6, CNA-8"
+        },
+        {
+          "frmr": "VDR-TFR-MVX"
+        }
       ]
     },
     {
@@ -1430,6 +1448,15 @@
       ],
       "placeholders": [
         "tool"
+      ],
+      "sources": [
+        {
+          "input": "I-02",
+          "location": "CNA-2"
+        },
+        {
+          "frmr": "VDR-TFR-MVX"
+        }
       ]
     },
     {
@@ -1444,6 +1471,12 @@
         "owner",
         "cadence",
         "record"
+      ],
+      "sources": [
+        {
+          "input": "I-03",
+          "location": "RPL-1, RPL-3, RPL-4"
+        }
       ]
     },
     {
@@ -1458,6 +1491,12 @@
         "owner",
         "cadence",
         "record"
+      ],
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "CMT-1 to CMT-6"
+        }
       ]
     },
     {
@@ -1472,6 +1511,12 @@
       "placeholders": [
         "owner",
         "record"
+      ],
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "INR-4"
+        }
       ]
     },
     {
@@ -1482,7 +1527,19 @@
       "closes": [
         "G-011"
       ],
-      "placeholders": []
+      "placeholders": [],
+      "sources": [
+        {
+          "input": "I-02",
+          "location": "CNA-7b"
+        },
+        {
+          "frmr": "SCN-TRF-NFP"
+        },
+        {
+          "frmr": "SCN-ADP-NTF"
+        }
+      ]
     },
     {
       "id": "R-009",
@@ -1492,7 +1549,16 @@
       "closes": [
         "G-007"
       ],
-      "placeholders": []
+      "placeholders": [],
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "CMT-7"
+        },
+        {
+          "frmr": "SCN-CSO-EVA"
+        }
+      ]
     },
     {
       "id": "R-008",
@@ -1504,6 +1570,12 @@
       ],
       "placeholders": [
         "record"
+      ],
+      "sources": [
+        {
+          "input": "I-03",
+          "location": "RPL-4"
+        }
       ]
     }
   ],

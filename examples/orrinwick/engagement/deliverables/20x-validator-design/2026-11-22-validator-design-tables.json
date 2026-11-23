@@ -29,7 +29,7 @@
           "Remove the cycle from INR-4 in a copy of the policy.",
           "POL-INR INR-4 states no review cycle for KSI-INR-RPI",
           "Planned",
-          "Designed"
+          "Draft"
         ],
         [
           "KSI-INR-RPI",
@@ -40,7 +40,7 @@
           "Add an incident opened after the newest review's start date and leave it out of incidents_covered.",
           "Past incident review dated <date> does not cover INC-<id> opened <date>",
           "Planned",
-          "Designed"
+          "Draft"
         ],
         [
           "KSI-INR-AAR",
@@ -51,7 +51,7 @@
           "Remove the 10 business day deadline from INR-2 in a copy of the policy.",
           "POL-INR INR-2 sets no deadline for after action reports",
           "Planned",
-          "Designed"
+          "Draft"
         ],
         [
           "KSI-INR-AAR",
@@ -62,7 +62,7 @@
           "Add a closed reportable incident with no rating and no aar_completed, and set the run date 11 business days after it closed.",
           "INC-<id> (reportable, unrated, treated as N5) has no after action report 11 business days after closing",
           "Planned",
-          "Designed"
+          "Draft"
         ],
         [
           "KSI-INR-AAR",
@@ -73,7 +73,7 @@
           "Add a lesson with no ticket reference to a completed report.",
           "Lesson <n> in the report for INC-<id> has no ticket or change reference",
           "Planned",
-          "Designed"
+          "Draft"
         ]
       ]
     },
@@ -100,7 +100,7 @@
           "No POL-INR requirement lists KSI-INR-RPI. The cycle is missing or longer than 92 days. No owner role is named, or the owner is a group with no lead. No review is recorded, or the newest review is dated after the run date or is older than the cycle. The review was recorded by a role other than the owner. The review does not list the incidents it covered, or misses an incident or near miss opened since the previous review. The review has no findings summary.",
           "The incident tracker named in plan section 10, for incidents and near misses by opened date. The review record in incident_pattern_reviews. The tracker's product and API are not named in the material: [source: client to confirm]",
           "The methods prove that a review happened on time, by the owner, and covered every incident. They do not prove that the review found the patterns that exist, or that its findings led to action. Near misses are covered only if they are recorded in the incident tracker.",
-          "Designed"
+          "Draft"
         ],
         [
           "KSI-INR-AAR",
@@ -111,7 +111,7 @@
           "No POL-INR requirement lists KSI-INR-AAR, or it sets no scope or no deadline. The plan does not require a ticket or change reference for each lesson. A closed incident that needs a report has none 10 business days after closing, or the report is dated after the run date. A reportable incident with no rating is not treated as N5. A lesson has no ticket or change reference. An open lesson has no owner, no due date, or a due date before the run date.",
           "The incident tracker named in plan section 10, where after action reports are linked from the incident record, and the backlog that holds the lesson tickets. Neither tool is named in the material: [source: client to confirm]",
           "The methods prove that reports exist on time and that each lesson has a tracked ticket. They do not prove that a report found the right root cause, or that a closed ticket changed what it should have. The record field lessons_incorporated is a single value and cannot show each lesson, so inr-aar-lessons needs a lessons list (DQ-003).",
-          "Designed"
+          "Draft"
         ]
       ]
     },

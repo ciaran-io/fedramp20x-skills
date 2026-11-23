@@ -30,11 +30,11 @@ If the description does not say what changes in the offering, stop and ask. Do n
 
 2. **Describe the change** in plain words: what changes, which resources and data classes (by scope record ID), and what changes for agency customers. Every element comes from the inputs.
 
-3. **Evaluate** with the questions in `references/change-types.md`, in order. For each question, record the answer and the evidence. Where an answer depends on something the inputs do not show (for example whether a change needs in-depth assessment, or whether it recurs), stop and ask the SME. Propose one type.
+3. **Evaluate** with the questions in `references/change-types.md`, in order, starting with the check for a change that rests on an exclusion condition. Each evaluation item cites SCN-CSO-EVA, the rule that sets the evaluation, beside the definition it applies (FRD-SGC, FRD-CCC or FRD-RTR). For each question, record the answer and the evidence. Where an answer depends on something the inputs do not show (for example whether a change needs in-depth assessment, or whether it recurs), stop and ask the SME. Propose one type.
 
 4. **Scope effect.** If the change adds, removes or moves a resource, changes a decision, a flow or an exclusion condition, draft a scope change log entry: change type, resources, summary, evaluation, and the change type. The entry is a draft until the consultant approves it.
 
-5. **Notice dates.** Run `python scripts/scn_timeline.py notices --type <type> --start <date> --finish <date>` (add `--verified` for transformative changes when known). Business days skip US federal holidays by default; add `--holidays <file>` for a client's extra holidays, or `--no-federal-holidays` if the consultant decides on weekdays only. Copy the dates and the business day basis into the deliverable. Never type a timeframe from memory. For an emergency, read SCN-CSO-EMG and record what must be provided after the event.
+5. **Notice dates.** Run `python scripts/scn_timeline.py notices --type <type> --start <date> --finish <date>` (add `--verified` for transformative changes when known). Business days skip US federal holidays by default; add `--holidays <file>` for a client's extra holidays, or `--no-federal-holidays` if the consultant decides on weekdays only. Copy the dates and the business day basis into the deliverable. Never type a timeframe from memory. If the script prints a warning that a date falls on a weekend or holiday, ask the client to confirm the date before you count from it. For an emergency, read SCN-CSO-EMG and record what must be provided after the event.
 
 6. **Notice content.** For a transformative or adaptive change, list the information SCN-CSO-INF requires and, for each item, whether the inputs supply it. A missing item is an open question.
 
@@ -49,6 +49,8 @@ If the description does not say what changes in the offering, stop and ask. Do n
 11. **SME Validate.** Follow `references/sme-validation.md`. Add to the checklist: the type matches the definitions, every date was computed by the script, and the business day basis is confirmed.
 
 12. **Render** after validation with `scripts/render.py`.
+
+13. **Export to FedRAMP JSON** after validation, following `references/fedramp-export.md`: schema `significant-change-notifications`. Export only an adaptive or transformative change, with the decided type. Fill the `fedramp_export` block from the validated deliverable only, list every value it does not hold in `missing` and ask the consultant for it, then run `python scripts/fedramp_export.py export <json> --schema <schema> --out <file>`. The script refuses a draft, an undefined field, a null or placeholder, an unsourced field and anything the schema rejects. If it reports errors, fix the block or stop and ask; never edit the output by hand.
 
 ## Must not
 

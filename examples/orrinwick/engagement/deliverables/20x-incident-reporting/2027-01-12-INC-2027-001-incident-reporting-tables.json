@@ -50,6 +50,27 @@
           "resolved",
           "",
           "needs resolved"
+        ],
+        [
+          "initial_report_rule",
+          "1h",
+          "reportable",
+          "2027-01-12T11:20:00-05:00",
+          "due"
+        ],
+        [
+          "ongoing_report_rule",
+          "6h",
+          "clock",
+          "2027-01-12T16:20:00-05:00",
+          "due"
+        ],
+        [
+          "final_report_rule",
+          "6h",
+          "resolved",
+          "",
+          "needs resolved"
         ]
       ]
     },
@@ -129,6 +150,14 @@
           "Which PAIN rating does the CISO approve for INC-2027-001?",
           "N4; N3; Keep N5 until the other tenants are checked",
           "Keep N5 until the other tenants are checked",
+          "open"
+        ],
+        [
+          "DQ-005",
+          "Decision",
+          "From which events do the rule timeframes count: the initial report from the reportability decision, ongoing reports from the clock, the final report from resolution?",
+          "As read; Other events the consultant names",
+          "As read",
           "open"
         ],
         [

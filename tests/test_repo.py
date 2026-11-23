@@ -104,7 +104,7 @@ def test_skill_text_has_no_lint_errors():
 
 def test_test_cases_cite_real_ids():
     files = [str(p) for p in (ROOT / "tests").rglob("expected.json")]
-    r = run(SHARED / "frmr.py", "lint", *files)
+    r = run(SHARED / "frmr.py", "lint", "--ids-only", *files)
     assert r.returncode == 0, r.stdout[-2000:]
 
 
@@ -280,3 +280,90 @@ def test_render_word_and_excel(tmp_path):
     assert run(SHARED / "render.py", "xlsx", Path(str(src) + "-tables.json"), tmp_path / "r.xlsx").returncode == 0
     from docx import Document
     assert "DRAFT: PENDING SME VALIDATION" in "\n".join(p.text for p in Document(tmp_path / "r.docx").paragraphs)
+
+
+# ---------- FedRAMP schema export (J1 to J4) ----------
+
+@pytest.fixture(scope="session")
+def schemas():
+    import fedramp_export
+    pytest.importorskip("jsonschema")
+    try:
+        return fedramp_export.load_schemas()
+    except SystemExit as e:  # schemas not reachable and FEDRAMP_SCHEMA_DIR not set
+        pytest.skip(f"FedRAMP schemas not available: {e}")
+
+
+def export_examples():
+    import fedramp_export
+    out = []
+    for p in sorted((ENG / "deliverables").rglob("*.json")):
+        if p.name.endswith("-tables.json"):
+            continue
+        d = json.loads(p.read_text(encoding="utf-8"))
+        if isinstance(d, dict) and "fedramp_export" in d:
+            for b in fedramp_export.blocks(d):
+                out.append((p, b["schema"]))
+    return out
+
+
+def test_export_examples_exist():
+    skills = {p.parent.name for p, _ in export_examples()}
+    assert {"20x-incident-reporting", "20x-change-evaluation", "20x-package-builder", "20x-scope-review"} <= skills
+
+
+@pytest.mark.parametrize("path,schema", export_examples(), ids=lambda x: getattr(x, "name", x))
+def test_export_example_matches_schema(schemas, path, schema):
+    """Every field the example maps is defined in the schema and sourced; the only schema errors
+    left are required fields the example lists as missing; the real export refuses the draft."""
+    import fedramp_export
+    d = json.loads(path.read_text(encoding="utf-8"))
+    err, _ = fedramp_export.check_export(d, schemas, schema, require_validated=False, allow_missing=True)
+    assert err == []
+    err, out = fedramp_export.check_export(d, schemas, schema)
+    assert out is None and any("draft" in e for e in err)
+
+
+def test_export_after_test_only_validation(schemas, tmp_path):
+    """A test-only validation with the missing value filled exports valid JSON."""
+    import fedramp_export
+    p = next(p for p, s in export_examples() if s == "incident-report")
+    d = json.loads(p.read_text(encoding="utf-8"))
+    d["items"] = [dict(i, confirmed=True) for i in d["items"]]
+    d["open_questions"] = []
+    d["sme_validation"] = {"status": "validated", "validated_by": "TEST ONLY", "role": "test", "date": "2026-11-22",
+                           "corrections": [], "rejected": []}
+    b = d["fedramp_export"][0]
+    b["document"]["certificationPackageOverviewUri"] = "https://example.invalid/orrinwick/package-overview.json"
+    b["sources"]["certificationPackageOverviewUri"] = [{"item": "RC-02"}]
+    b["missing"] = []
+    f = tmp_path / "d.json"
+    f.write_text(json.dumps(d))
+    r = run(SHARED / "fedramp_export.py", "export", f, "--out", tmp_path / "out.json")
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert json.loads((tmp_path / "out.json").read_text())["reportType"] == "Initial"
+
+
+@pytest.mark.parametrize("change,expect", [
+    (lambda doc: doc.update(severity="High"), "not defined"),
+    (lambda doc: doc.update(functionalImpact=None), "is null"),
+    (lambda doc: doc.update(functionalImpact="[owner: client to confirm]"), "placeholder"),
+    (lambda doc: doc.update(reportType="Interim"), "schema: reportType"),
+    (lambda doc: doc["potentialImpact"].update(currentRating=7), "schema: potentialImpact/currentRating"),
+    (lambda doc: doc.update(rootCause="Unknown"), "no entry in fedramp_export.sources"),
+], ids=["undefined-field", "null", "placeholder", "bad-enum", "bad-rating", "unsourced"])
+def test_export_break_tests(schemas, change, expect):
+    """Each way an export can go wrong is refused."""
+    import fedramp_export
+    p = next(p for p, s in export_examples() if s == "incident-report")
+    d = json.loads(p.read_text(encoding="utf-8"))
+    change(d["fedramp_export"][0]["document"])
+    err, out = fedramp_export.check_export(d, schemas, "incident-report", require_validated=False, allow_missing=True)
+    assert out is None and any(expect in e for e in err), err
+
+
+@pytest.mark.parametrize("script", sorted(p for p in (ROOT / "skills").glob("*/scripts/*.py")), ids=lambda p: f"{p.parent.parent.name}/{p.name}")
+def test_scripts_run_isolated(script, tmp_path):
+    """Every script answers --help under python -I, the way the skills tell the model to run it."""
+    r = subprocess.run([sys.executable, "-I", str(script), "--help"], capture_output=True, text=True, cwd=tmp_path)
+    assert r.returncode == 0, r.stderr[-500:]

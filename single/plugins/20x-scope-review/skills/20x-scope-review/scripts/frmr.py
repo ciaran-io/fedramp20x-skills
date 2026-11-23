@@ -178,6 +178,8 @@ def cmd_ksis(d, a):
         out.append({"id": kid, "theme": tkey, "theme_name": theme["name"], "name": r["name"],
                     "optional_at_class": st.startswith("**Optional:**"),
                     "controls": r.get("controls", []), "terms": r.get("terms", [])})
+        if getattr(a, "statements", False):
+            out[-1]["statement"] = st
     print(json.dumps({"class": a.cls.upper(), "count": len(out), "ksis": out}, indent=2))
 
 
@@ -228,7 +230,8 @@ def cmd_term(d, a):
 
 
 def cmd_search(d, a):
-    words = [w.lower() for w in a.text.split()]
+    text = " ".join(a.text) if isinstance(a.text, list) else a.text
+    words = [w.lower() for w in text.split()]
     hits = []
 
     def text_of(r):
@@ -245,7 +248,7 @@ def cmd_search(d, a):
     for kid, tkey, theme, r in iter_ksis(d, a.cls):
         if all(w in text_of(r) for w in words):
             hits.append({"id": kid, "kind": "ksi", "name": r.get("name")})
-    print(json.dumps({"query": a.text, "class": a.cls.upper(), "hits": hits}, indent=2))
+    print(json.dumps({"query": " ".join(a.text) if isinstance(a.text, list) else a.text, "class": a.cls.upper(), "hits": hits}, indent=2))
 
 
 def statement_ngrams(d: dict, n: int = 10) -> dict:
@@ -272,6 +275,53 @@ def strip_quotes(text: str) -> str:
     return re.sub(r"[\"“][^\"”\n]{0,400}[\"”]", "", text)
 
 
+CLIENT_TEXT_KEYS = {"text", "current", "client_text", "quote"}
+
+
+def json_strings(obj, key=None):
+    """Split a deliverable's string values into its own words and client text it quotes."""
+    own, quoted = [], []
+
+    def walk(o, k):
+        if isinstance(o, dict):
+            for kk, v in o.items():
+                walk(v, kk)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v, k)
+        elif isinstance(o, str):
+            (quoted if k in CLIENT_TEXT_KEYS else own).append(o)
+
+    walk(obj, key)
+    return own, "\n".join(quoted)
+
+
+def text_problems(text: str, grams: dict, unit: str = "line") -> list:
+    """Copied statement text, em dashes, compliance verdicts and banned words in a deliverable's own words."""
+    problems = []
+    body = strip_quotes(text)
+    words = re.findall(r"[a-z0-9]+", body.lower())
+    seen = set()
+    for i in range(len(words) - 9):
+        g = " ".join(words[i:i + 10])
+        if g in grams and grams[g] not in seen:
+            seen.add(grams[g])
+            problems.append(("error", f"text copied from the statement of {grams[g]}: '{g}...'"))
+    for ln, line in enumerate(text.splitlines(), 1):
+        if "\u2014" in line:
+            problems.append(("error", f"{unit} {ln}: em dash"))
+        if is_verdict(strip_quotes(line)):
+            problems.append(("error", f"{unit} {ln}: reads as a compliance verdict"))
+        low = strip_quotes(line).lower()
+        for w in BANNED_WORDS:
+            if re.search(rf"\b{w}\b", low):
+                problems.append(("warning", f"{unit} {ln}: avoid the word '{w}'"))
+        for ph in BANNED_PHRASES:
+            if ph in low:
+                problems.append(("warning", f"{unit} {ln}: avoid the phrase '{ph}'"))
+    return problems
+
+
 def cmd_lint(d, a):
     ids = all_ids(d)
     prefixes = {i.split("-")[0] for i in ids}
@@ -281,36 +331,33 @@ def cmd_lint(d, a):
     errors = warnings = 0
     for f in a.files:
         p = Path(f)
+        if not p.exists():
+            print(f"ERROR: {f}: file not found (run build_report.py first for the .md)")
+            errors += 1
+            continue
         text = p.read_text(encoding="utf-8")
         problems = []
-        for m in sorted(set(ID_RE.findall(text))):
+        # In a deliverable JSON, client text quoted in these keys is not the deliverable's own words.
+        quoted = ""
+        own = [text]
+        if p.suffix.lower() == ".json":
+            try:
+                own, quoted = json_strings(json.loads(text))
+            except json.JSONDecodeError as e:
+                problems.append(("error", f"not valid JSON: {e}"))
+                own = []
+        own_text = "\n".join(own)
+        for m in sorted(set(ID_RE.findall(own_text + "\n" + quoted))):
             if m.split("-")[0] not in prefixes:
                 continue  # not a FedRAMP ID (for example a client policy ID)
             if m not in ids:
                 problems.append(("error", f"unknown FedRAMP ID {m}"))
-            elif m not in applicable:
+            elif m not in applicable and m in ID_RE.findall(own_text):
                 problems.append(("warning", f"{m} does not apply at class {a.cls.upper()} for 20x"))
-        if p.suffix.lower() in (".md", ".txt"):
-            body = strip_quotes(text)
-            words = re.findall(r"[a-z0-9]+", body.lower())
-            seen = set()
-            for i in range(len(words) - 9):
-                g = " ".join(words[i:i + 10])
-                if g in grams and grams[g] not in seen:
-                    seen.add(grams[g])
-                    problems.append(("error", f"text copied from the statement of {grams[g]}: '{g}...'"))
-            for ln, line in enumerate(text.splitlines(), 1):
-                if "—" in line:
-                    problems.append(("error", f"line {ln}: em dash"))
-                if is_verdict(strip_quotes(line)):
-                    problems.append(("error", f"line {ln}: reads as a compliance verdict"))
-                low = strip_quotes(line).lower()
-                for w in BANNED_WORDS:
-                    if re.search(rf"\b{w}\b", low):
-                        problems.append(("warning", f"line {ln}: avoid the word '{w}'"))
-                for ph in BANNED_PHRASES:
-                    if ph in low:
-                        problems.append(("warning", f"line {ln}: avoid the phrase '{ph}'"))
+        if p.suffix.lower() in (".md", ".txt", ".json") and not a.ids_only:
+            problems += text_problems(own_text, grams, "string" if p.suffix.lower() == ".json" else "line")
+        if getattr(a, "client", False):
+            problems = [("warning" if lv == "error" and not m.startswith("unknown FedRAMP ID") else lv, m) for lv, m in problems]
         for level, msg in problems:
             print(f"{level.upper()}: {f}: {msg}")
             errors += level == "error"
@@ -333,10 +380,16 @@ def main(argv=None):
             p.add_argument("--affects", help="keep rules that affect this party, for example Providers")
         if name == "show":
             p.add_argument("id")
+        if name == "ksis":
+            p.add_argument("--statements", action="store_true", help="include each KSI statement (read, do not copy)")
         if name == "lint":
             p.add_argument("files", nargs="+")
+            p.add_argument("--ids-only", action="store_true", help="check FedRAMP IDs only (for test case files)")
+            p.add_argument("--client", action="store_true",
+                           help="the files are the client's documents: copied text, em dashes and wording are "
+                                "reported as warnings; unknown IDs stay errors")
         if name == "search":
-            p.add_argument("text")
+            p.add_argument("text", nargs="+", help="words to search for (quoting is optional)")
     p = sub.add_parser("term")
     p.add_argument("word")
     a = ap.parse_args(argv)

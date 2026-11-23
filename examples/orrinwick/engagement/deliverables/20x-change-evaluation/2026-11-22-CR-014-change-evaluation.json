@@ -479,5 +479,35 @@
     "date": null,
     "corrections": [],
     "rejected": []
-  }
+  },
+  "fedramp_export": [
+    {
+      "schema": "significant-change-notifications",
+      "fragment": null,
+      "document": {
+        "changeDescription": "Adds a fifth notification channel: messages to an agency's team chat channel through a chat messaging service run by another company (T6). Notification workers (P2) gain an outbound HTTPS connection to it. Messages carry an alert reference ID and fixed text only (PF3). Agency administrators turn the channel on and add chat channel addresses to escalation rules; addresses are stored with the routing policy (D2).",
+        "planAndTimeline": {
+          "summary": "Planned start 2027-02-01 and planned finish 2027-02-26, as stated in change request CR-014.",
+          "plannedStart": "2027-02-01",
+          "plannedCompletion": "2027-02-26"
+        }
+      },
+      "sources": {
+        "changeDescription": [
+          {
+            "item": "NC-05"
+          }
+        ],
+        "planAndTimeline": [
+          {
+            "item": "NC-08"
+          }
+        ]
+      },
+      "missing": [
+        "certificationPackageOverviewUri",
+        "changeType"
+      ]
+    }
+  ]
 }

@@ -38,6 +38,8 @@ Stop and ask the consultant before continuing when a step needs any of the follo
 
 Ask with the AskUserQuestion tool when it is available, otherwise in plain text. Each question names what was found, why the answer matters, and the options, with one recommended option and the reason. Ask related questions together, at most four at a time. Do not carry on with a guess. If the consultant is not available, stop at the last step that needs no answer, record the open questions in the deliverable, and leave its status as draft.
 
+**Unattended and test runs.** When the consultant has said in advance to proceed without answers (a test run, or a run nobody is watching), set `unattended_choice` on each decision question to the option the run used, carry on with it, and keep `decision_ref` null. Never write such a choice to `decisions.json`: only the consultant's answer goes there. Every item that depends on such a choice stays `confirmed: false`, and the deliverable stays a draft. A required input that was not supplied (for example no scope record) is an open question; continue with the steps that do not need it.
+
 ## 3. SME Validate before a deliverable is final
 
 The last step of every skill is SME Validate. The consultant, or a subject matter expert the consultant names, checks the draft against its sources. A deliverable has one of two statuses:

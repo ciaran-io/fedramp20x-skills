@@ -17,14 +17,20 @@
   },
   "timeline": {
     "clock_starts_at": "reportable",
+    "rating": 5,
+    "plan_later_than_rules": [
+      "ongoing_report: the plan's target (24h from clock) falls after IEC-CSO-OIR for N5 (6h from clock)",
+      "final_report: the plan's interval 5bd is longer than IEC-CSO-FIR for N5 (6h)"
+    ],
     "clock": "2027-01-12T10:20:00-05:00",
-    "business_days": "Monday to Friday, no holidays skipped",
+    "business_days": "Monday to Friday only; holidays not skipped",
     "timeline": [
       {
         "target": "reportability",
         "amount": "1h",
         "from": "declared",
         "repeats": false,
+        "set_by": "client plan",
         "due": "2027-01-12T10:40:00-05:00",
         "status": "met"
       },
@@ -33,6 +39,7 @@
         "amount": "4h",
         "from": "reportable",
         "repeats": false,
+        "set_by": "client plan",
         "due": "2027-01-12T14:20:00-05:00",
         "status": "due"
       },
@@ -41,6 +48,7 @@
         "amount": "1h",
         "from": "clock",
         "repeats": false,
+        "set_by": "client plan",
         "due": "2027-01-12T11:20:00-05:00",
         "status": "due"
       },
@@ -49,6 +57,7 @@
         "amount": "24h",
         "from": "clock",
         "repeats": true,
+        "set_by": "client plan",
         "due": "2027-01-13T10:20:00-05:00",
         "status": "due"
       },
@@ -57,6 +66,34 @@
         "amount": "5bd",
         "from": "resolved",
         "repeats": false,
+        "set_by": "client plan",
+        "due": null,
+        "status": "needs resolved"
+      },
+      {
+        "target": "initial_report_rule",
+        "amount": "1h",
+        "from": "reportable",
+        "repeats": false,
+        "set_by": "IEC-CSO-IIR",
+        "due": "2027-01-12T11:20:00-05:00",
+        "status": "due"
+      },
+      {
+        "target": "ongoing_report_rule",
+        "amount": "6h",
+        "from": "clock",
+        "repeats": true,
+        "set_by": "IEC-CSO-OIR",
+        "due": "2027-01-12T16:20:00-05:00",
+        "status": "due"
+      },
+      {
+        "target": "final_report_rule",
+        "amount": "6h",
+        "from": "resolved",
+        "repeats": false,
+        "set_by": "IEC-CSO-FIR",
         "due": null,
         "status": "needs resolved"
       }
@@ -183,6 +220,31 @@
         }
       ],
       "confirmed": true
+    },
+    {
+      "id": "EV-6",
+      "kind": "evaluation",
+      "question": "Do the plan's report targets meet the timeframes the rules data sets for N5, the rating in force?",
+      "answer": "Partly. The initial report target (1 hour from the clock) matches IEC-CSO-IIR for N5. The plan's ongoing report cycle (24 hours) is longer than the 6 hours IEC-CSO-OIR gives for N5, and its final report target (5 business days after resolution) is longer than the 6 hours IEC-CSO-FIR gives for N5. Reports for this incident follow the rule timeframes while N5 is in force. Which event each rule timeframe counts from is a reading of the rule statements, for the consultant to confirm (DQ-005).",
+      "sources": [
+        {
+          "input": "I-05",
+          "location": "section 5"
+        },
+        {
+          "frmr": "IEC-CSO-IIR"
+        },
+        {
+          "frmr": "IEC-CSO-OIR"
+        },
+        {
+          "frmr": "IEC-CSO-FIR"
+        },
+        {
+          "frmr": "IEC-CSO-DPR"
+        }
+      ],
+      "confirmed": false
     },
     {
       "id": "RC-01",
@@ -333,6 +395,17 @@
       "recommendation": "Keep N5 until the other tenants are checked",
       "reason": "The record does not yet show whether other tenant pairs were affected. The plan applies the higher rating while evidence is unclear. N4 fits if only AGY-07 was exposed",
       "decision_ref": null
+    },
+    {
+      "id": "DQ-005",
+      "question": "From which events do the rule timeframes count: the initial report from the reportability decision, ongoing reports from the clock, the final report from resolution?",
+      "options": [
+        "As read",
+        "Other events the consultant names"
+      ],
+      "recommendation": "As read",
+      "reason": "IEC-CSO-IIR applies after identifying a reportable incident and IEC-CSO-FIR once it is resolved; the rules data gives no other starting point.",
+      "decision_ref": null
     }
   ],
   "open_questions": [
@@ -363,5 +436,75 @@
     "date": null,
     "corrections": [],
     "rejected": []
-  }
+  },
+  "fedramp_export": [
+    {
+      "schema": "incident-report",
+      "fragment": null,
+      "document": {
+        "reportType": "Initial",
+        "providerTrackingId": "INC-2027-001",
+        "incidentDescription": "The web console's escalation rule page (part of application compute, P2) showed responder names and work and personal mobile numbers. In the scope record these are responder contact data, D1.",
+        "timeline": {
+          "startedAt": "2027-01-12T06:55:00-05:00",
+          "detectedAt": "2027-01-12T09:10:00-05:00",
+          "detectionSource": "Agency report",
+          "evaluationCompletedAt": "2027-01-12T10:20:00-05:00",
+          "milestones": [
+            {
+              "occurredAt": "2027-01-12T10:05:00-05:00",
+              "milestoneDescription": "Release rolled back"
+            }
+          ]
+        },
+        "potentialImpact": {
+          "currentRating": 5
+        },
+        "functionalImpact": "Confidentiality of responder contact data (D1) for AGY-07.",
+        "affectedAgencies": [
+          "AGY-07"
+        ]
+      },
+      "sources": {
+        "reportType": [
+          {
+            "item": "RC-02"
+          }
+        ],
+        "providerTrackingId": [
+          {
+            "item": "RC-02"
+          }
+        ],
+        "incidentDescription": [
+          {
+            "item": "EV-1"
+          }
+        ],
+        "timeline": [
+          {
+            "item": "RC-04"
+          }
+        ],
+        "potentialImpact.currentRating": [
+          {
+            "item": "RC-05"
+          }
+        ],
+        "functionalImpact": [
+          {
+            "item": "RC-06"
+          }
+        ],
+        "affectedAgencies": [
+          {
+            "item": "RC-08"
+          }
+        ]
+      },
+      "missing": [
+        "certificationPackageOverviewUri"
+      ]
+    }
+  ]
 }

@@ -15,6 +15,10 @@ The order follows the evaluation steps listed under SCN-CSO-EVA.
 | 4 | Does it meet the definition of a transformative change (FRD-TRF): new risks that need in-depth assessment and could change existing risk decisions? | New features or capabilities that change how customers use the service, extensive updates to assessments, procedures or documentation | **Transformative** |
 | 5 | Otherwise | | **Adaptive** (FRD-ADP) |
 
+## Changes that rest on an exclusion condition
+
+Before question 1, check whether the change moves data or a flow that the scope record keeps out of scope, or keeps safe, only through an exclusion condition (for example a flow that carries only company data while a condition on the source holds). If it does, the evaluation depends on that condition still holding. Name the condition, say whether the inputs show it is checked (an owner, a cycle, a record), and if they do not, still give `proposed_type` (the type if the condition holds), mark the evaluation items unconfirmed, and add a decision question for the SME that names the condition. A change to an exclusion condition itself is a change to the scope (step 4).
+
 ## Points that need SME input
 
 - Whether a change "substantively" affects the posture (question 1) when the change touches a control but not the boundary.

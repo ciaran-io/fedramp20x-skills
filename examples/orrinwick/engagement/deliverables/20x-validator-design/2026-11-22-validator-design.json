@@ -30,7 +30,7 @@
     {
       "id": "I-07",
       "file": "../deliverables/20x-policy-review/2026-11-22-policy-review.json",
-      "sha256": "a6e7788337db124112d652fc547e00b8fd266a0d4c098f34c81c5fd07fb04933",
+      "sha256": "4332375b0afc5473b1e104202c28737623ce7638fdb6173287590d9bceaac8bf",
       "description": "KSI policy coverage review, 2026-11-22 (draft)"
     }
   ],
@@ -92,7 +92,7 @@
       ],
       "production_source": "The incident tracker named in plan section 10, for incidents and near misses by opened date. The review record in incident_pattern_reviews. The tracker's product and API are not named in the material: [source: client to confirm]",
       "gap": "The methods prove that a review happened on time, by the owner, and covered every incident. They do not prove that the review found the patterns that exist, or that its findings led to action. Near misses are covered only if they are recorded in the incident tracker.",
-      "status": "Designed",
+      "status": "Draft",
       "decisions": [
         "The cycle limit is 92 days pending DQ-001: the plan says at least every 90 days and INR-4 says every quarter. A quarter can be 92 days long.",
         "The reviewer check waits for DQ-002: the policy names the security team and the plan names the team led by the Security Operations Lead.",
@@ -192,7 +192,7 @@
       ],
       "production_source": "The incident tracker named in plan section 10, where after action reports are linked from the incident record, and the backlog that holds the lesson tickets. Neither tool is named in the material: [source: client to confirm]",
       "gap": "The methods prove that reports exist on time and that each lesson has a tracked ticket. They do not prove that a report found the right root cause, or that a closed ticket changed what it should have. The record field lessons_incorporated is a single value and cannot show each lesson, so inr-aar-lessons needs a lessons list (DQ-003).",
-      "status": "Designed",
+      "status": "Draft",
       "decisions": [
         "The deadline counts from the date the incident is closed, as plan section 8 states. INR-2 does not say where the 10 days start; the plan settles it.",
         "Lessons are checked by a third method so the evidence shows reports and lessons separately. This answers policy review gap G-001 only if the client adopts a lesson cycle (R-001).",
