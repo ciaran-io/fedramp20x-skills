@@ -36,9 +36,9 @@ If no policies are given, stop and ask for them. If a policy refers to a documen
 
 1. **Set up.** Find or create `engagement.json` (ask for any field that is missing; do not guess). Copy nothing out of the engagement folder. Run `python scripts/frmr.py info` and record the FRMR version and commit. Give each input an ID (I-01, I-02) and record its SHA-256.
 
-2. **Load the KSIs.** Run `python scripts/frmr.py ksis`. Every KSI in the output appears in the coverage matrix. For each KSI, read its statement with `python scripts/frmr.py show <KSI-ID>`, and read each term it lists (for example `python scripts/frmr.py term persistently`). Do not copy statement text into the deliverable.
+2. **Load the KSIs.** Run `python scripts/frmr.py ksis --statements`. Every KSI in the output appears in the coverage matrix. Read each statement there (or with `python scripts/frmr.py show <KSI-ID>`), and read each term it lists (for example `python scripts/frmr.py term persistently`). Do not copy statement text into the deliverable.
 
-3. **Build the requirement inventory.** For each policy, list every requirement with its policy ID, requirement ID and the client's exact text. If the client gives no requirement IDs, number them (POL-X/R1) and tell the consultant. For each requirement, record the three elements as the text states them:
+3. **Build the requirement inventory.** Start with `python scripts/inventory.py <policy files> --role <each role the client names> --out <engagement>/deliverables/20x-policy-review/work/inventory.json`. It lists each requirement with its exact text and candidate values found by pattern. Candidates are not answers: confirm or correct each one against the text, and read anything listed under `unsplit`. For each policy, list every requirement with its policy ID, requirement ID and the client's exact text. If the client gives no requirement IDs, number them (POL-X/R1) and tell the consultant. For each requirement, record the three elements as the text states them:
    - owner (the role that does it and records it)
    - cadence or deadline
    - record location
@@ -49,8 +49,8 @@ If no policies are given, stop and ask for them. If a policy refers to a documen
 
    | Coverage | Meaning |
    |---|---|
-   | covered | At least one requirement addresses every part of the KSI and passes tests T1 to T5 |
-   | partial | A requirement addresses the KSI, but part of the KSI is not addressed or a test fails |
+   | covered | At least one requirement addresses every part of the KSI and passes tests T2, T4 and T5 (gaps under T1 and T3 are listed separately) |
+   | partial | A requirement addresses the KSI, but part of the KSI is not addressed, or a test other than T1 (owner) or T3 (record) fails. A missing owner or record location is a gap of its own and does not lower coverage |
    | not covered | No requirement in the policies provided addresses the KSI |
    | not reviewed | The policy that would cover it was not provided. Say which theme |
 
@@ -58,7 +58,12 @@ If no policies are given, stop and ask for them. If a policy refers to a documen
 
 5. **Apply the tests.** Apply tests T1 to T10 in `references/policy-tests.md` to each requirement and record each failure as a gap with an ID (G-001), the requirement, the test, the criteria (KSI or rule ID plus the client requirement), the rating from `references/finding-ratings.md`, and its sources. Run `python scripts/frmr.py lint` on a text file of the policies to find cited FedRAMP IDs that do not exist or do not apply at Class C (test T8).
 
-6. **Draft rewritten text.** For each gap that a change of wording would close, draft the requirement as the client could adopt it. Keep the client's requirement ID. Use only owners, cadences, deadlines and record locations that the client's material contains. Where one is missing, write a placeholder such as `[owner: client to confirm]` and add an open question. Never invent a system name or a record location. Group a fix that applies to several requirements (for example one review cycle for several KSIs) as one decision for the consultant.
+6. **Draft rewritten text.** For each gap that a change of wording would close, draft the requirement as the client could adopt it. Keep the client's requirement ID. A rewrite states what a role must do, by when, and where it is recorded. It does not describe how a system behaves.
+   - Use only owners, cadences, deadlines, numbers, system names and record locations that the client's material or a recorded decision states. List each source on the rewrite (`sources`, same form as an item's sources).
+   - Where one is missing, write a placeholder such as `[owner: client to confirm]` and add an open question. Never invent a system name, a record location or a number.
+   - Do not add a fact about the environment to explain the requirement (for example that a lock prevents deletion, or that staging holds no customer data). If the requirement depends on such a fact, it is a placeholder or an open question, even when one input seems to show it: a setting on one resource is not true of all of them.
+   - Before you finish, read each rewrite against its sources. Every number and every named thing in `recommended` must appear in `current` or in a listed source. `check_deliverable.py --inputs` reports a number that does not.
+   - Group a fix that applies to several requirements (for example one review cycle for several KSIs) as one decision for the consultant.
 
 7. **Stop and ask.** Collect the decisions and open questions. Ask the consultant with AskUserQuestion, at most four at a time, each with the options and a recommended option. Typical questions:
    - Does the policy header owner own every requirement that names no actor?

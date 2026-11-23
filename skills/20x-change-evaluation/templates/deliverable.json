@@ -15,8 +15,8 @@
   "items": [
     {"id": "EV-1", "kind": "evaluation", "question": "{question from change-types.md}", "answer": "{answer with evidence}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "FRD-SGC"}], "confirmed": true},
     {"id": "NC-01", "kind": "notice_content", "item": "{item SCN-CSO-INF lists}", "supplied": "{yes, partly, or no: what is missing}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "SCN-CSO-INF"}], "confirmed": true},
-    {"id": "SL-1", "kind": "scope_log", "title": "Draft scope change log entry", "detail": {"id": "{draft ID}", "change_type": "{added, removed, moved, decision_changed, condition_changed, flow_changed, other}", "resources": "{IDs}", "scn_category": "{type, proposed until decided}", "summary": "{summary}"}, "sources": [{"input": "I-01", "location": "{where}"}], "confirmed": false},
-    {"id": "CRV-1", "kind": "client_review", "title": "{client review requirement}", "detail": {"requirement": "{policy and requirement}", "due": "{date from scripts/scn_timeline.py bizdays}"}, "sources": [{"input": "I-02", "location": "{requirement}"}], "confirmed": true}
+    {"id": "SL-1", "kind": "scope_log", "title": "Draft scope change log entry", "detail": {"id": "{draft ID}", "change_type": "{added, removed, replaced, moved, decision_changed, condition_changed, flow_changed, data_class_added, third_party_changed, other}", "resources": "{IDs}", "scn_category": "{type, proposed until decided}", "summary": "{summary}"}, "sources": [{"input": "I-01", "location": "{where}"}], "confirmed": false},
+    {"id": "CRV-1", "kind": "client_review", "title": "{client review requirement}", "detail": {"requirement": "{policy and requirement}", "due": "{date from scripts/scn_timeline.py bizdays, or none set: the client policy sets no review for this type}"}, "sources": [{"input": "I-02", "location": "{requirement}"}], "confirmed": true}
   ],
   "decisions_needed": [],
   "open_questions": [],

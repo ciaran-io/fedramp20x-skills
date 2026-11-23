@@ -53,7 +53,9 @@ Drafts the parts of the Certification Package that come from the client's own wo
 
 10. **SME Validate.** Follow `references/sme-validation.md`. Add to the checklist: no assessor field is filled; every "ready" part was read; every metric matches the script output.
 
-11. **Render** after validation with `scripts/render.py`. FedRAMP also requires JSON that validates against its schemas (FRC-CSO-JSN); this skill's JSON is a working format, not the FedRAMP schema. Say so when you hand it over.
+11. **Render** after validation with `scripts/render.py`.
+
+12. **Export to FedRAMP JSON** after validation, following `references/fedramp-export.md`: schemas `security-decision-record`, `ongoing-certification-report` and `certification-package-overview`. Use one block per schema. Fill the `fedramp_export` block from the validated deliverable only, list every value it does not hold in `missing` and ask the consultant for it, then run `python scripts/fedramp_export.py export <json> --schema <schema> --out <file>`. The script refuses a draft, an undefined field, a null or placeholder, an unsourced field and anything the schema rejects. If it reports errors, fix the block or stop and ask; never edit the output by hand.
 
 ## Must not
 

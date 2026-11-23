@@ -40,6 +40,16 @@ For each change, find a review dated on or after the change and on or before its
 
 A method whose source is missing, empty or unparseable fails with a finding that says so. It never passes by default.
 
+## Client checks that read fixed paths
+
+`break_test.py` and `empty_probe.py` copy each input to a temporary folder and pass the copies' paths to the check command. A client check that reads files from fixed paths in its own repository cannot be pointed at the copies. Do not edit the client's check to test it. Write a small adapter next to the deliverable that:
+
+- takes the file paths and the run date as arguments,
+- replaces only the client's file loading function, in memory, so each fixed path reads the given file instead,
+- runs the client's methods unchanged and prints the JSON list of results.
+
+Name the adapter in the deliverable (`code.run`) and record that the client's code was not changed. Recommend, as a decision for the consultant, that the client's checks take file paths, so no adapter is needed.
+
 ## Messages
 
 One finding per failed condition. Each message names the record, the value seen and the value required, in plain words, so a break test can show exactly which condition failed.

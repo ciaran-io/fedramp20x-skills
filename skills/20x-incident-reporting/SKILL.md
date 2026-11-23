@@ -25,7 +25,7 @@ The reporting clock starts when the incident is judged reportable and rated, or 
 | Input | Required | Notes |
 |---|---|---|
 | The incident | Evaluate mode | What happened, which resources and data, times of start, detection and declaration, what is known and not known |
-| The client's incident response plan | Yes | The plan's targets set the timeline. Without a plan, say so: FedRAMP sets no fixed hours, so no timeline can be computed |
+| The client's incident response plan | Yes | The plan's targets, alongside the timeframes the rules data sets for each PAIN rating. Without a plan, compute the rule timeframes only and say the plan is missing |
 | Scope record | Yes | Which data classes are federal customer data, and which resources handle them |
 | Affected agencies | Evaluate mode | From the client's tenant records. Never guess which agencies are affected |
 
@@ -37,7 +37,7 @@ The reporting clock starts when the incident is judged reportable and rated, or 
 
 3. **Evaluate mode: PAIN rating.** Propose an N-rating using the scale in VER-EVA-EPA and the client's own examples in its plan. Give the reason, the number of agencies affected (from the client's records) and the effect (minimal, narrow, disruptive, debilitating). While no rating is approved, a reportable incident is N5. Where the evidence supports two ratings, the plan may say the higher applies; follow the plan.
 
-4. **Evaluate mode: timeline.** Take each target from the client's plan (reportability decision, rating, initial report, ongoing reports, final report) with its section reference. Run `python scripts/incident_timeline.py` with the incident's event times and those targets. Set `--clock-start` to the event the plan names; if the plan does not name one, ask. Business days skip US federal holidays by default (`--no-federal-holidays` to count weekdays only). Copy the output, including the business day basis, into the deliverable.
+4. **Evaluate mode: timeline.** Take each target from the client's plan (reportability decision, rating, initial report, ongoing reports, final report) with its section reference. Run `python scripts/incident_timeline.py --rating <rating in force>` with the incident's event times and those targets. The script adds the FedRAMP timeframes for that rating from the rules data and lists every plan target that falls later (`plan_later_than_rules`): report each as a finding. When the rating changes, run it again. Set `--clock-start` to the event the plan names; if the plan does not name one, ask. Business days skip US federal holidays by default (`--no-federal-holidays` to count weekdays only). Copy the output, including the business day basis, into the deliverable.
 
 5. **Evaluate mode: report content.** For the initial, ongoing and final reports, list the information the IEC rules require (IEC-CSO-IIR, IEC-CSO-OIR, IEC-CSO-FIR) and, for each item, whether the incident record supplies it. A missing item is an open question for the incident lead, not a gap to fill.
 
@@ -49,13 +49,15 @@ The reporting clock starts when the incident is judged reportable and rated, or 
 
 9. **Check** with `scripts/check_deliverable.py` and `scripts/frmr.py lint`.
 
-10. **SME Validate.** Follow `references/sme-validation.md`. Add to the checklist: every time in the timeline came from the plan and the incident record, and the clock start matches the plan.
+10. **SME Validate.** Follow `references/sme-validation.md`. Add to the checklist: every time in the timeline came from the plan, the incident record or the rules data, the clock start matches the plan, and the events the rule timeframes count from are confirmed.
 
 11. **Render** after validation with `scripts/render.py`.
+
+12. **Export to FedRAMP JSON** after validation, following `references/fedramp-export.md`: schema `incident-report`. Export each report as it is sent: Initial, Ongoing or Final. A Final report needs `resolvedAt`. Fill the `fedramp_export` block from the validated deliverable only, list every value it does not hold in `missing` and ask the consultant for it, then run `python scripts/fedramp_export.py export <json> --schema <schema> --out <file>`. The script refuses a draft, an undefined field, a null or placeholder, an unsourced field and anything the schema rejects. If it reports errors, fix the block or stop and ask; never edit the output by hand.
 
 ## Must not
 
 - Start the reporting clock at detection unless the client's plan says so.
 - Lower a rating below N5 for a reportable incident before the client's approver accepts an estimate.
-- State a reporting deadline in hours as a FedRAMP requirement. The hours are the client's targets.
+- State a FedRAMP reporting timeframe from memory or from this skill's pages. Read it from the rules data for the rating in force, and say which event it is counted from is a reading the consultant confirms.
 - Name an affected agency that the client's records do not name.

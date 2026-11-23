@@ -53,6 +53,14 @@ def add_bizdays(d: date, n: int, holidays: set, before: bool = False) -> date:
     return d
 
 
+def non_business(name: str, d: date, hol: set) -> str | None:
+    if d.weekday() >= 5:
+        return f"{name} {d.isoformat()} is a {d.strftime('%A')}; confirm the date with the client before counting from it"
+    if d in hol:
+        return f"{name} {d.isoformat()} is a holiday on this business day basis; confirm the date"
+    return None
+
+
 def notices(a):
     data = frmr.load()
     known = [date.fromisoformat(x) for x in (a.start, a.finish, a.verified) if x] or [date.today()]
@@ -79,14 +87,19 @@ def notices(a):
             item["due"] = None
             item["due_meaning"] = f"needs the {event} date"
         out.append(item)
-    print(json.dumps({"type": a.type, "frmr_commit": frmr.COMMIT,
+    warnings = [w for w in (non_business(k, date.fromisoformat(v), hol) for k, v in events.items() if v) if w]
+    print(json.dumps({"type": a.type, "frmr_commit": frmr.COMMIT, "warnings": warnings,
                       "business_days": bizdays.basis(not a.no_federal_holidays, a.holidays) + " (FedRAMP does not define business days; confirm with the consultant)",
                       "notices": out, "note": NOTES[a.type]}, indent=2))
 
 
 def cmd_bizdays(a):
     start = date.fromisoformat(a.from_)
-    d = add_bizdays(start, a.days, bizdays.holiday_set(start, start, not a.no_federal_holidays, a.holidays), before=a.before)
+    hol = bizdays.holiday_set(start, start, not a.no_federal_holidays, a.holidays)
+    w = non_business("--from", start, hol)
+    if w:
+        print(f"WARNING: {w}", file=sys.stderr)
+    d = add_bizdays(start, a.days, hol, before=a.before)
     print(d.isoformat())
 
 

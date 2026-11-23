@@ -35,12 +35,14 @@ def build(path: Path):
     if d.get("timeline"):
         t = d["timeline"]
         L += ["## Reporting timeline", "", f"The clock starts at: {t['clock_starts_at']} ({cell(t['clock'])}). Business days: {t['business_days']}. "
-              "The times are the client's targets from its plan; the FedRAMP rules set no fixed hours.", "",
+              "Targets marked client plan are the client's own; targets ending _rule come from the PAIN timeframes in the pinned rules data for the rating shown.", "",
               "| Target | Amount | From | Due | Status | Plan reference |", "|---|---|---|---|---|---|"]
         refs = d.get("target_refs", {})
         for x in t["timeline"]:
-            L.append(f"| {x['target']}{' (repeats)' if x['repeats'] else ''} | {x['amount']} | {x['from']} | {cell(x['due'])} | {x['status']} | {cell(refs.get(x['target']))} |")
+            L.append(f"| {x['target']}{' (repeats)' if x['repeats'] else ''} | {x['amount']} | {x['from']} | {cell(x['due'])} | {x['status']} | {cell(refs.get(x['target']) or x.get('set_by'))} |")
         L.append("")
+        if t.get("plan_later_than_rules"):
+            L += [f"Plan targets later than the rules for N{t.get('rating')}:", ""] + [f"- {cell(w)}" for w in t["plan_later_than_rules"]] + [""]
     rc = [i for i in d["items"] if i["kind"] == "report_content"]
     if rc:
         L += ["## Report content", "", "| ID | Report | Item | Supplied by the record | Sources |", "|---|---|---|---|---|"]
@@ -49,9 +51,9 @@ def build(path: Path):
         L.append("")
     fs = sorted([i for i in d["items"] if i["kind"] == "finding"], key=lambda i: (RATINGS.index(i["rating"]), i["id"]))
     if fs:
-        L += ["## Plan findings", "", "| ID | Test | Rating | Observation | Recommendation | Sources |", "|---|---|---|---|---|---|"]
+        L += ["## Plan findings", "", "| ID | Test | Rating | Observation | Criteria | Recommendation | Sources |", "|---|---|---|---|---|---|---|"]
         for i in fs:
-            L.append(f"| {i['id']} | {i['test']} | {i['rating']} | {cell(i['observation'])} | {cell(i['recommendation'])} | {src(i['sources'])} |")
+            L.append(f"| {i['id']} | {i['test']} | {i['rating']} | {cell(i['observation'])} | {cell(i.get('criteria'))} | {cell(i['recommendation'])} | {src(i['sources'])} |")
         L.append("")
     L += decisions_and_questions(d) + sme_section(d)
     sheets = []
@@ -67,6 +69,6 @@ def build(path: Path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit(__doc__)
-    build(Path(sys.argv[1]))
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import report_lib  # noqa: E402
+    report_lib.main(build, __doc__)
