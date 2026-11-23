@@ -219,6 +219,9 @@ def to_xlsx(src: Path, out: Path):
 
 def main(argv=None):
     a = argv or sys.argv[1:]
+    if a[:1] in (["-h"], ["--help"]):
+        print(__doc__)
+        return
     if len(a) != 3 or a[0] not in ("docx", "xlsx"):
         sys.exit(__doc__)
     src, out = Path(a[1]), Path(a[2])

@@ -71,9 +71,9 @@ def build(path: Path):
                   f"| Observation | {cell(g['observation'])} |", f"| Recommendation | {cell(g['recommendation'])} |",
                   f"| Rewrite | {cell(g.get('rewrite') or 'none')} |", f"| Sources | {src(g['sources'])} |",
                   f"| Confirmed | {'yes' if g.get('confirmed', True) else 'no, see open questions'} |", ""]
-    L += ["## Rewritten requirements", "", "| ID | Requirement | Current text | Recommended text | Closes |", "|---|---|---|---|---|"]
+    L += ["## Rewritten requirements", "", "| ID | Requirement | Current text | Recommended text | Closes | Sources |", "|---|---|---|---|---|---|"]
     for w in d["rewrites"]:
-        L.append(f"| {w['id']} | {w['requirement']} | {cell(w['current'])} | {cell(w['recommended'])} | {cell(w['closes'])} |")
+        L.append(f"| {w['id']} | {w['requirement']} | {cell(w['current'])} | {cell(w['recommended'])} | {cell(w['closes'])} | {cell(src(w.get('sources')))} |")
     L += ["", "## Decisions for the consultant", "", "| ID | Question | Options | Recommendation | Decision |", "|---|---|---|---|---|"]
     for q in d["decisions_needed"]:
         L.append(f"| {q['id']} | {cell(q['question'])} | {cell(q['options'])} | {cell(q['recommendation'])}: {cell(q['reason'])} | {cell(q.get('decision_ref') or 'open')} |")
@@ -98,8 +98,8 @@ def build(path: Path):
              "rows": [[c["ksi"], c["name"], c["requirements"], c["coverage"], c.get("gaps", []), c.get("note", "")] for c in d["coverage"]]},
             {"name": "Gaps", "columns": ["ID", "Title", "Requirement", "Test", "Criteria", "Rating", "Observation", "Recommendation", "Rewrite", "Sources", "Confirmed"],
              "rows": [[g["id"], g["title"], g["requirement"], g["test"], g["criteria"], g["rating"], g["observation"], g["recommendation"], g.get("rewrite") or "", src(g["sources"]), "yes" if g.get("confirmed", True) else "no"] for g in d["items"]]},
-            {"name": "Rewrites", "columns": ["ID", "Requirement", "Current text", "Recommended text", "Closes"],
-             "rows": [[w["id"], w["requirement"], w["current"], w["recommended"], w["closes"]] for w in d["rewrites"]]},
+            {"name": "Rewrites", "columns": ["ID", "Requirement", "Current text", "Recommended text", "Closes", "Sources"],
+             "rows": [[w["id"], w["requirement"], w["current"], w["recommended"], w["closes"], src(w.get("sources"))] for w in d["rewrites"]]},
             {"name": "Requirements", "columns": ["Policy", "Requirement", "Text", "Owner", "Cadence or deadline", "Record location", "KSIs (client mapping)"],
              "rows": [[q["policy"], q["id"], q["text"], q["owner"] or "not stated", q["cadence"] or "not stated", q["record_location"] or "not stated", q["client_ksis"]] for q in d["requirements"]]},
             {"name": "Questions", "columns": ["ID", "Type", "Question", "Detail", "Recommendation or blocks", "Answer"],
@@ -113,6 +113,6 @@ def build(path: Path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit(__doc__)
-    build(Path(sys.argv[1]))
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import report_lib  # noqa: E402
+    report_lib.main(build, __doc__)

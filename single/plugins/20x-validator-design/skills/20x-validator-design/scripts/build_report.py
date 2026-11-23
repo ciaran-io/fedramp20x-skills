@@ -24,7 +24,7 @@ def build(path: Path):
     L = front_matter(d)
     L += kv_table([("KSIs designed", ", ".join(i["ksi"] for i in d["items"])),
                    ("Status", "; ".join(f"{i['ksi']}: {i['status']}" for i in d["items"]))])
-    L += ["Each design states how its methods fail and the break test that will prove it. Status Designed means no method has been built or tested yet.", ""]
+    L += ["Each design states how its methods fail and the break test that will prove it. Status Draft means the design is not yet SME-validated; Designed means it is validated but no method has been built or tested yet.", ""]
     L += inputs_table(d)
     for i in d["items"]:
         L += [f"## {i['ksi']} {i['name']}", "", "| Field | Design |", "|---|---|"]
@@ -58,6 +58,6 @@ def build(path: Path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit(__doc__)
-    build(Path(sys.argv[1]))
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import report_lib  # noqa: E402
+    report_lib.main(build, __doc__)

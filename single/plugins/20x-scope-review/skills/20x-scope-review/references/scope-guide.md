@@ -33,7 +33,7 @@
 | M4 Flows | A data class has no flow, a flow ends at a resource with no decision, or a flow crosses the boundary with no stated protection | Moderate | |
 | M5 Third parties | A third party lacks any item MAS-CSO-TPR lists | Moderate | |
 | M6 Metadata | Provider metadata about federal customer data leaves the in-scope resources with no MAS-CSO-MDI entry | Moderate | |
-| M7 Categories | A data class has no security category, or a resource has none and no rule derives it (a common rule: a resource takes the highest category of the data classes it handles; check whether the record or its tooling states one before reporting), or a category the client did not set | Low; ask | |
-| M8 Change log | The record changed with no change log entry, or the change log cannot detect a change to a decision, condition or flow | Moderate | L3, L7 |
+| M7 Categories | A data class has no security category, or a category the client did not set. A resource with no category of its own is not a finding when the data classes it handles have categories: the usual rule is that a resource takes the highest category of its data classes. If the record or its tooling states no rule, ask the consultant to confirm that one as an open question; do not report it as a finding | Low; ask | |
+| M8 Change log | The record changed with no change log entry, or the change log check, run on a changed copy, does not detect a change to a decision, condition, flow or third party | Moderate | L3, L7 |
 | M9 Open questions | The record says decided while an open question is unresolved, or a decision has no recorded owner | Low | |
 | M10 Status | The record is a draft while other work relies on it | Observation | |

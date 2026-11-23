@@ -30,7 +30,7 @@
       ],
       "production_source": "{client system, or [source: client to confirm]}",
       "gap": "{what the methods do not prove}",
-      "status": "Designed",
+      "status": "Draft",
       "decisions": ["{choice made, option rejected and why, decision ID}"],
       "sources": [{"input": "I-01", "location": "{section or requirement}"}, {"frmr": "{KSI-ID}"}],
       "confirmed": true

@@ -43,7 +43,7 @@ A decision made in one document usually applies in others: the policy, the plan,
 
 6. **Draft follow-ups.** One item per place that disagrees, is silent or is affected: what to change, where, and who approves it (from the decision or the policy owner). Mark each item `proposed`. Do not edit any client document.
 
-7. **Check rule IDs.** Run `python scripts/frmr.py lint` on the documents that the decision touches. A cited ID that is unknown or out of scope is a follow-up (lesson L12).
+7. **Check rule IDs.** Run `python scripts/frmr.py lint --client` on the documents that the decision touches. A cited ID that is unknown or out of scope is a follow-up (lesson L12).
 
 8. **Stop and ask.** Present the follow-ups with AskUserQuestion, grouped by owner, and ask which to approve. Record approvals in the deliverable; do not record them as done until the consultant says the change was made.
 

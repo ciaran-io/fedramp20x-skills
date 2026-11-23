@@ -41,7 +41,7 @@
     }
   ],
   "rewrites": [
-    {"id": "R-001", "requirement": "{POL-X/X-1}", "current": "{client text}", "recommended": "{text with [placeholders]}", "closes": ["G-001"], "placeholders": ["{placeholder}"]}
+    {"id": "R-001", "requirement": "{POL-X/X-1}", "current": "{client text}", "recommended": "{text with [placeholders]}", "closes": ["G-001"], "placeholders": ["{placeholder}"], "sources": [{"input": "I-01", "location": "{where the owner, cadence and record come from}"}]}
   ],
   "decisions_needed": [
     {"id": "DQ-001", "question": "{question}", "options": ["{option}"], "recommendation": "{option}", "reason": "{why}", "decision_ref": null}

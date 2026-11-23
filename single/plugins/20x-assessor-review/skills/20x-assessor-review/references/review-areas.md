@@ -14,7 +14,7 @@ Each test names the lesson it applies (see `lessons.md`). Report a pattern once,
 
 ## Policies
 
-Apply the tests in the `20x-policy-review` skill's `policy-tests.md` when the policies have not been reviewed. When a policy review deliverable exists, review that deliverable instead (area "deliverable") and spot-check five requirements against the policies.
+When the policies have not been reviewed, check that every requirement a KSI depends on names an owner, a cycle and a record location (the core of the policy review's tests T1 to T3), and recommend a full policy review. When a policy review deliverable exists, review that deliverable instead (area "deliverable") and spot-check five requirements against the policies.
 
 | Test | Finding when | Lesson |
 |---|---|---|
@@ -23,7 +23,7 @@ Apply the tests in the `20x-policy-review` skill's `policy-tests.md` when the po
 | P3 Cycle | A "persistently" KSI has no documented cycle | L1 |
 | P4 Policy and plan agree | A policy and its plan state different owners, cycles or records for the same activity | |
 | P5 Claims match reality | A plan or policy describes automation, a link, a report or a record as in place, and the inputs show it is planned, missing or broken | |
-| P6 Required exercise | A plan requires an exercise or test (tabletop, restore test) and no dated record of one exists within its cycle | L1 |
+| P6 Required exercise | A plan requires an exercise or test (tabletop, restore test, failover, incident exercise) and no dated record of one exists within its cycle. List every exercise each plan names, then look for its record; a record type the plan names but no record file holds is itself the finding | L1 |
 | P7 Approval trace | A policy or plan approval is only a role and a date, with no record that can be traced (decision record entry, tagged commit, signed approval) | |
 
 ## Validator designs
@@ -45,11 +45,12 @@ Apply the tests in the `20x-policy-review` skill's `policy-tests.md` when the po
 | Test | Finding when | Lesson |
 |---|---|---|
 | R1 Coverage note | A KSI reports pass while a coverage note or design gap says the methods prove less than the KSI. Under a status model where a known gap means partial, this overstates the evidence | L11 |
-| R2 Cannot fail | A method's result never changes across the history while its inputs change, or a method passes on empty input | L3 |
+| R2 Cannot fail | A method's result never changes across the history while its inputs change, or a method passes on empty input. Run `scripts/empty_probe.py` on a copy of the client's checks: each method that still passes when an input is emptied is a finding. If the checks read fixed paths, use the adapter pattern in the validator build skill's `check-patterns.md`. If no check code is in the inputs, say in the deliverable that R2 was applied to the results only | L3 |
 | R3 Freshness | The newest result is older than the cadence rule (VDR-TFR-MVX for machine-based, VDR-TFR-NMV for non-machine) | |
-| R4 Edited history | A past record or result was changed rather than a new entry added | L4 |
+| R4 Edited history | A past record or result was changed rather than a new entry added. Where the inputs are a git repository, read the history of each record file (`git log -p -- <file>`) and look for a change to an entry dated before the commit, not only for added entries | L4 |
 | R5 Reviewer | A review record names a role other than the policy owner | L5 |
 | R6 Method count | A result lists fewer methods than the design | |
+| R7 Not passing | A KSI's latest result is fail, partial or not implemented. Report the KSI, how long it has held that status in the history, and whether a plan with an owner and a date exists. Rate by the KSI's effect on federal customer data, not by the count | |
 
 ## Deliverables of the other 20x skills
 
@@ -70,6 +71,8 @@ Report these in `not_assessed`, not as findings. Decide from the rule's subset a
 | Preparing (not yet applying) | FRC-APP subset; MKT; CCM-OCR and CCM-QTR; IVV assessments; SCN notifications to agencies | They start when the client applies, is listed or is certified, or when an agency relies on the offering |
 | Applying | CCM-OCR and CCM-QTR reports; SCN notifications to agencies | They start after certification |
 | Certified | None by stage | All provider rules apply |
+
+For a rule family this table does not name (for example AFC, CDS, CPO, FRC-CSO, SDR, VER reporting, IEC reporting), read the rule statement for its trigger, such as "with Class C Certifications", "after certification" or "when applying". If the statement names a trigger the client has not reached, put the rule in `not_assessed` with that trigger as the reason. If it names none, treat the rule as actionable now. Ask the consultant when two readings are possible; do not decide by family name alone. A rule for providers "seeking" certification (for example FRC-CSX-VVK) is treated as actionable while preparing, because the work it sets is done before applying; record this reading as a decision for the consultant.
 
 Rules that affect only FedRAMP, agencies or assessors are never provider findings. Use `frmr.py rules --affects Providers`.
 

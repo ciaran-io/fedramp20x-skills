@@ -41,8 +41,9 @@ def build(path: Path):
     m = d.get("metrics")
     if m:
         L += ["## KSI metrics (SDR-CSX-KMT)", "", f"History from {m['first_day']} to {m['as_of']}: {m['days_with_history']} days. "
-              f"Past 30 days window from {m['past_30_days_window']['from']}: {m['past_30_days_window']['days_present']} of "
-              f"{m['past_30_days_window']['days_expected']} days present. Synthetic days excluded: {cell(m['synthetic_days_excluded']) if m['synthetic_days_excluded'] else 'none'}.", "",
+              f"Past 30 days window {m['past_30_days_window']['from']} to {m['as_of']}: {m['past_30_days_window']['coverage']} "
+              f"({m['past_30_days_window']['days_before_history']} days before the history begins, "
+              f"{len(m['past_30_days_window']['missing_days'])} missing days after it). Synthetic days excluded: {cell(m['synthetic_days_excluded']) if m['synthetic_days_excluded'] else 'none'}.", "",
               "| KSI | Latest | Past 30 days | Up to past year |", "|---|---|---|---|"]
         for k, v in m["ksis"].items():
             fmt = lambda c: ", ".join(f"{n} {s}" for s, n in sorted(c.items()))
@@ -65,6 +66,6 @@ def build(path: Path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit(__doc__)
-    build(Path(sys.argv[1]))
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import report_lib  # noqa: E402
+    report_lib.main(build, __doc__)

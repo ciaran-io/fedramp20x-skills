@@ -30,15 +30,15 @@ An assessor review is worth more when the reviewer did not produce the work. If 
 
 ## Steps
 
-1. **Set up.** Find the engagement folder. Register each input with an ID and SHA-256. Run `python scripts/frmr.py info`. Ask for the client's stage if it is not in `engagement.json`.
+1. **Set up.** Find the engagement folder. Register each input with an ID and SHA-256. Run `python scripts/frmr.py info`. Ask for the client's stage if it is not in `engagement.json`, and write the answer there as `stage`.
 
 2. **Decide the review areas** from the inputs: scope, policy, design, results, evidence, deliverable. List them for the consultant and ask whether any area is out of the review. Each area's tests are in `references/review-areas.md`.
 
 3. **List the rules in play.** Run `python scripts/frmr.py rules --affects Providers` and `python scripts/frmr.py ksis`. For each rule, decide from its subset and the client's stage whether the client can act on it now (see "Rules the client cannot act on yet" in `references/review-areas.md`). Put the rest in the `not_assessed` list with the reason and the event that brings them in. Do not guess the stage of a rule; if unclear, ask.
 
-4. **Run the tests** for each area. For every finding record: the observation (what the evidence shows, with its source), the criteria (rule or KSI ID, and the client's own policy requirement where there is one), the rating from `references/finding-ratings.md`, the lesson it applies (L1 to L12) and a recommendation. Read each rule you cite with `python scripts/frmr.py show <ID>` before you rate against it.
+4. **Run the tests** for each area. For every finding record: the observation (what the evidence shows, with its source), the criteria (rule or KSI ID, and the client's own policy requirement where there is one), the rating from `references/finding-ratings.md`, the lesson it applies (L1 to L12) and a recommendation. Read each rule you cite with `python scripts/frmr.py show <ID>` before you rate against it. Where the client's checks are in the inputs, run `python scripts/empty_probe.py` on a copy of them (test R2), so a method that cannot fail is found by running it, not by reading it.
 
-5. **Run the mechanical checks.** On each deliverable of the other skills: `python scripts/check_deliverable.py <json>` and `python scripts/frmr.py lint <md> <json>`. On the client's policies and documents: `python scripts/frmr.py lint <files>`. Each error is a finding unless it is already reported.
+5. **Run the mechanical checks.** On each deliverable of the other skills: `python scripts/check_deliverable.py <json>` and `python scripts/frmr.py lint <md> <json>`. On the client's policies and documents: `python scripts/frmr.py lint --client <files>`. An unknown FedRAMP ID, or a cited rule that does not apply at Class C, is a finding (P2) unless it is already reported. In the client's own documents, copied statement text is an Observation at most; a placeholder ID in a template is not a finding.
 
 6. **Compare with earlier reviews.** For each earlier finding, record closed, open or partly closed, with the evidence. Never mark a finding closed without evidence in the inputs.
 

@@ -16,7 +16,7 @@
   "items": [
     {"id": "EV-1", "kind": "evaluation", "question": "{question}", "answer": "{answer with evidence}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "IEC-CSO-EFR"}], "confirmed": true},
     {"id": "RC-01", "kind": "report_content", "report": "initial | ongoing | final", "item": "{required item}", "supplied": "{yes, partly, or no: what is missing}", "sources": [{"input": "I-01", "location": "{where}"}, {"frmr": "IEC-CSO-IIR"}], "confirmed": true},
-    {"id": "F-001", "kind": "finding", "test": "{I1 to I11}", "rating": "High | Moderate | Low | Observation", "observation": "{what the plan says}", "recommendation": "{change}", "sources": [{"input": "I-02", "location": "{section}"}], "confirmed": true}
+    {"id": "F-001", "kind": "finding", "test": "{I1 to I11}", "rating": "High | Moderate | Low | Observation", "observation": "{what the plan says}", "criteria": ["{rule ID, or the plan section the finding compares}"], "recommendation": "{change}", "sources": [{"input": "I-02", "location": "{section}"}], "confirmed": true}
   ],
   "decisions_needed": [],
   "open_questions": [],
