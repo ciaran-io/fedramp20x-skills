@@ -13,9 +13,9 @@ sme_validation: Draft: pending SME validation
 | | |
 |---|---|
 | KSIs designed | KSI-INR-RPI, KSI-INR-AAR |
-| Status | KSI-INR-RPI: Designed; KSI-INR-AAR: Designed |
+| Status | KSI-INR-RPI: Draft; KSI-INR-AAR: Draft |
 
-Each design states how its methods fail and the break test that will prove it. Status Designed means no method has been built or tested yet.
+Each design states how its methods fail and the break test that will prove it. Status Draft means the design is not yet SME-validated; Designed means it is validated but no method has been built or tested yet.
 
 ## Inputs
 
@@ -40,7 +40,7 @@ Each design states how its methods fail and the break test that will prove it. S
 | Break test | inr-rpi-static (Planned): Remove the cycle from INR-4 in a copy of the policy. Expected: POL-INR INR-4 states no review cycle for KSI-INR-RPI inr-rpi-live (Planned): Add an incident opened after the newest review's start date and leave it out of incidents_covered. Expected: Past incident review dated <date> does not cover INC-<id> opened <date> inr-rpi-live (Planned): Set the run date 93 days after the newest review. Expected: Past incident review is 93 days old, the cycle is <cycle> days |
 | Production source | The incident tracker named in plan section 10, for incidents and near misses by opened date. The review record in incident_pattern_reviews. The tracker's product and API are not named in the material: [source: client to confirm] |
 | Gap | The methods prove that a review happened on time, by the owner, and covered every incident. They do not prove that the review found the patterns that exist, or that its findings led to action. Near misses are covered only if they are recorded in the incident tracker. |
-| Status | Designed |
+| Status | Draft |
 | Sources | I-01 INR-4; I-05 section 9; section 10; I-06 incident_pattern_reviews; incidents; I-07 G-010; Q-006; KSI-INR-RPI; FRD-PER; VDR-TFR-NMV; FRC-CSX-VVK |
 | Confirmed | no, see open questions and decisions |
 
@@ -65,7 +65,7 @@ Each design states how its methods fail and the break test that will prove it. S
 | Break test | inr-aar-static (Planned): Remove the 10 business day deadline from INR-2 in a copy of the policy. Expected: POL-INR INR-2 sets no deadline for after action reports inr-aar-reports (Planned): Add a closed reportable incident with no rating and no aar_completed, and set the run date 11 business days after it closed. Expected: INC-<id> (reportable, unrated, treated as N5) has no after action report 11 business days after closing inr-aar-lessons (Planned): Add a lesson with no ticket reference to a completed report. Expected: Lesson <n> in the report for INC-<id> has no ticket or change reference |
 | Production source | The incident tracker named in plan section 10, where after action reports are linked from the incident record, and the backlog that holds the lesson tickets. Neither tool is named in the material: [source: client to confirm] |
 | Gap | The methods prove that reports exist on time and that each lesson has a tracked ticket. They do not prove that a report found the right root cause, or that a closed ticket changed what it should have. The record field lessons_incorporated is a single value and cannot show each lesson, so inr-aar-lessons needs a lessons list (DQ-003). |
-| Status | Designed |
+| Status | Draft |
 | Sources | I-01 INR-2; I-05 section 8; section 10; I-06 incidents; I-07 G-001; R-001; KSI-INR-AAR; IEC-CSO-DPR; VDR-TFR-NMV; FRC-CSX-VVK |
 | Confirmed | no, see open questions and decisions |
 

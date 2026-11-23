@@ -335,5 +335,17 @@
     "date": null,
     "corrections": [],
     "rejected": []
-  }
+  },
+  "fedramp_export": [
+    {
+      "schema": "certification-package-overview",
+      "fragment": "thirdPartyInformationResources",
+      "document": {},
+      "sources": {},
+      "missing": [
+        "nonCertified",
+        "certified"
+      ]
+    }
+  ]
 }

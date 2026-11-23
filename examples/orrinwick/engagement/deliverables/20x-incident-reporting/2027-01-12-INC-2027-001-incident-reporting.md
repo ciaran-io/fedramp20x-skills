@@ -36,10 +36,11 @@ sme_validation: Draft: pending SME validation
 | EV-3 | Is confidentiality or integrity affected, or likely to be? | Confidentiality: AGY-07 responder contact data was shown to an AGY-03 administrator. Integrity: the record says the data was shown, not changed. This agrees with the CISO's reportability decision at 10:20 ET. | I-19 What happened; Reportability decision; IEC-CSO-EFR; FRD-FRI |
 | EV-4 | Which PAIN rating fits, and which applies now? | Proposed N4, for the CISO to approve: the plan's own example for N4 is responder contact details for one agency being exposed, and the record shows one agency's data (AGY-07) exposed. Until an estimate is approved, N5 applies (IEC-CSO-DPR and plan section 2). A lower rating is arguable because one administrator viewed the page twice and the release was rolled back; the plan says the higher rating applies while evidence is unclear. | I-19 Affected tenants; PAIN rating; I-05 section 2 rating table; section 4; VER-EVA-EPA; IEC-CSO-EFI; IEC-CSO-DPR |
 | EV-5 | Is a vulnerability involved that is treated as an incident? | The record names a release defect, not a detected vulnerability. The root cause is not yet known, so this stays open. | I-19 Not yet known; VER-TFR-IRI |
+| EV-6 | Do the plan's report targets meet the timeframes the rules data sets for N5, the rating in force? | Partly. The initial report target (1 hour from the clock) matches IEC-CSO-IIR for N5. The plan's ongoing report cycle (24 hours) is longer than the 6 hours IEC-CSO-OIR gives for N5, and its final report target (5 business days after resolution) is longer than the 6 hours IEC-CSO-FIR gives for N5. Reports for this incident follow the rule timeframes while N5 is in force. Which event each rule timeframe counts from is a reading of the rule statements, for the consultant to confirm (DQ-005). | I-05 section 5; IEC-CSO-IIR; IEC-CSO-OIR; IEC-CSO-FIR; IEC-CSO-DPR |
 
 ## Reporting timeline
 
-The clock starts at: reportable (2027-01-12T10:20:00-05:00). Business days: Monday to Friday, no holidays skipped. The times are the client's targets from its plan; the FedRAMP rules set no fixed hours.
+The clock starts at: reportable (2027-01-12T10:20:00-05:00). Business days: Monday to Friday only; holidays not skipped. Targets marked client plan are the client's own; targets ending _rule come from the PAIN timeframes in the pinned rules data for the rating shown.
 
 | Target | Amount | From | Due | Status | Plan reference |
 |---|---|---|---|---|---|
@@ -48,6 +49,14 @@ The clock starts at: reportable (2027-01-12T10:20:00-05:00). Business days: Mond
 | initial_report | 1h | clock | 2027-01-12T11:20:00-05:00 | due | Plan section 5: within 1 hour after the clock starts |
 | ongoing_report (repeats) | 24h | clock | 2027-01-13T10:20:00-05:00 | due | Plan section 5: at least every 24 hours while open |
 | final_report | 5bd | resolved | not stated | needs resolved | Plan section 5: within 5 business days after resolution and recovery |
+| initial_report_rule | 1h | reportable | 2027-01-12T11:20:00-05:00 | due | IEC-CSO-IIR |
+| ongoing_report_rule (repeats) | 6h | clock | 2027-01-12T16:20:00-05:00 | due | IEC-CSO-OIR |
+| final_report_rule | 6h | resolved | not stated | needs resolved | IEC-CSO-FIR |
+
+Plan targets later than the rules for N5:
+
+- ongoing_report: the plan's target (24h from clock) falls after IEC-CSO-OIR for N5 (6h from clock)
+- final_report: the plan's interval 5bd is longer than IEC-CSO-FIR for N5 (6h)
 
 ## Report content
 
@@ -67,6 +76,7 @@ The clock starts at: reportable (2027-01-12T10:20:00-05:00). Business days: Mond
 | ID | Question | Options | Recommendation | Decision |
 |---|---|---|---|---|
 | DQ-001 | Which PAIN rating does the CISO approve for INC-2027-001? | N4, N3, Keep N5 until the other tenants are checked | Keep N5 until the other tenants are checked: The record does not yet show whether other tenant pairs were affected. The plan applies the higher rating while evidence is unclear. N4 fits if only AGY-07 was exposed | open |
+| DQ-005 | From which events do the rule timeframes count: the initial report from the reportability decision, ongoing reports from the clock, the final report from resolution? | As read, Other events the consultant names | As read: IEC-CSO-IIR applies after identifying a reportable incident and IEC-CSO-FIR once it is resolved; the rules data gives no other starting point. | open |
 
 ## Open questions
 
