@@ -45,6 +45,7 @@ The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedra
 4. It runs `scripts/check_deliverable.py` and `scripts/frmr.py lint` and fixes every error.
 5. SME Validate.
 6. It renders the Word and Excel copies with `scripts/render.py`.
+7. Where a FedRAMP rule links a JSON schema, it exports schema-valid JSON with `scripts/fedramp_export.py` (incident reports, significant change notifications, Security Decision Record, Ongoing Certification Report, package overview, third-party resources).
 
 ## Install
 
@@ -70,6 +71,16 @@ Run it as `/20x-policy-review:20x-policy-review`. The same pattern applies to ea
 
 From a shell, `claude plugin marketplace add` and `claude plugin install` take the same arguments.
 
+**First run of Claude Code on Windows.** The installer puts `claude.exe` in `%USERPROFILE%\.local\bin`. If PowerShell says `claude` is not recognised, add that folder to your user PATH and open a new terminal:
+
+```powershell
+[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$env:USERPROFILE\.local\bin", "User")
+```
+
+Claude Code asks whether to trust a folder the first time it starts there. Start it inside your engagement folder or your clone, and answer Yes.
+
+**If an install fails.** After the marketplace file changes, run `claude plugin marketplace update <marketplace>` before installing again; the marketplace is cached. "Host key verification failed" means a plugin source used SSH: check `git config --global --get-regexp "^url\."` for an `insteadOf` rule that rewrites HTTPS to SSH.
+
 **Updates.** Auto-update is off by default for marketplaces outside Anthropic's own. Turn it on in `/plugin`, on the Marketplaces tab, or update by hand:
 
 ```bash
@@ -81,11 +92,14 @@ For single skills, use the marketplace name `fedramp20x-skills-single`. Claude C
 
 **claude.ai.** Download the zip files from the [latest release](https://github.com/ciaran-io/fedramp20x-skills/releases/latest), or run `python tools/package_skills.py` to build `dist/<skill>.zip` for each skill and `dist/fedramp20x-skills.zip` for the full set, then upload a `.zip` as a custom skill. Each skill folder carries its own copy of the shared scripts and references, so it works on its own.
 
-**Requirements.** Python 3.10 or newer, and `pip install python-docx openpyxl` for the Word and Excel copies. The first run downloads the FedRAMP rules data to `~/.cache/fedramp20x-skills/` (set `FRMR_DIR` to use another folder):
+**Requirements.** Python 3.10 or newer, `pip install python-docx openpyxl` for the Word and Excel copies, and `pip install jsonschema` for the FedRAMP JSON export. The first run downloads the FedRAMP rules data to `~/.cache/fedramp20x-skills/` (set `FRMR_DIR` to use another folder):
 
 ```bash
 python shared/scripts/frmr.py fetch
+python shared/scripts/fedramp_export.py fetch
 ```
+
+The second command downloads the pinned FedRAMP JSON schemas from fedramp.gov into the same cache, checking each SHA-256. If fedramp.gov is blocked where you work, save the files by hand into a folder and set `FEDRAMP_SCHEMA_DIR` to it. Neither the rules data nor the schemas are committed to this repository.
 
 ## Example engagement
 
