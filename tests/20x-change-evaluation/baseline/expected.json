@@ -3,13 +3,77 @@
   "inputs": "examples/orrinwick/engagement/inputs/changes/CR-014.md, the scope record and POL-CNA",
   "output": "examples/orrinwick/engagement/deliverables/20x-change-evaluation/2026-11-22-CR-014-change-evaluation.json",
   "expect": [
-    {"id": "E-01", "fault": "The change is significant: new third party and flow", "match": {"cites": ["FRD-SGC"], "mentions": ["T6"]}},
-    {"id": "E-02", "fault": "Transformative is proposed but left for the SME", "match": {"cites": ["FRD-TRF"], "mentions": ["\"confirmed\": false"]}},
-    {"id": "E-03", "fault": "The approver is missing from the notice content", "match": {"mentions": ["Name and title of approver", "No"]}},
-    {"id": "E-04", "fault": "The business day basis is a decision", "match": {"in": "decisions_needed", "mentions": ["business days"]}},
-    {"id": "E-05", "fault": "Whether the pilot agencies are necessary parties is asked", "match": {"in": "open_questions", "mentions": ["pilot agencies"]}}
+    {
+      "id": "E-01",
+      "fault": "The change is significant: new third party and flow",
+      "match": {
+        "cites": [
+          "FRD-SGC"
+        ],
+        "mentions": [
+          "T6"
+        ]
+      }
+    },
+    {
+      "id": "E-02",
+      "fault": "Transformative is proposed but left for the SME",
+      "match": {
+        "cites": [
+          "FRD-TRF"
+        ],
+        "mentions": [
+          "\"confirmed\": false"
+        ]
+      }
+    },
+    {
+      "id": "E-03",
+      "fault": "The approver is missing from the notice content",
+      "match": {
+        "mentions": [
+          [
+            "approver"
+          ],
+          "No"
+        ]
+      }
+    },
+    {
+      "id": "E-04",
+      "fault": "The business day basis is a decision",
+      "match": {
+        "in": "decisions_needed",
+        "mentions": [
+          [
+            "business day"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "E-05",
+      "fault": "Whether the pilot agencies are necessary parties is asked",
+      "match": {
+        "in": "open_questions",
+        "mentions": [
+          [
+            "pilot agenc"
+          ]
+        ]
+      }
+    }
   ],
   "must_not": [
-    {"id": "N-01", "reason": "Not applicable is not a change type", "match": {"mentions": ["not applicable"], "in": "items"}}
+    {
+      "id": "N-01",
+      "reason": "Not applicable is not a change type",
+      "match": {
+        "mentions": [
+          "not applicable"
+        ],
+        "in": "items"
+      }
+    }
   ]
 }

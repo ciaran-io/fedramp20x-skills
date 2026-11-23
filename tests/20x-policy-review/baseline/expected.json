@@ -3,20 +3,154 @@
   "inputs": "examples/orrinwick/engagement/inputs/policies (POL-INR, POL-CNA, POL-RPL, POL-CMT)",
   "output": "examples/orrinwick/engagement/deliverables/20x-policy-review/2026-11-22-policy-review.json",
   "expect": [
-    {"id": "E-01", "fault": "INR-2 has no cycle for incorporating lessons learned", "match": {"cites": ["KSI-INR-AAR"], "mentions": ["INR-2"]}},
-    {"id": "E-02", "fault": "CNA requirements state configuration but no review cycle", "match": {"cites": ["KSI-CNA-MAT", "KSI-CNA-RNT"], "test": "T2"}},
-    {"id": "E-03", "fault": "CNA-2 allows manual correction; the KSI needs automatic enforcement", "match": {"cites": ["KSI-CNA-EIS"], "mentions": ["CNA-2"], "test": "T7"}},
-    {"id": "E-04", "fault": "CMT-7 cites FRC-CCL rules that apply to Rev5 only", "match": {"cites": ["FRC-CCL-UCC"], "test": "T8"}},
-    {"id": "E-05", "fault": "RPL-3 does not review the plan against the objectives", "match": {"cites": ["KSI-RPL-ARP"], "mentions": ["RPL-3"]}},
-    {"id": "E-06", "fault": "CMT-1 logs changes but nobody monitors them", "match": {"cites": ["KSI-CMT-LMC"], "mentions": ["CMT-1"]}},
-    {"id": "E-07", "fault": "INR-4 is owned by a team", "match": {"cites": ["KSI-INR-RPI"], "mentions": ["INR-4"]}},
-    {"id": "E-08", "fault": "KSI-RPL-RRO is fully stated in RPL-1", "match": {"in": "coverage", "cites": ["KSI-RPL-RRO"], "coverage": "covered"}},
-    {"id": "E-09", "fault": "IAM policy was not provided", "match": {"in": "coverage", "cites": ["KSI-IAM-APM"], "coverage": "not reviewed"}},
-    {"id": "E-10", "fault": "The incident response plan is referenced but not provided", "match": {"in": "open_questions", "mentions": ["incident response plan"]}}
+    {
+      "id": "E-01",
+      "fault": "INR-2 has no cycle for incorporating lessons learned",
+      "match": {
+        "cites": [
+          "KSI-INR-AAR"
+        ],
+        "mentions": [
+          "INR-2"
+        ]
+      }
+    },
+    {
+      "id": "E-02",
+      "fault": "CNA requirements state configuration but no review cycle (one grouped gap, or one gap per KSI)",
+      "match": {
+        "cites": [
+          "KSI-CNA-MAT"
+        ],
+        "test": "T2"
+      }
+    },
+    {
+      "id": "E-03",
+      "fault": "CNA-2 allows manual correction; the KSI needs automatic enforcement",
+      "match": {
+        "cites": [
+          "KSI-CNA-EIS"
+        ],
+        "mentions": [
+          "CNA-2"
+        ],
+        "test": "T7"
+      }
+    },
+    {
+      "id": "E-04",
+      "fault": "CMT-7 cites FRC-CCL rules that apply to Rev5 only",
+      "match": {
+        "cites": [
+          "FRC-CCL-UCC"
+        ],
+        "test": "T8"
+      }
+    },
+    {
+      "id": "E-05",
+      "fault": "RPL-3 does not review the plan against the objectives",
+      "match": {
+        "cites": [
+          "KSI-RPL-ARP"
+        ],
+        "mentions": [
+          "RPL-3"
+        ]
+      }
+    },
+    {
+      "id": "E-06",
+      "fault": "CMT-1 logs changes but nobody monitors them",
+      "match": {
+        "cites": [
+          "KSI-CMT-LMC"
+        ],
+        "mentions": [
+          "CMT-1"
+        ]
+      }
+    },
+    {
+      "id": "E-07",
+      "fault": "INR-4 is owned by a team",
+      "match": {
+        "cites": [
+          "KSI-INR-RPI"
+        ],
+        "mentions": [
+          "INR-4"
+        ]
+      }
+    },
+    {
+      "id": "E-08",
+      "fault": "KSI-RPL-RRO is fully stated in RPL-1",
+      "match": {
+        "in": "coverage",
+        "cites": [
+          "KSI-RPL-RRO"
+        ],
+        "coverage": "covered"
+      }
+    },
+    {
+      "id": "E-09",
+      "fault": "IAM policy was not provided",
+      "match": {
+        "in": "coverage",
+        "cites": [
+          "KSI-IAM-APM"
+        ],
+        "coverage": "not reviewed"
+      }
+    },
+    {
+      "id": "E-10",
+      "fault": "The incident response plan is referenced but not provided",
+      "match": {
+        "in": "open_questions",
+        "mentions": [
+          [
+            "incident response plan",
+            "IR plan"
+          ]
+        ]
+      }
+    }
   ],
   "must_not": [
-    {"id": "N-01", "reason": "RPL-1 states owner, cycle and record; a Moderate or High gap on it would be wrong", "match": {"cites": ["KSI-RPL-RRO"], "rating_in": ["High", "Moderate"]}},
-    {"id": "N-02", "reason": "SCN-CSO-EVA covers class changes for 20x; saying no rule covers them is wrong", "match": {"mentions": ["No rule that applies to 20x"]}},
-    {"id": "N-03", "reason": "No tool or product is named in the policies", "match": {"mentions": ["ServiceNow"]}}
+    {
+      "id": "N-01",
+      "reason": "RPL-1 states owner, cycle and record; a Moderate or High gap on it would be wrong",
+      "match": {
+        "cites": [
+          "KSI-RPL-RRO"
+        ],
+        "rating_in": [
+          "High",
+          "Moderate"
+        ]
+      }
+    },
+    {
+      "id": "N-02",
+      "reason": "SCN-CSO-EVA covers class changes for 20x; saying no rule covers them is wrong",
+      "match": {
+        "mentions": [
+          "No rule that applies to 20x"
+        ]
+      }
+    },
+    {
+      "id": "N-03",
+      "reason": "No tool or product is named in the policies",
+      "match": {
+        "mentions": [
+          "ServiceNow"
+        ]
+      }
+    }
   ]
 }

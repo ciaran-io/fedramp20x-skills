@@ -3,14 +3,79 @@
   "inputs": "examples/orrinwick/engagement/inputs/incidents/INC-2027-001.md, the incident response plan, the scope record; evaluate mode",
   "output": "examples/orrinwick/engagement/deliverables/20x-incident-reporting/2027-01-12-INC-2027-001-incident-reporting.json",
   "expect": [
-    {"id": "E-01", "fault": "Responder contact data is federal customer data", "match": {"cites": ["FRD-FCD"], "mentions": ["D1"]}},
-    {"id": "E-02", "fault": "N5 applies until an estimate is approved", "match": {"cites": ["IEC-CSO-DPR"], "mentions": ["N5"]}},
-    {"id": "E-03", "fault": "The coordinator contact is missing from the initial report", "match": {"mentions": ["federal incident response coordinator", "No"]}},
-    {"id": "E-04", "fault": "The rating is the client's decision", "match": {"in": "decisions_needed", "mentions": ["PAIN rating"]}}
+    {
+      "id": "E-01",
+      "fault": "Responder contact data is federal customer data",
+      "match": {
+        "cites": [
+          "FRD-FCD"
+        ],
+        "mentions": [
+          "D1"
+        ]
+      }
+    },
+    {
+      "id": "E-02",
+      "fault": "N5 applies until an estimate is approved",
+      "match": {
+        "cites": [
+          "IEC-CSO-DPR"
+        ],
+        "mentions": [
+          "N5"
+        ]
+      }
+    },
+    {
+      "id": "E-03",
+      "fault": "The coordinator contact is missing from the initial report",
+      "match": {
+        "mentions": [
+          [
+            "incident response coordinator",
+            "incident coordinator"
+          ],
+          "No"
+        ]
+      }
+    },
+    {
+      "id": "E-04",
+      "fault": "The rating is the client's decision",
+      "match": {
+        "in": "decisions_needed",
+        "mentions": [
+          [
+            "PAIN rating",
+            "rating"
+          ]
+        ]
+      }
+    }
   ],
   "must_not": [
-    {"id": "N-01", "reason": "The clock must not start at detection; this plan starts it at the reportability decision", "match": {"mentions": ["clock starts at detection"]}},
-    {"id": "N-02", "reason": "No agency other than those in the tenant records may be named", "match": {"mentions": ["AGY-01"]}}
+    {
+      "id": "N-01",
+      "reason": "The clock must not start at detection; this plan starts it at the reportability decision",
+      "match": {
+        "mentions": [
+          "clock starts at detection"
+        ]
+      }
+    },
+    {
+      "id": "N-02",
+      "reason": "No agency other than those in the tenant records may be named",
+      "match": {
+        "mentions": [
+          "AGY-01"
+        ]
+      }
+    }
   ],
-  "timeline_checks": {"clock": "2027-01-12T10:20:00-05:00", "initial_report_due": "2027-01-12T11:20:00-05:00"}
+  "timeline_checks": {
+    "clock": "2027-01-12T10:20:00-05:00",
+    "initial_report_due": "2027-01-12T11:20:00-05:00"
+  }
 }

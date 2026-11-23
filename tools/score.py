@@ -17,12 +17,19 @@ expected.json:
 }
 
 An expectation is met when one entry in the named section (default items) cites every
-ID in "cites" (in criteria or sources), contains every string in "mentions" anywhere in
+ID in "cites" (in criteria or sources), contains every element of "mentions" anywhere in
 the entry, starts its test with "test", and has a rating in "rating_in". A must_not entry
-fails the score when any entry matches. Exit 1 if any expectation is missed or any
+fails the score when any entry matches.
+
+Each element of "mentions" is a string or a list of alternatives (any one is enough).
+Matching ignores case and runs of spaces, so a correct finding is not missed for wording
+alone; put the facts that make a finding right (IDs, numbers, the observed message) in
+"mentions", not the example's sentence. "in": "document" matches the whole deliverable,
+for rules about its top-level fields (for example a status). Exit 1 if any expectation is missed or any
 must_not matches.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -43,11 +50,21 @@ def ids_in(entry) -> set:
     return out
 
 
+def norm(t: str) -> str:
+    return re.sub(r"\s+", " ", t).lower()
+
+
+def mentioned(text: str, m) -> bool:
+    alts = m if isinstance(m, list) else [m]
+    return any(norm(a) in text for a in alts)
+
+
 def matches(entry, m) -> bool:
-    text = json.dumps(entry)
-    if not set(m.get("cites", [])) <= ids_in(entry) and not all(c in text for c in m.get("cites", [])):
+    raw = json.dumps(entry)
+    text = norm(raw)
+    if not set(m.get("cites", [])) <= ids_in(entry) and not all(c in raw for c in m.get("cites", [])):
         return False
-    if not all(s in text for s in m.get("mentions", [])):
+    if not all(mentioned(text, s) for s in m.get("mentions", [])):
         return False
     if m.get("test") and not str(entry.get("test", "")).startswith(m["test"]):
         return False
@@ -58,17 +75,48 @@ def matches(entry, m) -> bool:
     return True
 
 
+def section(doc: dict, name: str) -> list:
+    if name == "document":
+        return [doc]
+    sec = doc.get(name, [])
+    return sec if isinstance(sec, list) else [sec]
+
+
 def score(doc: dict, exp: dict) -> tuple[list, list]:
     met, missed = [], []
     for e in exp.get("expect", []):
-        sec = doc.get(e["match"].get("in", "items"), [])
+        sec = section(doc, e["match"].get("in", "items"))
         (met if any(matches(x, e["match"]) for x in sec) else missed).append(e)
     bad = []
     for n in exp.get("must_not", []):
-        sec = doc.get(n["match"].get("in", "items"), [])
+        sec = section(doc, n["match"].get("in", "items"))
         if any(matches(x, n["match"]) for x in sec):
             bad.append(n)
     return missed, bad
+
+
+def per_change(doc: dict, exp: dict) -> tuple[list, int]:
+    """For a case run once per change: check the deliverable for its change against expect_per_change."""
+    cid = (doc.get("change") or {}).get("id")
+    want = (exp.get("expect_per_change") or {}).get(cid)
+    if not want:
+        return [], 0
+    text = json.dumps(doc)
+    missed = []
+    types = [t.strip() for t in re.split(r",| or ", want["type"]) if t.strip() in
+             ("routine_recurring", "adaptive", "transformative", "not_significant", "class_change")]
+    if doc.get("proposed_type") not in types:
+        missed.append({"id": f"{cid}-type", "fault": f"proposed type {doc.get('proposed_type')}, expected {want['type']}"})
+    for c in want.get("cites", []):
+        if c not in text:
+            missed.append({"id": f"{cid}-{c}", "fault": f"does not cite {c}"})
+    if want.get("must_ask") and (doc.get("decided_type") or not doc.get("decisions_needed")):
+        missed.append({"id": f"{cid}-ask", "fault": "the type must be left to the SME as a decision question"})
+    if "notices" in want:
+        n = len([x for x in (doc.get("timeline") or {}).get("notices", []) if x])
+        if n != want["notices"]:
+            missed.append({"id": f"{cid}-notices", "fault": f"{n} notices, expected {want['notices']}"})
+    return missed, 2 + len(want.get("cites", [])) + bool(want.get("must_ask"))
 
 
 def main():
@@ -78,6 +126,9 @@ def main():
     exp = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
     missed, bad = score(doc, exp)
     total = len(exp.get("expect", []))
+    pm, pt = per_change(doc, exp)
+    missed += pm
+    total += pt
     for e in missed:
         print(f"MISSED {e['id']}: {e['fault']}")
     for n in bad:

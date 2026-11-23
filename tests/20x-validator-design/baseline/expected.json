@@ -3,14 +3,86 @@
   "inputs": "examples/orrinwick/engagement/inputs: POL-INR, incident response plan, GRC records; the policy review deliverable",
   "output": "examples/orrinwick/engagement/deliverables/20x-validator-design/2026-11-22-validator-design.json",
   "expect": [
-    {"id": "E-01", "fault": "KSI-INR-RPI design with two methods reading different sources", "match": {"cites": ["KSI-INR-RPI"], "mentions": ["inr-rpi-static", "inr-rpi-live", "run date"]}},
-    {"id": "E-02", "fault": "KSI-INR-AAR treats an unrated reportable incident as N5", "match": {"cites": ["KSI-INR-AAR", "IEC-CSO-DPR"], "mentions": ["N5"]}},
-    {"id": "E-03", "fault": "Policy and plan disagree on the cycle; the design asks", "match": {"in": "decisions_needed", "mentions": ["90 days", "quarter"]}},
-    {"id": "E-04", "fault": "The incident tracker product is not named; the design asks", "match": {"in": "open_questions", "mentions": ["incident tracker"]}}
+    {
+      "id": "E-01",
+      "fault": "KSI-INR-RPI design with two methods reading different sources",
+      "match": {
+        "cites": [
+          "KSI-INR-RPI"
+        ],
+        "mentions": [
+          "inr-rpi-static",
+          "inr-rpi-live",
+          "run date"
+        ]
+      }
+    },
+    {
+      "id": "E-02",
+      "fault": "KSI-INR-AAR treats an unrated reportable incident as N5",
+      "match": {
+        "cites": [
+          "KSI-INR-AAR",
+          "IEC-CSO-DPR"
+        ],
+        "mentions": [
+          "N5"
+        ]
+      }
+    },
+    {
+      "id": "E-03",
+      "fault": "Policy and plan disagree on the cycle; the design asks",
+      "match": {
+        "in": "decisions_needed",
+        "mentions": [
+          "90 days",
+          "quarter"
+        ]
+      }
+    },
+    {
+      "id": "E-04",
+      "fault": "The incident tracker product is not named; the design asks",
+      "match": {
+        "in": "open_questions",
+        "mentions": [
+          [
+            "incident tracker",
+            "tracker",
+            "ticketing"
+          ]
+        ]
+      }
+    }
   ],
   "must_not": [
-    {"id": "N-01", "reason": "No break test has been run; a design must not claim Built or Verified", "match": {"mentions": ["\"status\": \"Verified\""]}},
-    {"id": "N-02", "reason": "No tracker product is named in the inputs", "match": {"mentions": ["Jira"]}},
-    {"id": "N-03", "reason": "No tracker product is named in the inputs", "match": {"mentions": ["ServiceNow"]}}
+    {
+      "id": "N-01",
+      "reason": "No break test has been run; a design must not claim Built or Verified",
+      "match": {
+        "mentions": [
+          "\"status\": \"Verified\""
+        ]
+      }
+    },
+    {
+      "id": "N-02",
+      "reason": "No tracker product is named in the inputs",
+      "match": {
+        "mentions": [
+          "Jira"
+        ]
+      }
+    },
+    {
+      "id": "N-03",
+      "reason": "No tracker product is named in the inputs",
+      "match": {
+        "mentions": [
+          "ServiceNow"
+        ]
+      }
+    }
   ]
 }

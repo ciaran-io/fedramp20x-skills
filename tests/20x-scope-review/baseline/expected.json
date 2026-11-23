@@ -3,12 +3,68 @@
   "inputs": "examples/orrinwick/engagement/inputs/scope (mas-record.json, scope-changes.json) and tools/check_scope_changes.py; review mode",
   "output": "examples/orrinwick/engagement/deliverables/20x-scope-review/2026-11-22-scope-review.json",
   "expect": [
-    {"id": "E-01", "fault": "Exclusion conditions have no owner, cycle, record or check (lesson L10)", "match": {"test": "M3", "mentions": ["COND-S1-1"]}},
-    {"id": "E-02", "fault": "The change log check cannot see a changed condition", "match": {"test": "M8", "mentions": ["fingerprint"]}},
-    {"id": "E-03", "fault": "Every condition is listed with its evidence", "match": {"mentions": ["COND-T4-1", "Automated outbound payload test"]}}
+    {
+      "id": "E-01",
+      "fault": "Exclusion conditions have no owner, cycle, record or check (lesson L10)",
+      "match": {
+        "test": "M3",
+        "mentions": [
+          "COND-S1-1"
+        ]
+      }
+    },
+    {
+      "id": "E-02",
+      "fault": "The change log check cannot see a changed condition",
+      "match": {
+        "test": "M8",
+        "mentions": [
+          "fingerprint"
+        ]
+      }
+    },
+    {
+      "id": "E-03",
+      "fault": "Every condition is listed with its evidence",
+      "match": {
+        "mentions": [
+          "COND-T4-1",
+          [
+            "Automated outbound payload test",
+            "evidence"
+          ]
+        ]
+      }
+    }
   ],
   "must_not": [
-    {"id": "N-01", "reason": "Resources take their category from their data classes; missing categories on P2 and P3 are not a finding", "match": {"test": "M7"}},
-    {"id": "N-02", "reason": "Every third party records each MAS-CSO-TPR item; a High or Moderate TPR finding would be wrong", "match": {"test": "M5", "rating_in": ["High", "Moderate"]}}
+    {
+      "id": "N-01",
+      "reason": "Resources take their category from their data classes; missing categories on P2 and P3 are not a finding",
+      "match": {
+        "test": "M7"
+      }
+    },
+    {
+      "id": "N-02",
+      "reason": "Every third party records each MAS-CSO-TPR item; a High or Moderate finding that a TPR item is missing would be wrong (a contradiction between a TPR entry and the flows is a separate matter)",
+      "match": {
+        "test": "M5",
+        "rating_in": [
+          "High",
+          "Moderate"
+        ],
+        "mentions": [
+          [
+            "is missing",
+            "does not record",
+            "no authorization status",
+            "no justification",
+            "no usage",
+            "lacks"
+          ]
+        ]
+      }
+    }
   ]
 }

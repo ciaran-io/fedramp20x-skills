@@ -3,13 +3,68 @@
   "inputs": "examples/orrinwick/engagement: decision D-001 in decisions.json; inputs and deliverables folders",
   "output": "examples/orrinwick/engagement/deliverables/20x-sanity-check/2026-11-22-D-001-sanity-check.json",
   "expect": [
-    {"id": "E-01", "fault": "INR-4 still says the security team, every quarter", "match": {"mentions": ["INR-4", "disagrees"]}},
-    {"id": "E-02", "fault": "The plan's review row agrees on 90 days", "match": {"mentions": ["90 days", "agrees"]}},
-    {"id": "E-03", "fault": "The record has no reviewed_by field", "match": {"mentions": ["reviewed_by", "affected"]}},
-    {"id": "E-04", "fault": "The validator design's open decisions are answered by D-001", "match": {"mentions": ["DQ-001", "affected"]}},
-    {"id": "E-05", "fault": "Each follow-up is proposed, not done", "match": {"mentions": ["\"status\": \"proposed\""]}}
+    {
+      "id": "E-01",
+      "fault": "INR-4 still says the security team, every quarter",
+      "match": {
+        "mentions": [
+          "INR-4",
+          "disagrees"
+        ]
+      }
+    },
+    {
+      "id": "E-02",
+      "fault": "The plan's review row agrees on 90 days",
+      "match": {
+        "mentions": [
+          "90 days",
+          "agrees"
+        ]
+      }
+    },
+    {
+      "id": "E-03",
+      "fault": "The record has no reviewed_by field",
+      "match": {
+        "mentions": [
+          "reviewed_by",
+          [
+            "affected",
+            "silent"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "E-04",
+      "fault": "The validator design's open decisions are answered by D-001",
+      "match": {
+        "mentions": [
+          "DQ-001",
+          "affected"
+        ]
+      }
+    },
+    {
+      "id": "E-05",
+      "fault": "Each follow-up is proposed, not done",
+      "match": {
+        "mentions": [
+          "\"status\": \"proposed\""
+        ]
+      }
+    }
   ],
   "must_not": [
-    {"id": "N-01", "reason": "The skill must not mark a follow-up done", "match": {"mentions": ["\"status\": \"done\""]}}
+    {
+      "id": "N-01",
+      "reason": "The skill must not mark a follow-up done",
+      "match": {
+        "mentions": [
+          "\"status\": \"done\""
+        ]
+      }
+    }
   ]
 }
