@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.1.1 (in progress)
+## v0.1.1 (beta), 23 November 2026
 
 Fixes from the first model test run on 22 November 2026.
 
