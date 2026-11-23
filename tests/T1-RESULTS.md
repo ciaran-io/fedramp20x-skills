@@ -5,7 +5,7 @@ Run 22 and 23 November 2026. Each case was set up with `SETUP_ONLY=1 tools/run_s
 | Skill | Case | Score | Notes |
 |---|---|---|---|
 | 20x-assessor-review | baseline | 5/5 | 29 findings |
-| 20x-assessor-review | fedramp20x-findings | 10/11 | A4 missed: the runner deleted git history, where the edit shows. Fixed in the runner and in test R4; not re-run |
+| 20x-assessor-review | fedramp20x-findings | 11/11 | Re-run 23 Nov with git history kept: A4 found (F-017, past records changed after the fact). A6 found as "records only last_reviewed, with no reviewer"; the scorer now accepts "no reviewer". First run: 10/11, A4 missed because the runner deleted git history |
 | 20x-assessor-review | seeded | 5/5 | |
 | 20x-change-evaluation | baseline | 5/5 | CR-014 proposed adaptive |
 | 20x-change-evaluation | seeded | 13/14 | CH-2 did not cite SCN-CSO-EVA; the skill now requires it on every evaluation item |
@@ -41,6 +41,6 @@ Eight expectations were widened or narrowed after reading the run and the inputs
 | policy-review baseline | E-02 | one KSI per gap accepted | The run gave one gap per KSI instead of one grouped gap |
 | scope-review baseline | N-02 | narrowed to "a TPR item is missing" | The run found a real contradiction: TPR-T3 says no alert identifiers reach the provider, but F16 and F18 carry D3, which includes the alert ID |
 | scope-review baseline | E-03 | "evidence" accepted | The run listed every condition and its evidence state without quoting the example text |
-| assessor fedramp20x-findings | A6 | "no reviewer field" accepted | Same finding, other words |
+| assessor fedramp20x-findings | A6 | "no reviewer field" and "no reviewer" accepted | Same finding, other words |
 | change-evaluation seeded | all | `expect_per_change` is now scored | `score.py` ignored it before |
 | validator-build baseline | N-01 | fails only a Verified proposal with a break test that did not fail | Before, it failed an honest report |
