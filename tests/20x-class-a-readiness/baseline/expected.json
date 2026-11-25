@@ -1,0 +1,118 @@
+{
+  "case": "baseline",
+  "inputs": "examples/orrinwick/engagement/inputs: alternative-framework/soc2-type2-summary.md (fictional SOC 2 Type II summary), scope/mas-record.json, plans/incident-response-plan.md; the policy review deliverable",
+  "output": "examples/orrinwick/engagement/deliverables/20x-class-a-readiness/2026-11-24-class-a-readiness.json",
+  "expect": [
+    {
+      "id": "E-01",
+      "fault": "High: no bridge or gap letter covers the time since the examination period ended (FRC-CLA-EAM)",
+      "match": {
+        "mentions": [
+          "bridge",
+          [
+            "missing",
+            "not supplied",
+            "no letter"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "E-02",
+      "fault": "The data export and backup store is in the scope record but outside the SOC 2 examination",
+      "match": {
+        "mentions": [
+          [
+            "export",
+            "backup"
+          ],
+          [
+            "outside",
+            "excluded",
+            "excludes",
+            "not covered"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "E-03",
+      "fault": "The plan's final incident report (5 business days) is later than the Class A timeframe (3 business days)",
+      "match": {
+        "mentions": [
+          "IEC-CSO-FIR",
+          [
+            "3 business days",
+            "3bd",
+            "three business days"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "E-04",
+      "fault": "Which date starts the 12-month window (period end or report date) is a decision for the consultant",
+      "match": {
+        "mentions": [
+          [
+            "12 months",
+            "12-month"
+          ],
+          [
+            "2026-06-30",
+            "period end",
+            "end of the examination period"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "E-05",
+      "fault": "KSIs that FRC-CLA-MFR names were not reviewed because POL-IAM, POL-CED and POL-SVC were not provided",
+      "match": {
+        "mentions": [
+          "POL-IAM",
+          [
+            "not reviewed",
+            "not_reviewed",
+            "not provided"
+          ]
+        ]
+      }
+    }
+  ],
+  "must_not": [
+    {
+      "id": "N-01",
+      "reason": "A SHOULD or MAY rule at Class A is a recommendation, never a rated gap",
+      "match": {
+        "mentions": [
+          [
+            "IEC-CSO-IIR",
+            "IEC-CSO-OIR",
+            "CMU-CSO-UVM",
+            "FRC-CLA-IVV"
+          ]
+        ],
+        "rating_in": [
+          "High",
+          "Moderate",
+          "Low"
+        ]
+      }
+    },
+    {
+      "id": "N-02",
+      "reason": "The skill never states that the client is ready, eligible or certified",
+      "match": {
+        "mentions": [
+          [
+            "is ready for Class A",
+            "is eligible for Class A",
+            "meets all Class A"
+          ]
+        ]
+      }
+    }
+  ]
+}

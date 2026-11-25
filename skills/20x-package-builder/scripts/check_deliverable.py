@@ -48,6 +48,18 @@ def file_sha256(path: Path) -> str:
 
 PLACEHOLDER = re.compile(r"\[[^\]]*(owner|cadence|deadline|record|tool|system|date|client|category|confirm|source)[^\]]*\]", re.IGNORECASE)
 # Recommended text may hold a placeholder for the client to fill (method.md); facts may not.
+def item_strings(v) -> list:
+    """The string values in an item. The placeholder check reads these, not the JSON text,
+    so a list of sources or criteria is not mistaken for a [placeholder]."""
+    if isinstance(v, str):
+        return [v]
+    if isinstance(v, dict):
+        return [t for x in v.values() for t in item_strings(x)]
+    if isinstance(v, list):
+        return [t for x in v for t in item_strings(x)]
+    return []
+
+
 PLACEHOLDER_OK = {"recommendation", "recommended", "rewrite", "change", "remediation"}
 
 
@@ -221,7 +233,7 @@ def check(doc: dict, inputs_dir: Path | None, decisions: set | None, known_ids: 
                 err.append(f"item {iid}: source {s} is not an input, frmr or decision source")
         if it.get("confirmed") is False:
             unconfirmed.append(iid)
-        elif PLACEHOLDER.search(json.dumps({k: v for k, v in it.items() if k not in PLACEHOLDER_OK})):
+        elif any(PLACEHOLDER.search(t) for t in item_strings({k: v for k, v in it.items() if k not in PLACEHOLDER_OK})):
             warn.append(f"item {iid}: has a placeholder in square brackets but is marked confirmed")
     err += rewrite_checks(doc, inputs_dir, input_ids, local_decisions, decisions)
     blocking = []

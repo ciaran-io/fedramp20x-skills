@@ -1,0 +1,19 @@
+{
+  "name": "20x-class-a-readiness",
+  "version": "0.2.0",
+  "description": "Check whether a cloud service provider is ready to seek FedRAMP 20x Class A certification, from its alternative framework certification (SOC 2 Type II, FedRAMP Rev5 or Ready, GovRAMP), the materials from that assessment, and its own policies, scope and package material, and return the framework and materials findings, a mapping of every mandatory Class A rule and KSI, and recommendations for the recommended and optional rules. Use when a consultant is preparing a client for Class A.",
+  "author": {
+    "name": "ciaran-io",
+    "url": "https://github.com/ciaran-io"
+  },
+  "homepage": "https://github.com/ciaran-io/fedramp20x-skills",
+  "repository": "https://github.com/ciaran-io/fedramp20x-skills",
+  "license": "MIT",
+  "keywords": [
+    "fedramp",
+    "fedramp-20x",
+    "ksi",
+    "grc",
+    "compliance"
+  ]
+}

@@ -2,7 +2,7 @@
 
 > **FICTIONAL.** Orrinwick Labs, Inc., the Orrinwick Beacon service, the agencies, the consultant (A. Example) and the change and incident records are invented. No real client data is stored in this repository.
 
-`engagement/` is laid out the way the skills expect (see `shared/references/engagement-folder.md`). The inputs come from [fedramp20x](https://github.com/ciaran-io/fedramp20x), plus three invented client records: change request CR-014, incident INC-2027-001 and one example decision (D-001). Every deliverable is a **draft pending SME validation**. Each one has Markdown and JSON (the sources of truth) and Word and Excel copies.
+`engagement/` is laid out the way the skills expect (see `shared/references/engagement-folder.md`). The inputs come from [fedramp20x](https://github.com/ciaran-io/fedramp20x), plus invented client records: change request CR-014, incident INC-2027-001, one example decision (D-001) and a consultant's summary of a SOC 2 Type II report for the Class A readiness example. Every deliverable is a **draft pending SME validation**. Each one has Markdown and JSON (the sources of truth) and Word and Excel copies.
 
 | Skill | Deliverable | What it found in the Orrinwick material |
 |---|---|---|
@@ -15,3 +15,4 @@
 | `20x-validator-build` | `deliverables/20x-validator-build/` | KSI-INR-RIR checks as portable code, 9 unit tests and 4 break tests that each made a method fail |
 | `20x-incident-reporting` | `deliverables/20x-incident-reporting/2027-01-12-INC-2027-001-incident-reporting` | Reportable (responder contact data); N5 in force until the CISO approves an estimate; timeline from the plan's targets |
 | `20x-package-builder` | `deliverables/20x-package-builder/2026-11-22-package` | Package outline (5 parts missing, 5 partial, 2 for the assessor), KSI summaries for 3 KSIs, metrics from 5 days of history, an example Ongoing Certification Report |
+| `20x-class-a-readiness` | `deliverables/20x-class-a-readiness/2026-11-24-class-a-readiness` | From an invented SOC 2 Type II summary: no bridge letter (High); the export and backup store is outside the examined scope; the plan's final incident report is later than the Class A timeframe; 19 mandatory rules and KSIs not reviewed for want of material |

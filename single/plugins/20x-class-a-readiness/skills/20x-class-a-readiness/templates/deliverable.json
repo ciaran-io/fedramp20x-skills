@@ -1,0 +1,21 @@
+{
+  "skill": "20x-class-a-readiness",
+  "skill_version": "0.2.0",
+  "title": "Class A readiness: {offering}",
+  "client": "{client}",
+  "class": "A",
+  "date": "{YYYY-MM-DD}",
+  "frmr_version": "{from scripts/frmr.py info}",
+  "frmr_commit": "{from scripts/frmr.py info}",
+  "planned_submission": "{YYYY-MM-DD, from the consultant, or null with an open question}",
+  "inputs": [{"id": "I-01", "file": "{path}", "sha256": "{sha256}", "description": "{what it is}"}],
+  "items": [
+    {"id": "A-01", "kind": "framework", "framework": "{SOC 2 Type II | FedRAMP Rev5 | FedRAMP Ready | GovRAMP}", "completed": "{YYYY-MM-DD and which date it is}", "assessor": "{who assessed it}", "period": "{period covered}", "window_closes": "{completion date plus 12 months}", "within_window": "yes | no | unclear", "finding": "{what the evidence shows}", "criteria": ["FRC-CLA-ASF"], "rating": "High | Moderate | Low | Observation | none", "recommendation": "{what to do, or null}", "test": "R1 | R2 | R3", "sources": [{"input": "I-01", "location": "{section}"}, {"frmr": "FRC-CLA-ASF"}], "confirmed": true},
+    {"id": "M-01", "kind": "material", "material": "{material FRC-CLA-EAM names, in plain words}", "status": "present | partial | missing", "finding": "{what the evidence shows}", "criteria": ["FRC-CLA-EAM"], "rating": "High | Moderate | Low | Observation | none", "recommendation": "{what to do, or null}", "test": "R4 | R5", "sources": [{"input": "I-01", "location": "{section}"}, {"frmr": "FRC-CLA-EAM"}], "confirmed": true},
+    {"id": "P-01", "kind": "mapping", "rule": "{rule or KSI ID}", "list": "FRC-CLA-MFR | FRC-CLA", "status": "mapped | partial | unmapped | not_reviewed", "mapped_to": "{client material and location, or null}", "package_location": "{where the mapping sits in the Certification Package}", "finding": "{what the evidence shows}", "criteria": ["{rule or KSI ID}", "{client requirement ID, if any}"], "rating": "High | Moderate | Low | Observation | none", "recommendation": "{what to do, or null}", "test": "R6 | R7", "sources": [{"input": "I-01", "location": "{section}"}, {"frmr": "{rule or KSI ID}"}], "confirmed": true},
+    {"id": "C-01", "kind": "recommendation", "rule": "{rule ID}", "list": "FRC-CLA-RFR | FRC-CLA-OFR | FRC-CLA", "force": "SHOULD | MAY", "today": "{what the material shows today}", "recommendation": "{what the client could do}", "test": "R8", "sources": [{"frmr": "{rule ID}"}], "confirmed": true}
+  ],
+  "decisions_needed": [],
+  "open_questions": [],
+  "sme_validation": {"status": "draft", "validated_by": null, "role": null, "date": null, "corrections": [], "rejected": []}
+}

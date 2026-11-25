@@ -23,11 +23,12 @@ The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedra
 | `20x-scope-review` | Build or review the Minimum Assessment Scope | Scope record or findings, boundary decisions, exclusion conditions and their evidence |
 | `20x-change-evaluation` | Evaluate a change | Change type, notice dates from the rules data, scope log entry, the client's review deadline |
 | `20x-sanity-check` | Follow a decision through every document | Places that agree, disagree, are silent or are affected, and follow-ups to approve |
+| `20x-class-a-readiness` | Check readiness for Class A | Alternative framework and materials findings (FRC-CLA-ASF, FRC-CLA-EAM), a mapping of every mandatory Class A rule and KSI, recommendations for the recommended and optional rules |
 | `20x-validator-build` | Build checks from an approved design | Code, unit tests and break test records |
 | `20x-incident-reporting` | Evaluate an incident or review an incident response plan | Reportability, PAIN rating, timeline from the reportability decision, report content |
 | `20x-package-builder` | Prepare Certification Package material | Package outline, KSI summaries and metrics, a draft Ongoing Certification Report |
 
-**Status: v0.1.0 beta.** All nine skills are built, each with a worked example, and the repository tests pass. The skills have not yet been run end to end by a model against their seeded test cases (see [Tests](#tests) and [`CHANGELOG.md`](CHANGELOG.md)).
+**Status: v0.2.0 beta.** All ten skills are built, each with a worked example, and the repository tests pass. The nine v0.1 skills were run by a model against their test cases in v0.1.1 (`tests/T1-RESULTS.md`); `20x-class-a-readiness` has not yet had a model run (see [`CHANGELOG.md`](CHANGELOG.md)).
 
 ## Rules every skill follows
 
@@ -35,7 +36,7 @@ The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedra
 - **Stop and ask.** A skill stops and asks the consultant when it needs a scope or risk decision, the meaning of a client term, how a client tool works, an owner or cadence the client has not set, or a choice between two readings of a rule. It does not carry on with a guess.
 - **SME Validate.** The last step of every skill. The consultant or a subject matter expert they name checks each item against its source. Until then, every copy is marked "Draft: pending SME validation". A deliverable cannot be marked validated while any item is unconfirmed or any blocking question is open, and the skill never marks it validated on its own.
 - **Official data at run time.** The skills read the FedRAMP Consolidated Rules from [FedRAMP/rules](https://github.com/FedRAMP/rules) at a pinned commit, with hash checks. The data is not stored here, because upstream has no licence file. Deliverables cite IDs and do not copy statement text; `scripts/frmr.py lint` reports copied text.
-- **Class A, B and C.** Set the class in `engagement.json`; each skill passes it to the scripts and rates findings against the force a rule has at that class (`shared/references/classes.md`). Class D is out of scope. The new `20x-class-a-readiness` skill is planned (issue: v0.2). **No compliance verdicts.** **The consultant decides** scope and risk. **Client data stays local**: the skills work on the files the consultant provides and send nothing elsewhere.
+- **Class A, B and C.** Set the class in `engagement.json`; each skill passes it to the scripts and rates findings against the force a rule has at that class (`shared/references/classes.md`). Class D is out of scope. `20x-class-a-readiness` checks a client's alternative framework certification and the Class A rule lists. **No compliance verdicts.** **The consultant decides** scope and risk. **Client data stays local**: the skills work on the files the consultant provides and send nothing elsewhere.
 
 ## How a skill runs
 
