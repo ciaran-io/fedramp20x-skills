@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.2.0 (beta), not yet released
+## v0.2.0 (beta), 25 November 2026
 
 Class A and Class B (v0.2 issue, items A1 to A6).
 
