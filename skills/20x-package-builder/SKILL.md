@@ -1,6 +1,6 @@
 ---
 name: 20x-package-builder
-description: Assemble FedRAMP 20x Class C Certification Package material from a client's scope, policies, validator designs, evidence history and decisions, and return Security Decision Record entries for each KSI, a draft Ongoing Certification Report and a package outline that shows what is ready and what is missing. Use when a consultant is preparing a client's package or a quarterly report.
+description: Assemble FedRAMP 20x (Class A, B or C) Certification Package material from a client's scope, policies, validator designs, evidence history and decisions, and return Security Decision Record entries for each KSI, a draft Ongoing Certification Report and a package outline that shows what is ready and what is missing. Use when a consultant is preparing a client's package or a quarterly report.
 ---
 
 # 20x package builder
@@ -10,6 +10,7 @@ Drafts the parts of the Certification Package that come from the client's own wo
 ## Read first
 
 - `references/method.md`, `references/sme-validation.md`, `references/writing-rules.md`, `references/lessons.md` (L1, L11)
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/engagement-folder.md`, `references/validator-design-template.md`
 - `references/package-structure.md`: the parts of the package, the rules that define them, and where each piece comes from
 

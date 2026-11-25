@@ -1,6 +1,6 @@
 ---
 name: 20x-scope-review
-description: Build or review a FedRAMP 20x Class C Minimum Assessment Scope from a client's asset inventory, diagrams, data flows and third-party list, and return the scope record, the boundary decisions the consultant must make, and the evidence each conditional exclusion needs. Use when a consultant needs to set or check what is inside a client's cloud service offering.
+description: Build or review a FedRAMP 20x (Class A, B or C) Minimum Assessment Scope from a client's asset inventory, diagrams, data flows and third-party list, and return the scope record, the boundary decisions the consultant must make, and the evidence each conditional exclusion needs. Use when a consultant needs to set or check what is inside a client's cloud service offering.
 ---
 
 # 20x scope review
@@ -17,6 +17,7 @@ The skill never decides that a resource is in or out of scope. It proposes, give
 ## Read first
 
 - `references/method.md`, `references/sme-validation.md`, `references/writing-rules.md`, `references/lessons.md` (L10)
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/engagement-folder.md`, `references/finding-ratings.md`
 - `references/scope-guide.md`: the scope record fields, the decision values and the tests
 

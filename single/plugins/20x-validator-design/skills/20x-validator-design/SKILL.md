@@ -1,6 +1,6 @@
 ---
 name: 20x-validator-design
-description: Write a FedRAMP 20x Class C validator design for one or more KSIs, from the client's policy requirement and the client's own tools, stating every way each automated method fails and the break test that proves it. Use when a consultant needs to design how a KSI will be checked before any check code is written.
+description: Write a FedRAMP 20x (Class A, B or C) validator design for one or more KSIs, from the client's policy requirement and the client's own tools, stating every way each automated method fails and the break test that proves it. Use when a consultant needs to design how a KSI will be checked before any check code is written.
 ---
 
 # 20x validator design
@@ -10,6 +10,7 @@ Writes one validator design per KSI, using the template in `references/validator
 ## Read first
 
 - `references/method.md`, `references/sme-validation.md`, `references/writing-rules.md`
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/lessons.md`: L1 to L6 and L11 apply to every design
 - `references/validator-design-template.md`: the fields, statuses and design checks
 - `references/engagement-folder.md`, `references/design-guide.md`

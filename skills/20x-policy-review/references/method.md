@@ -19,7 +19,7 @@ If none of these supports a statement, the statement does not go in the delivera
 - fill a gap in the client's material with what a typical provider would do
 - state a rule's timeframe, force or applicability from memory; read it with `scripts/frmr.py show <ID>`
 - state that no rule covers something until `scripts/frmr.py search <words>` has searched every field (statements, following information and notes)
-- cite a rule or KSI ID that `scripts/frmr.py lint` reports as unknown or not applicable at Class C
+- cite a rule or KSI ID that `scripts/frmr.py lint --class <class>` reports as unknown or not applicable at the client's class
 
 When the material is silent, say so: "The policy names no owner for this review." A gap is a finding, not a blank to fill.
 
@@ -63,7 +63,7 @@ The skill never sets `validated` itself. It sets it only when the consultant sta
 ## 5. Other ground rules
 
 - **Official data at run time.** Read rules with `scripts/frmr.py`. Cite IDs. Do not copy statement text into deliverables; describe the requirement in plain words. `scripts/frmr.py lint` flags copied text.
-- **Class C (CR26) only** in version 1. State the class in every deliverable.
+- **Class A, B or C.** Read the class from `engagement.json` and pass it to every script (`--class a`, `b` or `c`). Rate findings against the force a rule has at that class. Read `classes.md` before work on a Class A or B client. If the class is not recorded, stop and ask. State the class in every deliverable.
 - **No compliance verdicts.** Say what the evidence shows and where it falls short. Never write that a client is compliant, meets all requirements or has achieved compliance.
 - **The consultant decides.** Draft, list the decisions needed and recommend one option for each. Do not make scope or risk decisions.
 - **Client data stays local.** Work only on the files the consultant provides. Do not send client material to any other service, and do not put it in the skills repository.

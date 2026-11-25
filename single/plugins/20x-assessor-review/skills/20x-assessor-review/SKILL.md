@@ -1,6 +1,6 @@
 ---
 name: 20x-assessor-review
-description: Review a FedRAMP 20x Class C client's finished work (scope record, policies, validator designs, check results, evidence, or deliverables from the other 20x skills) as an assessor would, and return rated findings with observation, criteria, rating and recommendation. Use when a consultant wants finished work challenged before a client or an assessor sees it.
+description: Review a FedRAMP 20x (Class A, B or C) client's finished work (scope record, policies, validator designs, check results, evidence, or deliverables from the other 20x skills) as an assessor would, and return rated findings with observation, criteria, rating and recommendation. Use when a consultant wants finished work challenged before a client or an assessor sees it.
 ---
 
 # 20x assessor review
@@ -10,6 +10,7 @@ Reviews finished work the way an independent assessor would, and reports what th
 ## Read first
 
 - `references/method.md`, `references/sme-validation.md`, `references/writing-rules.md`
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/lessons.md` and `references/finding-ratings.md`
 - `references/validator-design-template.md` (to review designs and results)
 - `references/review-areas.md`: what to test in each kind of work

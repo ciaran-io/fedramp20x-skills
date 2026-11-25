@@ -10,6 +10,7 @@ A decision made in one document usually applies in others: the policy, the plan,
 ## Read first
 
 - `references/method.md`, `references/sme-validation.md`, `references/writing-rules.md`, `references/lessons.md` (L9, L12)
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/engagement-folder.md`
 - `references/where-decisions-land.md`: the places to search for each kind of decision
 

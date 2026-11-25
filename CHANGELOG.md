@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.2.0 (beta), not yet released
+
+Class A and Class B (v0.2 issue, items A1, A2, A3 and A6). Item A4 (the `20x-class-a-readiness` skill) and the Class A and B examples in A5 are not built yet.
+
+- **Class A rules (A1).** At Class A, FRC-CLA-MFR, FRC-CLA-RFR and FRC-CLA-OFR list the other rules and KSIs that apply, as MUST, SHOULD or MAY. `frmr.py rules --class a` now adds every listed rule, marked with `class_a_list` and `class_a_force`; `ksis --class a` marks the KSIs FRC-CLA-MFR names. Before, `rules --class a --affects Providers` found 29 rules; it now finds 57. `lint --class a` and `check_deliverable.py` use the same list.
+- **Class setting (A2).** Every skill reads the class from `engagement.json` and passes it to the scripts. `check_deliverable.py` accepts Class A, B and C and checks rewrite sources against the deliverable's class. `incident_timeline.py --class` reads the PAIN timeframes for the class and reports each rule's force (`rule_force`); at Class A, IEC-CSO-IIR and IEC-CSO-OIR are SHOULD and IEC-CSO-FIR is MUST. `scn_timeline.py notices --class` stops when a notification rule does not apply at the class.
+- **Class differences (A3).** New `frmr.py compare --class b --to c` lists, from the pinned data, the rules and KSIs at one class only, changed force and timeframes, rules whose statement text differs, and KSIs optional at the class. New reference `classes.md` (copied into every skill) covers Class B (12 rules change force or timeframe, own PAIN timeframes, 5 optional KSIs) and Class A (the three lists, 41 KSIs, FRC-CLA-ASF, FRC-CLA-EAM, FRC-CLA-IVV), and how to rate findings by class.
+- **Lint by class (A6).** `frmr.py lint --class a|b|c` warns on IDs that do not apply at the class, including rules that apply at Class A only through FRC-CLA-MFR.
+- Tests: Class A lists, the Class B comparison, lint at each class, the incident timeline at Class A, and the class check in `check_deliverable.py`.
+- Version 0.2.0 in every `plugin.json`.
+
 ## v0.1.1 (beta), 23 November 2026
 
 Fixes from the first model test run on 22 November 2026.

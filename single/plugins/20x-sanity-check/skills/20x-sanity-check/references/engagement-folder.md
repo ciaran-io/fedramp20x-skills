@@ -17,7 +17,7 @@ The consultant keeps one folder per client engagement, outside the skills reposi
       <YYYY-MM-DD>-<name>.xlsx   Excel copy of the tables, rendered after SME Validate
 ```
 
-If `engagement.json` does not exist, the first skill run asks for the client name, the consultant's name and the SME names, then creates it. Do not guess them. `stage` (preparing, applying or certified) is asked for by the first skill that needs it, usually the assessor review, and written back here; a later change of stage is also recorded in `decisions.json`. `fedramp_package_uri` (the Certification Package Overview URI) is added when the consultant gives it, for the FedRAMP JSON export.
+If `engagement.json` does not exist, the first skill run asks for the client name, the class (A, B or C), the consultant's name and the SME names, then creates it. Do not guess them. `stage` (preparing, applying or certified) is asked for by the first skill that needs it, usually the assessor review, and written back here; a later change of stage is also recorded in `decisions.json`. `fedramp_package_uri` (the Certification Package Overview URI) is added when the consultant gives it, for the FedRAMP JSON export.
 
 ```json
 {
@@ -62,7 +62,7 @@ Every deliverable JSON has this envelope. `scripts/check_deliverable.py` checks 
 | Field | Content |
 |---|---|
 | `skill`, `skill_version` | The skill that produced it |
-| `title`, `client`, `class`, `date` | Class is always `C` in version 1 |
+| `title`, `client`, `class`, `date` | Class is `A`, `B` or `C` (see `classes.md`) |
 | `frmr_version`, `frmr_commit` | From `scripts/frmr.py info` |
 | `inputs` | Each client file used: `id` (I-01), `file`, `sha256` (from `scripts/check_deliverable.py --sha256 <file>`, which ignores Windows and Unix line-ending differences in text files), `description` |
 | `items` | The findings, rows or entries. Each has an `id`, `sources` and `confirmed` |
