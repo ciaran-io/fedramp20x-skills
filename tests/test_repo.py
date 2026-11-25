@@ -220,8 +220,65 @@ def test_check_deliverable_rules(data):
         sme_validation={"status": "validated", "validated_by": "A", "role": "B", "date": "2026-11-22"},
         open_questions=[{"id": "Q-001", "blocks": ["F-001"], "answer": None}]), None, None, known)
     assert any("open questions have no answer" in e for e in err)
-    err, _ = check_deliverable.check(deliverable(class_="B", **{"class": "B"}), None, None, known)
-    assert any("Class C only" in e for e in err)
+    for cls in ("A", "B", "C"):
+        err, _ = check_deliverable.check(deliverable(**{"class": cls}), None, None, known)
+        assert not any("the skills cover" in e for e in err)
+    err, _ = check_deliverable.check(deliverable(**{"class": "D"}), None, None, known)
+    assert any("Class A, B and C" in e for e in err)
+
+
+def test_class_a_lists(data):
+    """A1: at Class A the rules and KSIs named in FRC-CLA-MFR, -RFR and -OFR apply, with the list's force."""
+    listed = frmr.class_a_lists(data)
+    assert listed["FRC-CSO-PKG"] == ("FRC-CLA-MFR", "MUST")
+    assert listed["IEC-CSO-IIR"] == ("FRC-CLA-RFR", "SHOULD")
+    assert listed["CMU-CSO-UVM"] == ("FRC-CLA-OFR", "MAY")
+    assert listed["KSI-INR-RIR"][0] == "FRC-CLA-MFR"
+    rules_a = {rid: r for rid, _f, _s, r in frmr.iter_rules(data, "a", "20x")}
+    for rid, (lid, force) in listed.items():
+        if not rid.startswith("KSI-"):
+            assert rules_a[rid]["class_a_list"] == lid and rules_a[rid]["class_a_force"] == force
+    assert "MAS-CSO-IIR" in rules_a  # listed in MFR, not in the subset applicability for A
+    rules_c = {rid: r for rid, _f, _s, r in frmr.iter_rules(data, "c", "20x")}
+    assert not any("class_a_list" in r for r in rules_c.values())
+    ksis_a = {k for k, *_ in frmr.iter_ksis(data, "a")}
+    assert len(ksis_a) == 41 and "KSI-CNA-EIS" not in ksis_a
+
+
+def test_compare_classes(data, capsys):
+    """A3: Class B against Class C, read from the data."""
+    frmr.cmd_compare(data, type("A", (), {"cls": "b", "to": "c"})())
+    out = json.loads(capsys.readouterr().out)
+    assert out["rules_only_at_class"] == [] and out["rules_only_at_other"] == []
+    forced = {c["id"] for c in out["rules_changed"]
+              if set(c["fields"]) & {"force", "timeframe_type", "timeframe_num"}}
+    assert forced == {"CCM-QTR-MTG", "CMU-CSO-UVM", "CPO-CSX-CPM", "FRC-CSX-VVK", "SDR-CSX-KMT", "VDR-TFR-MVX",
+                      "VDR-TFR-PCD", "VDR-TFR-PDD", "VDR-TFR-PSD", "VER-TFR-EVU", "VER-TFR-IRI", "VER-TFR-MRH"}
+    assert out["ksis_optional_at_class"] == ["KSI-CNA-EIS", "KSI-MLA-ALA", "KSI-SVC-PRR", "KSI-SVC-RUD", "KSI-SVC-VCM"]
+
+
+def test_lint_class_a_and_b(tmp_path):
+    """A6: lint applies the class. MAS-CSO-IIR applies at A only through FRC-CLA-MFR; SCN-ADP-NTF does not apply at A."""
+    f = tmp_path / "d.md"
+    f.write_text("MAS-CSO-IIR and SCN-ADP-NTF and KSI-CNA-EIS.\n", encoding="utf-8")
+    script = ROOT / "shared" / "scripts" / "frmr.py"
+    out = {}
+    for cls in ("a", "b", "c"):
+        r = subprocess.run([sys.executable, "-I", str(script), "lint", "--class", cls, "--ids-only", str(f)],
+                           capture_output=True, text=True)
+        out[cls] = r.stdout
+    assert "SCN-ADP-NTF does not apply at class A" in out["a"] and "MAS-CSO-IIR" not in out["a"]
+    assert "KSI-CNA-EIS does not apply at class A" in out["a"]
+    assert "does not apply" not in out["b"] and "does not apply" not in out["c"]
+
+
+def test_incident_timeline_class_a():
+    script = ROOT / "skills" / "20x-incident-reporting" / "scripts" / "incident_timeline.py"
+    r = subprocess.run([sys.executable, "-I", str(script), "--event", "reportable=2026-11-24T10:00:00-05:00",
+                        "--rating", "3", "--class", "a"], capture_output=True, text=True, check=True)
+    out = json.loads(r.stdout)
+    assert out["class"] == "A"
+    assert out["rule_force"] == {"IEC-CSO-IIR": "SHOULD", "IEC-CSO-OIR": "SHOULD", "IEC-CSO-FIR": "MUST"}
 
 
 def test_input_hash_ignores_line_endings(tmp_path):

@@ -5,7 +5,7 @@
   check_deliverable.py --sha256 FILE      print the hash to record for an input file
 
 Errors (exit 1):
-  - a required envelope field is missing, or class is not C
+  - a required envelope field is missing, or class is not A, B or C
   - an item has no sources, or a source points to an input or decision that does not exist
   - a source cites a FedRAMP ID that is not in the rules data
   - status is "validated" but the SME name, role or date is missing, an item is
@@ -99,18 +99,22 @@ def template_fields(doc: dict, template: Path | None = None) -> list:
 
 
 _RECS = {}
+CLASSES = ("A", "B", "C")
 
 
-def rule_records() -> dict:
-    """Each Class C 20x rule and KSI record, and each definition, by ID."""
-    if not _RECS:
+def rule_records(cls: str = "c") -> dict:
+    """Each 20x rule and KSI record at the class, and each definition, by ID."""
+    cls = cls.lower()
+    if cls not in _RECS:
         d = frmr.load()
-        for rid, _f, _s, r in frmr.iter_rules(d, "c", "20x"):
-            _RECS[rid] = r
-        for kid, _t, _th, r in frmr.iter_ksis(d, "c"):
-            _RECS[kid] = r
-        _RECS.update(d["FRD"]["data"]["all"])
-    return _RECS
+        recs = {}
+        for rid, _f, _s, r in frmr.iter_rules(d, cls, "20x"):
+            recs[rid] = r
+        for kid, _t, _th, r in frmr.iter_ksis(d, cls):
+            recs[kid] = r
+        recs.update(d["FRD"]["data"]["all"])
+        _RECS[cls] = recs
+    return _RECS[cls]
 
 
 NUMBER = re.compile(r"(?<![\w.-])\d+(?:\.\d+)?(?![\w-])")
@@ -137,9 +141,9 @@ def rewrite_checks(doc: dict, inputs_dir, input_ids: set, local_decisions: set, 
                     if f.exists():
                         texts.append(f.read_text(encoding="utf-8", errors="replace"))
             elif "frmr" in s:
-                recs = rule_records()
+                recs = rule_records(str(doc.get("class", "c")))
                 if s["frmr"] not in recs:
-                    err.append(f"rewrite {rid}: {s['frmr']} is not in the FedRAMP rules data")
+                    err.append(f"rewrite {rid}: {s['frmr']} does not apply at class {doc.get('class')} in the FedRAMP rules data")
                 else:
                     texts.append(json.dumps(recs[s["frmr"]]))
             elif "decision" in s:
@@ -178,8 +182,8 @@ def check(doc: dict, inputs_dir: Path | None, decisions: set | None, known_ids: 
     if template_for(doc.get("skill", "")) is None and TEMPLATE.exists():
         warn.append(f"the {doc.get('skill')} template is not installed beside this skill; its field check was skipped")
     err += template_fields(doc)
-    if str(doc["class"]).upper() != "C":
-        err.append(f"class is {doc['class']}; version 1 covers Class C only")
+    if str(doc["class"]).upper() not in CLASSES:
+        err.append(f"class is {doc['class']}; the skills cover Class A, B and C (20x) only")
     input_ids = set()
     for inp in doc["inputs"]:
         input_ids.add(inp.get("id"))

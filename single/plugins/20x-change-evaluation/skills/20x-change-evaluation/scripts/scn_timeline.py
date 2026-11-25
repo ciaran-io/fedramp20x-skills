@@ -68,9 +68,9 @@ def notices(a):
     events = {"start": a.start, "finish": a.finish, "verified": a.verified}
     out = []
     for rid, event, direction in RULES[a.type]:
-        found = [r for i, f, s, r in frmr.iter_rules(data, "c", "20x") if i == rid]
+        found = [r for i, f, s, r in frmr.iter_rules(data, a.cls, "20x") if i == rid]
         if not found:
-            sys.exit(f"{rid} is not in the rules data for Class C 20x; check the pinned FRMR version")
+            sys.exit(f"{rid} does not apply at Class {a.cls.upper()} 20x in the pinned FRMR data")
         r = found[0]
         unit, num = r.get("timeframe_type"), r.get("timeframe_num")
         item = {"rule": rid, "name": r["name"], "force": r.get("force"), "counts_from": event,
@@ -113,6 +113,7 @@ def main(argv=None):
     p.add_argument("--verified")
     p.add_argument("--holidays")
     p.add_argument("--no-federal-holidays", action="store_true")
+    p.add_argument("--class", dest="cls", default="c", choices=["a", "b", "c"], help="certification class (default c)")
     q = sub.add_parser("bizdays")
     q.add_argument("--from", dest="from_", required=True)
     q.add_argument("--days", type=int, required=True)

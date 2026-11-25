@@ -2,7 +2,7 @@
 
 > **NOT ADVICE.** These skills are a learning and portfolio project. They are **not** a FedRAMP assessment, certification or legal advice. A skill's output says what the evidence shows and where it falls short. It never says that a client is compliant. All examples use Orrinwick Labs, Inc., a fictional company.
 
-Claude skills for a consultant who reviews a cloud service provider's FedRAMP 20x Class C (CR26) program. Each skill takes the client's own material (policies, plans, scope records, records exports, change and incident records, validation history) and returns a draft deliverable in Markdown, JSON, Word and Excel. Every finding cites a FedRAMP rule or Key Security Indicator (KSI) ID and the client source it rests on.
+Claude skills for a consultant who reviews a cloud service provider's FedRAMP 20x Class A, B or C program. Each skill takes the client's own material (policies, plans, scope records, records exports, change and incident records, validation history) and returns a draft deliverable in Markdown, JSON, Word and Excel. Every finding cites a FedRAMP rule or Key Security Indicator (KSI) ID and the client source it rests on.
 
 The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedramp20x), a worked Class C example:
 
@@ -17,7 +17,7 @@ The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedra
 
 | Skill | Use it to | Deliverable |
 |---|---|---|
-| `20x-policy-review` | Review policies against all 46 Class C KSIs | Coverage matrix, rated gaps, rewritten requirements |
+| `20x-policy-review` | Review policies against every KSI at the client's class (46 at Class C) | Coverage matrix, rated gaps, rewritten requirements |
 | `20x-validator-design` | Design how a KSI will be checked | One design per KSI: methods, how each fails, planned break tests, gaps |
 | `20x-assessor-review` | Challenge finished work as an assessor would | Findings with observation, criteria, rating and recommendation |
 | `20x-scope-review` | Build or review the Minimum Assessment Scope | Scope record or findings, boundary decisions, exclusion conditions and their evidence |
@@ -35,7 +35,7 @@ The skills apply the method from [fedramp20x](https://github.com/ciaran-io/fedra
 - **Stop and ask.** A skill stops and asks the consultant when it needs a scope or risk decision, the meaning of a client term, how a client tool works, an owner or cadence the client has not set, or a choice between two readings of a rule. It does not carry on with a guess.
 - **SME Validate.** The last step of every skill. The consultant or a subject matter expert they name checks each item against its source. Until then, every copy is marked "Draft: pending SME validation". A deliverable cannot be marked validated while any item is unconfirmed or any blocking question is open, and the skill never marks it validated on its own.
 - **Official data at run time.** The skills read the FedRAMP Consolidated Rules from [FedRAMP/rules](https://github.com/FedRAMP/rules) at a pinned commit, with hash checks. The data is not stored here, because upstream has no licence file. Deliverables cite IDs and do not copy statement text; `scripts/frmr.py lint` reports copied text.
-- **Class C only** in version 1. **No compliance verdicts.** **The consultant decides** scope and risk. **Client data stays local**: the skills work on the files the consultant provides and send nothing elsewhere.
+- **Class A, B and C.** Set the class in `engagement.json`; each skill passes it to the scripts and rates findings against the force a rule has at that class (`shared/references/classes.md`). Class D is out of scope. The new `20x-class-a-readiness` skill is planned (issue: v0.2). **No compliance verdicts.** **The consultant decides** scope and risk. **Client data stays local**: the skills work on the files the consultant provides and send nothing elsewhere.
 
 ## How a skill runs
 

@@ -1,6 +1,6 @@
 ---
 name: 20x-change-evaluation
-description: Evaluate a described change to a FedRAMP 20x Class C cloud service offering and return its change type, the notice dates the Significant Change Notification rules set, the scope change log entry, and the review deadline the client's own policy sets. Use when a consultant or client describes a planned or finished change and needs to know what FedRAMP requires.
+description: Evaluate a described change to a FedRAMP 20x (Class A, B or C) cloud service offering and return its change type, the notice dates the Significant Change Notification rules set, the scope change log entry, and the review deadline the client's own policy sets. Use when a consultant or client describes a planned or finished change and needs to know what FedRAMP requires.
 ---
 
 # 20x change evaluation
@@ -10,6 +10,7 @@ Every change gets one of four types: transformative, adaptive, routine recurring
 ## Read first
 
 - `references/method.md`, `references/sme-validation.md`, `references/writing-rules.md`, `references/lessons.md` (L6, L7)
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/engagement-folder.md`
 - `references/change-types.md`: the evaluation questions and the evidence each type needs
 
@@ -34,7 +35,7 @@ If the description does not say what changes in the offering, stop and ask. Do n
 
 4. **Scope effect.** If the change adds, removes or moves a resource, changes a decision, a flow or an exclusion condition, draft a scope change log entry: change type, resources, summary, evaluation, and the change type. The entry is a draft until the consultant approves it.
 
-5. **Notice dates.** Run `python scripts/scn_timeline.py notices --type <type> --start <date> --finish <date>` (add `--verified` for transformative changes when known). Business days skip US federal holidays by default; add `--holidays <file>` for a client's extra holidays, or `--no-federal-holidays` if the consultant decides on weekdays only. Copy the dates and the business day basis into the deliverable. Never type a timeframe from memory. If the script prints a warning that a date falls on a weekend or holiday, ask the client to confirm the date before you count from it. For an emergency, read SCN-CSO-EMG and record what must be provided after the event.
+5. **Notice dates.** Run `python scripts/scn_timeline.py notices --type <type> --start <date> --finish <date> --class <class>` (add `--verified` for transformative changes when known). Business days skip US federal holidays by default; add `--holidays <file>` for a client's extra holidays, or `--no-federal-holidays` if the consultant decides on weekdays only. Copy the dates and the business day basis into the deliverable. Never type a timeframe from memory. If the script prints a warning that a date falls on a weekend or holiday, ask the client to confirm the date before you count from it. For an emergency, read SCN-CSO-EMG and record what must be provided after the event.
 
 6. **Notice content.** For a transformative or adaptive change, list the information SCN-CSO-INF requires and, for each item, whether the inputs supply it. A missing item is an open question.
 

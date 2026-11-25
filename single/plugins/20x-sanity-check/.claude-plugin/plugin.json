@@ -1,6 +1,6 @@
 {
   "name": "20x-sanity-check",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "After a FedRAMP 20x decision or change is made, find every other document, record, check or deliverable it applies to, list the ones that now disagree with it, and draft the follow-up items for approval. Use right after a consultant or client decides something (an owner, a cycle, a scope decision, a rewrite adopted) so nothing is left inconsistent.",
   "author": {
     "name": "ciaran-io",

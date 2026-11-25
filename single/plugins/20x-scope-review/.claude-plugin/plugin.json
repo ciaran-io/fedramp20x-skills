@@ -1,7 +1,7 @@
 {
   "name": "20x-scope-review",
-  "version": "0.1.1",
-  "description": "Build or review a FedRAMP 20x Class C Minimum Assessment Scope from a client's asset inventory, diagrams, data flows and third-party list, and return the scope record, the boundary decisions the consultant must make, and the evidence each conditional exclusion needs. Use when a consultant needs to set or check what is inside a client's cloud service offering.",
+  "version": "0.2.0",
+  "description": "Build or review a FedRAMP 20x (Class A, B or C) Minimum Assessment Scope from a client's asset inventory, diagrams, data flows and third-party list, and return the scope record, the boundary decisions the consultant must make, and the evidence each conditional exclusion needs. Use when a consultant needs to set or check what is inside a client's cloud service offering.",
   "author": {
     "name": "ciaran-io",
     "url": "https://github.com/ciaran-io"

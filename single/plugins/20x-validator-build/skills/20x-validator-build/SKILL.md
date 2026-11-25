@@ -1,6 +1,6 @@
 ---
 name: 20x-validator-build
-description: Build the check code for an SME-validated FedRAMP 20x Class C validator design, with at least two automated methods, unit tests that fix the run date, and recorded break tests that prove each method can fail. Use when a consultant has an approved validator design and sample data and wants working checks.
+description: Build the check code for an SME-validated FedRAMP 20x (Class A, B or C) validator design, with at least two automated methods, unit tests that fix the run date, and recorded break tests that prove each method can fail. Use when a consultant has an approved validator design and sample data and wants working checks.
 ---
 
 # 20x validator build
@@ -10,6 +10,7 @@ Turns an approved design from `20x-validator-design` into code. A method is not 
 ## Read first
 
 - `references/method.md`, `references/sme-validation.md`, `references/lessons.md` (L3, L4, L5, L6, L11)
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/validator-design-template.md`
 - `references/check-patterns.md`: the result format, run date, record lists, reviewer and deadline patterns
 - `references/engagement-folder.md`

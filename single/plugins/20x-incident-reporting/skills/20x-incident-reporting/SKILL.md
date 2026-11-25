@@ -1,6 +1,6 @@
 ---
 name: 20x-incident-reporting
-description: For a FedRAMP 20x Class C provider, evaluate an incident (reportability, PAIN rating, reporting timeline that starts at the reportability decision, report content) or review a draft incident response plan against the incident rules. Use when a consultant brings an incident to evaluate, or an incident response plan to check.
+description: For a FedRAMP 20x (Class A, B or C) provider, evaluate an incident (reportability, PAIN rating, reporting timeline that starts at the reportability decision, report content) or review a draft incident response plan against the incident rules. Use when a consultant brings an incident to evaluate, or an incident response plan to check.
 ---
 
 # 20x incident reporting
@@ -17,6 +17,7 @@ The reporting clock starts when the incident is judged reportable and rated, or 
 ## Read first
 
 - `references/method.md`, `references/sme-validation.md`, `references/writing-rules.md`, `references/lessons.md` (L5, L8)
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/engagement-folder.md`, `references/finding-ratings.md`
 - `references/incident-guide.md`: the rules to read, the evaluation questions and the plan tests
 
@@ -37,7 +38,7 @@ The reporting clock starts when the incident is judged reportable and rated, or 
 
 3. **Evaluate mode: PAIN rating.** Propose an N-rating using the scale in VER-EVA-EPA and the client's own examples in its plan. Give the reason, the number of agencies affected (from the client's records) and the effect (minimal, narrow, disruptive, debilitating). While no rating is approved, a reportable incident is N5. Where the evidence supports two ratings, the plan may say the higher applies; follow the plan.
 
-4. **Evaluate mode: timeline.** Take each target from the client's plan (reportability decision, rating, initial report, ongoing reports, final report) with its section reference. Run `python scripts/incident_timeline.py --rating <rating in force>` with the incident's event times and those targets. The script adds the FedRAMP timeframes for that rating from the rules data and lists every plan target that falls later (`plan_later_than_rules`): report each as a finding. When the rating changes, run it again. Set `--clock-start` to the event the plan names; if the plan does not name one, ask. Business days skip US federal holidays by default (`--no-federal-holidays` to count weekdays only). Copy the output, including the business day basis, into the deliverable.
+4. **Evaluate mode: timeline.** Take each target from the client's plan (reportability decision, rating, initial report, ongoing reports, final report) with its section reference. Run `python scripts/incident_timeline.py --rating <rating in force> --class <class>` with the incident's event times and those targets. The script adds the FedRAMP timeframes for that rating from the rules data and lists every plan target that falls later (`plan_later_than_rules`): report each as a finding. When the rating changes, run it again. Set `--clock-start` to the event the plan names; if the plan does not name one, ask. Business days skip US federal holidays by default (`--no-federal-holidays` to count weekdays only). Copy the output, including the business day basis, into the deliverable.
 
 5. **Evaluate mode: report content.** For the initial, ongoing and final reports, list the information the IEC rules require (IEC-CSO-IIR, IEC-CSO-OIR, IEC-CSO-FIR) and, for each item, whether the incident record supplies it. A missing item is an open question for the incident lead, not a gap to fill.
 

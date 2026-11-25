@@ -1,17 +1,18 @@
 ---
 name: 20x-policy-review
-description: Review a cloud service provider's security policies against every FedRAMP 20x Class C Key Security Indicator and return a KSI coverage matrix, rated gaps and rewritten requirement text with an owner, cadence and record location. Use when a consultant gives you a client's policies to review for FedRAMP 20x.
+description: Review a cloud service provider's security policies against every FedRAMP 20x (Class A, B or C) Key Security Indicator and return a KSI coverage matrix, rated gaps and rewritten requirement text with an owner, cadence and record location. Use when a consultant gives you a client's policies to review for FedRAMP 20x.
 ---
 
 # 20x policy review
 
-Reviews a client's policies against all KSIs that apply at Class C (CR26). The deliverable shows which policy requirement covers each KSI, where a requirement falls short, and the rewritten text the client could adopt.
+Reviews a client's policies against all KSIs that apply at the client's class (A, B or C; `references/classes.md`). The deliverable shows which policy requirement covers each KSI, where a requirement falls short, and the rewritten text the client could adopt.
 
 ## Read first
 
 Read these before step 1. They override the steps below where they differ.
 
 - `references/method.md`: never make anything up, stop and ask, SME Validate
+- `references/classes.md`: Class A, B and C differences; pass the client's class to every script
 - `references/sme-validation.md`
 - `references/writing-rules.md`
 - `references/lessons.md`
@@ -56,7 +57,7 @@ If no policies are given, stop and ask for them. If a policy refers to a documen
 
    A client mapping that names a KSI the requirement does not address is a gap (test T7). A requirement that addresses a KSI the client did not map is noted, not counted against the client.
 
-5. **Apply the tests.** Apply tests T1 to T10 in `references/policy-tests.md` to each requirement and record each failure as a gap with an ID (G-001), the requirement, the test, the criteria (KSI or rule ID plus the client requirement), the rating from `references/finding-ratings.md`, and its sources. Run `python scripts/frmr.py lint` on a text file of the policies to find cited FedRAMP IDs that do not exist or do not apply at Class C (test T8).
+5. **Apply the tests.** Apply tests T1 to T10 in `references/policy-tests.md` to each requirement and record each failure as a gap with an ID (G-001), the requirement, the test, the criteria (KSI or rule ID plus the client requirement), the rating from `references/finding-ratings.md`, and its sources. Run `python scripts/frmr.py lint` on a text file of the policies to find cited FedRAMP IDs that do not exist or do not apply at the client's class (`--class`, test T8).
 
 6. **Draft rewritten text.** For each gap that a change of wording would close, draft the requirement as the client could adopt it. Keep the client's requirement ID. A rewrite states what a role must do, by when, and where it is recorded. It does not describe how a system behaves.
    - Use only owners, cadences, deadlines, numbers, system names and record locations that the client's material or a recorded decision states. List each source on the rewrite (`sources`, same form as an item's sources).

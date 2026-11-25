@@ -10,12 +10,18 @@ Commands (all output is JSON unless noted):
   fetch                      download the data if it is missing or does not match the hashes
   info                       FRMR version, commit and data folder
   ksis [--class c]           every KSI that applies at the class, with theme, name and controls
+                             (at Class A, the KSIs FRC-CLA-MFR names carry class_a_list)
   rules [--class c] [--family VDR] [--type 20x] [--affects Providers]
-                             every rule that applies at the class and type, without statement text
+                             every rule that applies at the class and type, without statement text.
+                             At Class A the rules named in FRC-CLA-MFR, -RFR and -OFR are added,
+                             with class_a_list and class_a_force (MUST, SHOULD or MAY)
   show ID [--class c]        one rule, KSI or definition, statement included (for reading only)
   term WORD                  definitions whose term or alternative names match WORD
   search TEXT [--class c]    rules and KSIs whose name, statement, following information or notes
                              contain every word of TEXT (search all fields, not only the statement)
+  compare --class b [--to c] differences between two classes for 20x provider rules and KSIs:
+                             rules and KSIs at one class only, changed force and timeframes,
+                             changed statement text (named, not shown), KSIs optional at the class
   lint FILE... [--class c]   check deliverables: unknown IDs, copied statement text,
                              em dashes, compliance verdicts and banned words (exit 1 on errors)
 
@@ -123,8 +129,56 @@ def resolve(rec: dict, cls: str) -> dict | None:
     return out
 
 
+CLASS_A_LISTS = {"FRC-CLA-MFR": "MUST", "FRC-CLA-RFR": "SHOULD", "FRC-CLA-OFR": "MAY"}
+LISTED_ID_RE = re.compile(r"\b(?:KSI|[A-Z]{3})-[A-Z]{3}-[A-Z]{3}\b")
+
+
+def class_a_lists(d: dict) -> dict:
+    """IDs named in the Class A lists (FRC-CLA-MFR, -RFR, -OFR), mapped to (list ID, force).
+
+    At Class A these lists, not the subset applicability, say which other rules and KSIs apply.
+    """
+    out = {}
+    cla = d["FRR"].get("FRC", {}).get("data", {}).get("all", {}).get("CLA", {})
+    for lid, force in CLASS_A_LISTS.items():
+        for line in cla.get(lid, {}).get("following_information", []):
+            for i in LISTED_ID_RE.findall(line):
+                out.setdefault(i, (lid, force))
+    return out
+
+
+def _class_a_mark(rid: str, r: dict, listed: dict) -> dict:
+    if rid in listed:
+        r["class_a_list"], r["class_a_force"] = listed[rid]
+    return r
+
+
 def iter_rules(d: dict, cls: str, typ: str):
-    """Yield (id, family, subset, record) for every rule that applies at the class and type."""
+    """Yield (id, family, subset, record) for every rule that applies at the class and type.
+
+    At Class A for 20x, the rules named in FRC-CLA-MFR, -RFR and -OFR are added, each with
+    class_a_list and class_a_force (MUST, SHOULD or MAY from the list).
+    """
+    listed = class_a_lists(d) if cls == "a" and typ == "20x" else {}
+    seen = set()
+    for rid, fam, sname, r in _iter_rules_by_subset(d, cls, typ):
+        seen.add(rid)
+        yield rid, fam, sname, _class_a_mark(rid, r, listed)
+    if not listed:
+        return
+    for fam, f in d["FRR"].items():
+        for sub in f["data"].values():
+            for sname, rules in sub.items():
+                for rid, rec in rules.items():
+                    if rid in listed and rid not in seen:
+                        seen.add(rid)
+                        r = resolve(rec, cls)
+                        if r is None:  # no Class A variant: the list applies the rule as written
+                            r = {k: v for k, v in rec.items() if k != "varies_by_class"}
+                        yield rid, fam, sname, _class_a_mark(rid, r, listed)
+
+
+def _iter_rules_by_subset(d: dict, cls: str, typ: str):
     for fam, f in d["FRR"].items():
         subsets = f["info"].get("subsets", {})
         for key, sub in f["data"].items():
@@ -173,11 +227,14 @@ def cmd_info(d, a):
 
 def cmd_ksis(d, a):
     out = []
+    listed = class_a_lists(d)
     for kid, tkey, theme, r in iter_ksis(d, a.cls):
         st = r.get("statement") or ""
         out.append({"id": kid, "theme": tkey, "theme_name": theme["name"], "name": r["name"],
                     "optional_at_class": st.startswith("**Optional:**"),
                     "controls": r.get("controls", []), "terms": r.get("terms", [])})
+        if a.cls == "a" and kid in listed:
+            out[-1]["class_a_list"], out[-1]["class_a_force"] = listed[kid]
         if getattr(a, "statements", False):
             out[-1]["statement"] = st
     print(json.dumps({"class": a.cls.upper(), "count": len(out), "ksis": out}, indent=2))
@@ -192,11 +249,42 @@ def cmd_rules(d, a):
             continue
         item = {"id": rid, "family": fam, "subset": sname, "name": r.get("name"),
                 "force": r.get("force"), "affects": r.get("affects", [])}
-        for k in ("timeframe_type", "timeframe_num"):
+        for k in ("timeframe_type", "timeframe_num", "class_a_list", "class_a_force"):
             if k in r:
                 item[k] = r[k]
         out.append(item)
     print(json.dumps({"class": a.cls.upper(), "type": a.type, "count": len(out), "rules": out}, indent=2))
+
+
+COMPARE_FIELDS = ("force", "class_a_force", "timeframe_type", "timeframe_num", "pain_timeframes")
+
+
+def cmd_compare(d, a):
+    """Differences between two classes for 20x provider rules and KSIs, read from the data."""
+    def rules(c):
+        return {rid: r for rid, _f, _s, r in iter_rules(d, c, "20x") if "Providers" in r.get("affects", [])}
+
+    def ksis(c):
+        return {k: r for k, _t, _th, r in iter_ksis(d, c)}
+
+    def opt(r):
+        return (r.get("statement") or "").startswith("**Optional:**")
+
+    ra, rb = rules(a.cls), rules(a.to)
+    changed = []
+    for rid in sorted(set(ra) & set(rb)):
+        x, y = ra[rid], rb[rid]
+        diff = {k: {a.cls.upper(): x.get(k), a.to.upper(): y.get(k)} for k in COMPARE_FIELDS if x.get(k) != y.get(k)}
+        text = [k for k in ("statement", "following_information") if x.get(k) != y.get(k)]
+        if diff or text:
+            changed.append({"id": rid, "name": x.get("name"), "fields": diff, "text_differs": text})
+    ka, kb = ksis(a.cls), ksis(a.to)
+    out = {"class": a.cls.upper(), "compared_with": a.to.upper(), "commit": COMMIT,
+           "rules_only_at_class": sorted(set(ra) - set(rb)), "rules_only_at_other": sorted(set(rb) - set(ra)),
+           "rules_changed": changed,
+           "ksis_only_at_class": sorted(set(ka) - set(kb)), "ksis_only_at_other": sorted(set(kb) - set(ka)),
+           "ksis_optional_at_class": sorted(k for k in ka if opt(ka[k]) and not (k in kb and opt(kb[k])))}
+    print(json.dumps(out, indent=2))
 
 
 def cmd_show(d, a):
@@ -371,7 +459,7 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("fetch")
     sub.add_parser("info")
-    for name in ("ksis", "rules", "show", "lint", "search"):
+    for name in ("ksis", "rules", "show", "lint", "search", "compare"):
         p = sub.add_parser(name)
         p.add_argument("--class", dest="cls", default="c", choices=["a", "b", "c", "d"])
         p.add_argument("--type", default="20x", choices=["20x", "Rev5"])
@@ -390,6 +478,8 @@ def main(argv=None):
                                 "reported as warnings; unknown IDs stay errors")
         if name == "search":
             p.add_argument("text", nargs="+", help="words to search for (quoting is optional)")
+        if name == "compare":
+            p.add_argument("--to", default="c", choices=["a", "b", "c", "d"], help="class to compare with (default c)")
     p = sub.add_parser("term")
     p.add_argument("word")
     a = ap.parse_args(argv)
@@ -398,7 +488,7 @@ def main(argv=None):
         return
     d = load()
     {"info": cmd_info, "ksis": cmd_ksis, "rules": cmd_rules, "show": cmd_show,
-     "term": cmd_term, "lint": cmd_lint, "search": cmd_search}[a.cmd](d, a)
+     "term": cmd_term, "lint": cmd_lint, "search": cmd_search, "compare": cmd_compare}[a.cmd](d, a)
 
 
 if __name__ == "__main__":

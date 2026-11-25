@@ -1,7 +1,7 @@
 {
   "name": "20x-assessor-review",
-  "version": "0.1.1",
-  "description": "Review a FedRAMP 20x Class C client's finished work (scope record, policies, validator designs, check results, evidence, or deliverables from the other 20x skills) as an assessor would, and return rated findings with observation, criteria, rating and recommendation. Use when a consultant wants finished work challenged before a client or an assessor sees it.",
+  "version": "0.2.0",
+  "description": "Review a FedRAMP 20x (Class A, B or C) client's finished work (scope record, policies, validator designs, check results, evidence, or deliverables from the other 20x skills) as an assessor would, and return rated findings with observation, criteria, rating and recommendation. Use when a consultant wants finished work challenged before a client or an assessor sees it.",
   "author": {
     "name": "ciaran-io",
     "url": "https://github.com/ciaran-io"

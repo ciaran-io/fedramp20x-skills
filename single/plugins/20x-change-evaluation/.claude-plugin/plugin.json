@@ -1,7 +1,7 @@
 {
   "name": "20x-change-evaluation",
-  "version": "0.1.1",
-  "description": "Evaluate a described change to a FedRAMP 20x Class C cloud service offering and return its change type, the notice dates the Significant Change Notification rules set, the scope change log entry, and the review deadline the client's own policy sets. Use when a consultant or client describes a planned or finished change and needs to know what FedRAMP requires.",
+  "version": "0.2.0",
+  "description": "Evaluate a described change to a FedRAMP 20x (Class A, B or C) cloud service offering and return its change type, the notice dates the Significant Change Notification rules set, the scope change log entry, and the review deadline the client's own policy sets. Use when a consultant or client describes a planned or finished change and needs to know what FedRAMP requires.",
   "author": {
     "name": "ciaran-io",
     "url": "https://github.com/ciaran-io"
