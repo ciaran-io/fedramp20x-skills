@@ -2,13 +2,21 @@
 
 ## v0.2.0 (beta), not yet released
 
-Class A and Class B (v0.2 issue, items A1, A2, A3 and A6). Item A4 (the `20x-class-a-readiness` skill) and the Class A and B examples in A5 are not built yet.
+Class A and Class B (v0.2 issue, items A1 to A6).
+
+### New skill: `20x-class-a-readiness` (A4)
+
+- Checks the alternative framework certification (FRC-CLA-ASF: framework on the list, completed within 12 months before the planned submission, when the window closes), the assessment materials (FRC-CLA-EAM), and whether the assessed scope covers the offering (MAS-CSO-IIR). Maps every mandatory rule and KSI that FRC-CLA-MFR names, with Class A force and timeframes, and gives recommendations, not gaps, for the FRC-CLA-RFR and FRC-CLA-OFR rules and FRC-CLA-IVV. Tests R1 to R9 in `references/class-a-tests.md`. It never states that a client is ready or certified.
+- Worked example (A5): `examples/orrinwick/engagement/deliverables/20x-class-a-readiness/`, from an invented consultant's summary of a SOC 2 Type II report (`inputs/alternative-framework/soc2-type2-summary.md`). Test case `tests/20x-class-a-readiness/baseline` (5 expected findings, 2 must-nots); the example scores 5/5. No model run yet.
+
+### Class A and B in the other skills
 
 - **Class A rules (A1).** At Class A, FRC-CLA-MFR, FRC-CLA-RFR and FRC-CLA-OFR list the other rules and KSIs that apply, as MUST, SHOULD or MAY. `frmr.py rules --class a` now adds every listed rule, marked with `class_a_list` and `class_a_force`; `ksis --class a` marks the KSIs FRC-CLA-MFR names. Before, `rules --class a --affects Providers` found 29 rules; it now finds 57. `lint --class a` and `check_deliverable.py` use the same list.
-- **Class setting (A2).** Every skill reads the class from `engagement.json` and passes it to the scripts. `check_deliverable.py` accepts Class A, B and C and checks rewrite sources against the deliverable's class. `incident_timeline.py --class` reads the PAIN timeframes for the class and reports each rule's force (`rule_force`); at Class A, IEC-CSO-IIR and IEC-CSO-OIR are SHOULD and IEC-CSO-FIR is MUST. `scn_timeline.py notices --class` stops when a notification rule does not apply at the class.
+- **Class setting (A2).** Every skill reads the class from `engagement.json` and passes it to the scripts. `check_deliverable.py` accepts Class A, B and C and checks rewrite sources against the deliverable's class. Report front matter states the deliverable's class (it said Class C on every report). `finding-ratings.md` rates against the force at the client's class. `incident_timeline.py --class` reads the PAIN timeframes for the class and reports each rule's force (`rule_force`); at Class A, IEC-CSO-IIR and IEC-CSO-OIR are SHOULD and IEC-CSO-FIR is MUST. `scn_timeline.py notices --class` stops when a notification rule does not apply at the class.
 - **Class differences (A3).** New `frmr.py compare --class b --to c` lists, from the pinned data, the rules and KSIs at one class only, changed force and timeframes, rules whose statement text differs, and KSIs optional at the class. New reference `classes.md` (copied into every skill) covers Class B (12 rules change force or timeframe, own PAIN timeframes, 5 optional KSIs) and Class A (the three lists, 41 KSIs, FRC-CLA-ASF, FRC-CLA-EAM, FRC-CLA-IVV), and how to rate findings by class.
 - **Lint by class (A6).** `frmr.py lint --class a|b|c` warns on IDs that do not apply at the class, including rules that apply at Class A only through FRC-CLA-MFR.
-- Tests: Class A lists, the Class B comparison, lint at each class, the incident timeline at Class A, and the class check in `check_deliverable.py`.
+- **Placeholder check.** `check_deliverable.py` looked for `[placeholders]` in an item's JSON text, so a list of sources or criteria could raise a false warning (13 in the 23 November assessor re-run). It now reads string values only.
+- Tests: Class A lists, the Class B comparison, lint at each class, the incident timeline at Class A, the class check, the placeholder check, the front matter class, and ten skills.
 - Version 0.2.0 in every `plugin.json`.
 
 ## v0.1.1 (beta), 23 November 2026

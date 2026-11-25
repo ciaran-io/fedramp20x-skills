@@ -1,0 +1,1191 @@
+{
+  "skill": "20x-class-a-readiness",
+  "skill_version": "0.2.0",
+  "title": "Class A readiness: Orrinwick Beacon",
+  "client": "Orrinwick Labs, Inc.",
+  "class": "A",
+  "date": "2026-11-24",
+  "frmr_version": "2026.11.02.01",
+  "frmr_commit": "64fa769510416fa75fd00a4689466094265b8083",
+  "prepared_by": "Claude, for A. Example",
+  "planned_submission": null,
+  "inputs": [
+    {
+      "id": "I-01",
+      "file": "alternative-framework/soc2-type2-summary.md",
+      "sha256": "b4102ae0927259aba42719d93239cd1fed388e5ae765b95a67235db5b7d05645",
+      "description": "Consultant's summary of the SOC 2 Type II materials (fictional)"
+    },
+    {
+      "id": "I-02",
+      "file": "scope/mas-record.json",
+      "sha256": "b44e3cde2a752abb05195ffec5e3ccff17d2fd219763b06626a44f3c90d4fd3e",
+      "description": "Minimum Assessment Scope record"
+    },
+    {
+      "id": "I-03",
+      "file": "plans/incident-response-plan.md",
+      "sha256": "443df3674b1bb04ed809ed494b359b15f849d3e3ce611842242193b1d78ec40b",
+      "description": "Incident response plan, version 1.0"
+    },
+    {
+      "id": "I-04",
+      "file": "../deliverables/20x-policy-review/2026-11-22-policy-review.json",
+      "sha256": "4332375b0afc5473b1e104202c28737623ce7638fdb6173287590d9bceaac8bf",
+      "description": "KSI policy coverage review (draft)"
+    }
+  ],
+  "items": [
+    {
+      "id": "A-01",
+      "kind": "framework",
+      "framework": "SOC 2 Type II",
+      "completed": "2026-08-14 (report date); examination period ended 2026-06-30",
+      "assessor": "Example Assurance LLP, an independent CPA firm",
+      "period": "2026-01-01 to 2026-06-30",
+      "window_closes": "2027-06-30 if the period end counts; 2027-08-14 if the report date counts",
+      "within_window": "yes",
+      "finding": "SOC 2 Type II is on the FRC-CLA-ASF list and was performed by an independent service auditor. The completion date is within 12 months of today under either reading.",
+      "criteria": [
+        "FRC-CLA-ASF"
+      ],
+      "rating": "none",
+      "recommendation": null,
+      "test": "R1",
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "section 1"
+        },
+        {
+          "frmr": "FRC-CLA-ASF"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "A-02",
+      "kind": "framework",
+      "framework": "SOC 2 Type II",
+      "completed": "2026-08-14 (report date); examination period ended 2026-06-30",
+      "assessor": "Example Assurance LLP",
+      "period": "2026-01-01 to 2026-06-30",
+      "window_closes": "2027-06-30 if the period end counts; 2027-08-14 if the report date counts",
+      "within_window": "unclear",
+      "finding": "The client plans to submit in the second quarter of 2027 but has set no date. If the period end counts as completion, the window closes on 2027-06-30, inside that quarter. The next report, expected in February 2027, would open a new window.",
+      "criteria": [
+        "FRC-CLA-ASF"
+      ],
+      "rating": "Observation",
+      "recommendation": "Set the submission date, decide DQ-001, and plan to submit with the February 2027 report if the date falls after the window closes.",
+      "test": "R2",
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "sections 1, 3 and 4"
+        },
+        {
+          "frmr": "FRC-CLA-ASF"
+        },
+        {
+          "decision": "DQ-001"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "M-01",
+      "kind": "material",
+      "material": "Complete SOC 2 Type II report",
+      "status": "present",
+      "finding": "The consultant received the full report.",
+      "criteria": [
+        "FRC-CLA-EAM"
+      ],
+      "rating": "none",
+      "recommendation": null,
+      "test": "R4",
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "section 1"
+        },
+        {
+          "frmr": "FRC-CLA-EAM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "M-02",
+      "kind": "material",
+      "material": "Bridge or gap letter",
+      "status": "missing",
+      "finding": "The examination period ended on 2026-06-30 and no letter covers the time since. The GRC Lead says the auditor issues one on request.",
+      "criteria": [
+        "FRC-CLA-EAM"
+      ],
+      "rating": "High",
+      "recommendation": "Request a bridge letter from the service auditor covering 2026-07-01 to the submission date.",
+      "test": "R4",
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "section 3"
+        },
+        {
+          "frmr": "FRC-CLA-EAM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "M-03",
+      "kind": "material",
+      "material": "Verified audit engagement documentation",
+      "status": "partial",
+      "finding": "The signed engagement letter was supplied. Nothing shows how the engagement can be verified with the auditor.",
+      "criteria": [
+        "FRC-CLA-EAM"
+      ],
+      "rating": "Moderate",
+      "recommendation": "Ask the auditor how a party can verify the engagement, and record the contact and method in the package.",
+      "test": "R5",
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "section 3"
+        },
+        {
+          "frmr": "FRC-CLA-EAM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "M-04",
+      "kind": "material",
+      "material": "Estimated schedule for the next report",
+      "status": "present",
+      "finding": "An email from the auditor gives the next period (2026-07-01 to 2026-12-31) and a report expected in February 2027.",
+      "criteria": [
+        "FRC-CLA-EAM"
+      ],
+      "rating": "none",
+      "recommendation": null,
+      "test": "R5",
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "section 3"
+        },
+        {
+          "frmr": "FRC-CLA-EAM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "M-05",
+      "kind": "material",
+      "material": "Supplemental compliance evidence, if applicable",
+      "status": "missing",
+      "finding": "None was supplied. The material does not show whether any is applicable.",
+      "criteria": [
+        "FRC-CLA-EAM"
+      ],
+      "rating": "Observation",
+      "recommendation": "Answer Q-001.",
+      "test": "R4",
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "section 3"
+        },
+        {
+          "frmr": "FRC-CLA-EAM"
+        }
+      ],
+      "confirmed": false
+    },
+    {
+      "id": "P-01",
+      "kind": "mapping",
+      "rule": "MAS-CSO-IIR",
+      "list": "FRC-CLA-MFR",
+      "status": "partial",
+      "mapped_to": "Scope record, information resource P4 (object storage)",
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The scope record puts P4, which holds customer exports and backup copies, in scope. The SOC 2 examination excludes the data export and backup store, so part of the offering is outside the assessed scope.",
+      "criteria": [
+        "MAS-CSO-IIR",
+        "FRC-CLA-ASF"
+      ],
+      "rating": "Moderate",
+      "recommendation": "Ask the auditor to bring the export and backup store into the next examination, or record how the client covers it until then.",
+      "test": "R6",
+      "sources": [
+        {
+          "input": "I-01",
+          "location": "section 2"
+        },
+        {
+          "input": "I-02",
+          "location": "information_resources P4"
+        },
+        {
+          "frmr": "MAS-CSO-IIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-02",
+      "kind": "mapping",
+      "rule": "IEC-CSO-FIR",
+      "list": "FRC-CLA-MFR",
+      "status": "partial",
+      "mapped_to": "Incident response plan, Final Incident Report paragraph",
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The plan sends the final report within 5 business days after resolution. At Class A, incident_timeline.py gives 3 business days for every PAIN rating.",
+      "criteria": [
+        "IEC-CSO-FIR"
+      ],
+      "rating": "Moderate",
+      "recommendation": "Change the plan to the Class A timeframe from the rules data, and say which class's timeframes apply.",
+      "test": "R7",
+      "sources": [
+        {
+          "input": "I-03",
+          "location": "Final Incident Report (IEC-CSO-FIR)"
+        },
+        {
+          "frmr": "IEC-CSO-FIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-03",
+      "kind": "mapping",
+      "rule": "KSI-CMT-LMC",
+      "list": "FRC-CLA-MFR",
+      "status": "partial",
+      "mapped_to": "POL-CMT/CMT-1, POL-CMT/CMT-5, POL-CMT/CMT-6",
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The policy review rated coverage partial (G-006): Logging stated; monitoring not stated.",
+      "criteria": [
+        "KSI-CMT-LMC",
+        "POL-CMT/CMT-1",
+        "POL-CMT/CMT-5",
+        "POL-CMT/CMT-6"
+      ],
+      "rating": "Moderate",
+      "recommendation": "Close G-006 from the policy review before submission.",
+      "test": "R7",
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "coverage KSI-CMT-LMC; G-006"
+        },
+        {
+          "frmr": "KSI-CMT-LMC"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-04",
+      "kind": "mapping",
+      "rule": "KSI-CNA-RNT",
+      "list": "FRC-CLA-MFR",
+      "status": "partial",
+      "mapped_to": "POL-CNA/CNA-6",
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The policy review rated coverage partial (G-002, G-008): No review cycle.",
+      "criteria": [
+        "KSI-CNA-RNT",
+        "POL-CNA/CNA-6"
+      ],
+      "rating": "Moderate",
+      "recommendation": "Close G-002, G-008 from the policy review before submission.",
+      "test": "R7",
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "coverage KSI-CNA-RNT; G-002, G-008"
+        },
+        {
+          "frmr": "KSI-CNA-RNT"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-05",
+      "kind": "mapping",
+      "rule": "KSI-CED-RAT",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The policy review did not cover this KSI: POL-CED was not provided.",
+      "criteria": [
+        "KSI-CED-RAT"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-002.",
+      "test": "R7",
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "coverage KSI-CED-RAT"
+        },
+        {
+          "frmr": "KSI-CED-RAT"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-06",
+      "kind": "mapping",
+      "rule": "KSI-IAM-AAM",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The policy review did not cover this KSI: POL-IAM was not provided.",
+      "criteria": [
+        "KSI-IAM-AAM"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-002.",
+      "test": "R7",
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "coverage KSI-IAM-AAM"
+        },
+        {
+          "frmr": "KSI-IAM-AAM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-07",
+      "kind": "mapping",
+      "rule": "KSI-IAM-APM",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The policy review did not cover this KSI: POL-IAM was not provided.",
+      "criteria": [
+        "KSI-IAM-APM"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-002.",
+      "test": "R7",
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "coverage KSI-IAM-APM"
+        },
+        {
+          "frmr": "KSI-IAM-APM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-08",
+      "kind": "mapping",
+      "rule": "KSI-INR-RIR",
+      "list": "FRC-CLA-MFR",
+      "status": "partial",
+      "mapped_to": "POL-INR/INR-1, POL-INR/INR-3",
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The policy review rated coverage partial (G-008, G-009): Owner and cycle stated; record location not stated.",
+      "criteria": [
+        "KSI-INR-RIR",
+        "POL-INR/INR-1",
+        "POL-INR/INR-3"
+      ],
+      "rating": "Moderate",
+      "recommendation": "Close G-008, G-009 from the policy review before submission.",
+      "test": "R7",
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "coverage KSI-INR-RIR; G-008, G-009"
+        },
+        {
+          "frmr": "KSI-INR-RIR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-09",
+      "kind": "mapping",
+      "rule": "KSI-SVC-SIN",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The policy review did not cover this KSI: POL-SVC was not provided.",
+      "criteria": [
+        "KSI-SVC-SIN"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-002.",
+      "test": "R7",
+      "sources": [
+        {
+          "input": "I-04",
+          "location": "coverage KSI-SVC-SIN"
+        },
+        {
+          "frmr": "KSI-SVC-SIN"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-10",
+      "kind": "mapping",
+      "rule": "AFC-CSO-CRA",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "AFC-CSO-CRA"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "AFC-CSO-CRA"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-11",
+      "kind": "mapping",
+      "rule": "AFC-CSO-INB",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "AFC-CSO-INB"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "AFC-CSO-INB"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-12",
+      "kind": "mapping",
+      "rule": "AFC-CSO-RCV",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "AFC-CSO-RCV"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "AFC-CSO-RCV"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-13",
+      "kind": "mapping",
+      "rule": "CCM-OCR-AVL",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "CCM-OCR-AVL"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "CCM-OCR-AVL"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-14",
+      "kind": "mapping",
+      "rule": "CCM-OCR-NRD",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "CCM-OCR-NRD"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "CCM-OCR-NRD"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-15",
+      "kind": "mapping",
+      "rule": "CDS-CSO-PUB",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "CDS-CSO-PUB"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "CDS-CSO-PUB"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-16",
+      "kind": "mapping",
+      "rule": "CDS-CSO-UTC",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "CDS-CSO-UTC"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "CDS-CSO-UTC"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-17",
+      "kind": "mapping",
+      "rule": "CDS-UTC-AAD",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "CDS-UTC-AAD"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "CDS-UTC-AAD"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-18",
+      "kind": "mapping",
+      "rule": "FRC-CSO-JSN",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "FRC-CSO-JSN"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "FRC-CSO-JSN"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-19",
+      "kind": "mapping",
+      "rule": "FRC-CSO-PKG",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "FRC-CSO-PKG"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "FRC-CSO-PKG"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-20",
+      "kind": "mapping",
+      "rule": "FRC-CSO-POP",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "FRC-CSO-POP"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "FRC-CSO-POP"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-21",
+      "kind": "mapping",
+      "rule": "IEC-CSO-EFR",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "IEC-CSO-EFR"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "IEC-CSO-EFR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-22",
+      "kind": "mapping",
+      "rule": "IVV-CSX-AIA",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "IVV-CSX-AIA"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "IVV-CSX-AIA"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-23",
+      "kind": "mapping",
+      "rule": "SDR-CSX-KSI",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "SDR-CSX-KSI"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "SDR-CSX-KSI"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "P-24",
+      "kind": "mapping",
+      "rule": "VDR-CSO-DET",
+      "list": "FRC-CLA-MFR",
+      "status": "not_reviewed",
+      "mapped_to": null,
+      "package_location": "Class A mapping table in the Certification Package (FRC-CLA-MFR)",
+      "finding": "The inputs for this review do not include material for this rule.",
+      "criteria": [
+        "VDR-CSO-DET"
+      ],
+      "rating": "none",
+      "recommendation": "Answer Q-003.",
+      "test": "R7",
+      "sources": [
+        {
+          "frmr": "VDR-CSO-DET"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-01",
+      "kind": "recommendation",
+      "rule": "CCM-QTR-MTG",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "CCM-QTR-MTG"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-02",
+      "kind": "recommendation",
+      "rule": "CDS-CSO-PSM",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "CDS-CSO-PSM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-03",
+      "kind": "recommendation",
+      "rule": "CMU-CSO-UVM",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "CMU-CSO-UVM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-04",
+      "kind": "recommendation",
+      "rule": "FRC-APP-FIA",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "FRC-APP-FIA"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-05",
+      "kind": "recommendation",
+      "rule": "IVV-CSO-FIA",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "IVV-CSO-FIA"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-06",
+      "kind": "recommendation",
+      "rule": "SDR-CSX-KMT",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "SDR-CSX-KMT"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-07",
+      "kind": "recommendation",
+      "rule": "VER-TFR-IRI",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VER-TFR-IRI"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-08",
+      "kind": "recommendation",
+      "rule": "VER-TFR-MRH",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VER-TFR-MRH"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-09",
+      "kind": "recommendation",
+      "rule": "VER-TFR-NRI",
+      "list": "FRC-CLA-OFR",
+      "force": "MAY",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VER-TFR-NRI"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-10",
+      "kind": "recommendation",
+      "rule": "CDS-CSO-AVR",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "CDS-CSO-AVR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-11",
+      "kind": "recommendation",
+      "rule": "CPO-CSX-CPM",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "CPO-CSX-CPM"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-12",
+      "kind": "recommendation",
+      "rule": "IEC-CSO-IIR",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "The incident response plan sets initial and ongoing report targets (see the 20x-incident-reporting example).",
+      "recommendation": "Compare the plan with incident_timeline.py --class a and decide whether to adopt the Class A timeframes.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "IEC-CSO-IIR"
+        },
+        {
+          "input": "I-03",
+          "location": "reporting targets"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-13",
+      "kind": "recommendation",
+      "rule": "IEC-CSO-OIR",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "The incident response plan sets initial and ongoing report targets (see the 20x-incident-reporting example).",
+      "recommendation": "Compare the plan with incident_timeline.py --class a and decide whether to adopt the Class A timeframes.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "IEC-CSO-OIR"
+        },
+        {
+          "input": "I-03",
+          "location": "reporting targets"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-14",
+      "kind": "recommendation",
+      "rule": "VDR-TFR-MVX",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VDR-TFR-MVX"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-15",
+      "kind": "recommendation",
+      "rule": "VDR-TFR-PCD",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VDR-TFR-PCD"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-16",
+      "kind": "recommendation",
+      "rule": "VDR-TFR-PDD",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VDR-TFR-PDD"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-17",
+      "kind": "recommendation",
+      "rule": "VDR-TFR-PSD",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VDR-TFR-PSD"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-18",
+      "kind": "recommendation",
+      "rule": "VDR-TFR-PVR",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VDR-TFR-PVR"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-19",
+      "kind": "recommendation",
+      "rule": "VER-TFR-EVU",
+      "list": "FRC-CLA-RFR",
+      "force": "SHOULD",
+      "today": "Not reviewed: the inputs do not include material for this rule.",
+      "recommendation": "Decide whether to address this rule, and record the decision in decisions.json.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "VER-TFR-EVU"
+        }
+      ],
+      "confirmed": true
+    },
+    {
+      "id": "C-20",
+      "kind": "recommendation",
+      "rule": "FRC-CLA-IVV",
+      "list": "FRC-CLA",
+      "force": "MAY",
+      "today": "No independent verification of the package is planned in the material.",
+      "recommendation": "Decide whether a FedRAMP Recognized assessor should verify the package before submission.",
+      "test": "R8",
+      "sources": [
+        {
+          "frmr": "FRC-CLA-IVV"
+        }
+      ],
+      "confirmed": true
+    }
+  ],
+  "decisions_needed": [
+    {
+      "id": "DQ-001",
+      "question": "Which date counts as completion of the SOC 2 Type II for the 12-month window in FRC-CLA-ASF?",
+      "options": [
+        "Report date (2026-08-14)",
+        "End of the examination period (2026-06-30)"
+      ],
+      "recommendation": "End of the examination period (2026-06-30)",
+      "reason": "It gives the earlier closing date, so the plan does not depend on a reading FedRAMP may not accept. Confirm with FedRAMP before relying on the later date",
+      "decision_ref": null
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "Q-001",
+      "question": "Does the client have supplemental compliance evidence for the SOC 2 Type II, such as the corrective action for the two exceptions?",
+      "why": "FRC-CLA-EAM lists it where applicable",
+      "blocks": [
+        "M-05"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-002",
+      "question": "Can the client provide POL-CED, POL-IAM and POL-SVC?",
+      "why": "Four KSIs that FRC-CLA-MFR names were not reviewed without them",
+      "blocks": [
+        "P-05",
+        "P-06",
+        "P-07",
+        "P-09"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-003",
+      "question": "Can the client provide its package, trust center, communication and monitoring material for the other mandatory rules?",
+      "why": "These rules are not reviewed without it",
+      "blocks": [
+        "P-10",
+        "P-11",
+        "P-12",
+        "P-13",
+        "P-14",
+        "P-15",
+        "P-16",
+        "P-17",
+        "P-18",
+        "P-19",
+        "P-20",
+        "P-21",
+        "P-22",
+        "P-23",
+        "P-24"
+      ],
+      "answer": null
+    },
+    {
+      "id": "Q-004",
+      "question": "What is the planned submission date?",
+      "why": "The 12-month window in FRC-CLA-ASF counts back from it",
+      "blocks": [
+        "A-02"
+      ],
+      "answer": null
+    }
+  ],
+  "sme_validation": {
+    "status": "draft",
+    "validated_by": null,
+    "role": null,
+    "date": null,
+    "corrections": [],
+    "rejected": []
+  }
+}

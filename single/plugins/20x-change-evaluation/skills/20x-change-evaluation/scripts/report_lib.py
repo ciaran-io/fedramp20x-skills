@@ -36,7 +36,7 @@ def status_line(sv: dict) -> str:
 
 
 def front_matter(d: dict) -> list:
-    return ["---", f"title: {d['title']}", f"client: {d['client']}", "class: C (CR26)",
+    return ["---", f"title: {d['title']}", f"client: {d['client']}", f"class: {d['class']}" + (" (CR26)" if str(d["class"]).upper() == "C" else ""),
             f"frmr_version: {d['frmr_version']} (commit {d['frmr_commit'][:7]})", f"date: {d['date']}",
             f"prepared_by: {d.get('prepared_by', 'Claude')}", f"sme_validation: {status_line(d['sme_validation'])}",
             "---", "", f"# {d['title']}", ""]

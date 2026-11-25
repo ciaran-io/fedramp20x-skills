@@ -36,8 +36,8 @@ def data():
 
 # ---------- skills ----------
 
-def test_nine_skills():
-    assert len(SKILLS) == 9
+def test_ten_skills():
+    assert len(SKILLS) == 10
 
 
 @pytest.mark.parametrize("skill", SKILLS, ids=lambda p: p.name)
@@ -270,6 +270,23 @@ def test_lint_class_a_and_b(tmp_path):
     assert "SCN-ADP-NTF does not apply at class A" in out["a"] and "MAS-CSO-IIR" not in out["a"]
     assert "KSI-CNA-EIS does not apply at class A" in out["a"]
     assert "does not apply" not in out["b"] and "does not apply" not in out["c"]
+
+
+def test_placeholder_check_reads_strings_only():
+    """A source list is not a [placeholder]; a bracketed placeholder in a confirmed fact is."""
+    known = set()
+    base = {"id": "F-001", "sources": [{"frmr": "MAS-CSO-IIR"}, {"frmr": "KSI-INR-RIR"}], "confirmed": True,
+            "finding": "The scope record lists P4 in scope."}
+    _, warn = check_deliverable.check(deliverable(items=[base]), None, None, known)
+    assert not any("placeholder" in w for w in warn)
+    _, warn = check_deliverable.check(deliverable(items=[dict(base, finding="[owner to confirm] reviews it")]), None, None, known)
+    assert any("placeholder" in w for w in warn)
+
+
+def test_front_matter_states_the_class():
+    import report_lib
+    assert "class: A" in report_lib.front_matter(deliverable(**{"class": "A"}))
+    assert "class: C (CR26)" in report_lib.front_matter(deliverable())
 
 
 def test_incident_timeline_class_a():
